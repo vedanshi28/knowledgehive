@@ -10,8 +10,8 @@
     background-color: #fcfbfb;
 }
 .navbar-brand{
-    font-size: 1.5rem !important;
-    color: #fdfdff !important;
+    font-size: 1.5rem;
+    color: #fdfdff ;
 }
 .navbar a{
     font-size: 1rem;
@@ -22,7 +22,7 @@
     border-bottom: 1px solid #535687;
 }
 .navbar a:hover{
-    color: #983bc4 !important;
+    color: #9319b8 !important;
 }
 @media(max-width:991px){
     .navbar-brand{
@@ -38,7 +38,7 @@
 }
 .bttn{
     margin-right: 80px;
-    background-color: #983bc4;
+    background-color: #9319b8;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 10px 20px;
@@ -48,7 +48,7 @@
 }
 .bttn1{
     margin-right: 30px;
-    background-color: #983bc4;
+    background-color: #9319b8;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 10px 20px;
@@ -87,7 +87,7 @@
     font-weight: 700;
     color: black;
 }
-span{
+.text{
     text-align: center;
     font-size: 67px;
     font-weight: 700;
@@ -113,7 +113,7 @@ span{
     text-decoration: none;
 }
 #header .bttn:hover{
-    background: #983bc4;
+    background: #9319b8;
     color: #fff;
 }
 #header .learn{
@@ -123,7 +123,7 @@ span{
     text-decoration: none;
 }
 #header .learn:hover{
-    color: #983bc4;
+    color: #9319b8;
 }
 .img{
    padding-top: 10px;
@@ -133,6 +133,169 @@ span{
    align-items: center;
    justify-content: center;
 }
+.main-container{
+    min-height: 100vh;
+    height: 80%;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.box1{
+    height: 450px;
+    width: 40%;
+    padding: 80px 50px;
+    margin-top: 200px;
+    margin-right: 50px;
+    margin-left: 70px;
+    background: #000000;
+}
+.box2{
+    width: 50%;
+    height: 550px;
+    background: #e0c426;
+    margin-top: 178px;
+    margin-right: 70px;
+    padding: 80px 50px;
+}
+.title1{
+    color: #ffffff;
+}
+.title2{
+    color: #000000;
+}
+.learn-more{
+    color: #ffffff;
+    background: #000000;
+    border: none;
+    margin-top: 18px;
+}
+.content1{
+    color: #a3a4a5;
+}
+.content2{
+    color: #000000;
+    font-weight: 700;
+}
+.content3{
+    font-weight: 700;
+}
+.learn-more2{
+    margin-top: 25px;
+    color: #000000;
+    background: #e0c426;
+    border: none;
+    font-weight: bold;
+}
+.boximg{
+    border-radius: 100%;
+    margin-bottom: 20px;
+    width: 50px;
+    height: 50px;
+}
+i{
+    margin-left: 7px;
+}
+.main-container-collab{
+    min-height: 100vh;
+    height: 80%;
+    width: 100%;
+    padding-top: 250px;
+    padding-bottom: 100px;
+    padding-left: 100px;
+    padding-right: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container{
+    background: #4e639c;
+    color: #000000;
+    font-weight: 700;
+}
+.collab{
+    color: #000000;
+}
+.collabimg{
+   background: #4e639c;
+   height: auto;
+}
+.div{
+    height: 550px;
+    padding-top: 70px;
+    padding-left: 90px;
+    padding-right: 90px;
+    background: #4e639c;
+}
+.learn-more3{
+    background: #4e639c;
+    color: #000000;
+    margin-top: 25px;
+    font-weight: bold;
+    border: none;
+}
+
+section{
+    padding: 80px 100px;
+}
+.footer{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,auto));
+    gap: 3.5rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.footer-content h3{
+    color: #fff;
+    font-size: 20px;
+}
+.link1{
+    padding-left: 200px;
+}
+ .link{
+    padding-left: 80px;
+}
+.footer-content h4{
+    margin-bottom: 1.5rem;
+    color: #fff;
+    font-size: 20px;
+}
+.footer-content li{
+    margin-bottom: 16px;
+    list-style: none;
+}
+.footer-content li a{
+    display: block;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+}
+.footer-content li a:hover{
+    color: #9319b8;
+}
+.footer-content p{
+    font-size: 16px;
+    color: #fff;
+    line-height: 30px;
+    margin: 20px 0;
+}
+.icons{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.icons a i{
+    margin-left: 0;
+}
+.icons a:hover{
+    cursor: pointer;
+}
+.copyright{
+    color: #fff;
+}
+
 /*
 @media(max-width:991px){
     #header{

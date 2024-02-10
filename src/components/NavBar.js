@@ -26,10 +26,10 @@ const NavBar=()=>{
       </ul>
       <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
         <li className="nav-item" >
-        <i class="fa-brands fa-twitter nav-link active icon1"></i>
+        <i className="fa-brands fa-twitter nav-link active icon1"></i>
         </li>
         <li className="nav-item">
-        <i class="fa-brands fa-reddit nav-link active icon"></i>
+        <i className="fa-brands fa-reddit nav-link active icon"></i>
         </li>
       </ul>
       <form className="d-flex">

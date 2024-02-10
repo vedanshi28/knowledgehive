@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Features from './components/Features';
 import Contact from './components/Contact';
 import About from './components/About';
+import Footer from './components/Footer';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Routes,Route,Navigate} from 'react-router-dom';
 
@@ -18,6 +19,7 @@ function App() {
          <Route exact="true" path='/contact' element={<Contact />}/>
          <Route path="/:anything" element={<Navigate replace to='/' />} />
     </Routes>
+    <Footer/>
     </>
   );
 }
