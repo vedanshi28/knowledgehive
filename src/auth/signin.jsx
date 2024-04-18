@@ -10,6 +10,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from "react-hot-toast";
 
 function Copyright(props) {
   return (
@@ -24,7 +27,6 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const darkTheme = createTheme({
   palette: {
@@ -46,14 +48,73 @@ const darkTheme = createTheme({
 
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+  const navigate = useNavigate();
+  const [loggingIn , setLoggingIn] = useState(false);
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: value,
+      };
     });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    //setLoggingIn(true);
+
+    const response = await fetch(`http://localhost:5000/api/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    // console.log(response);
+    
+    if (response.ok) {
+      const json = await response.json();
+      // console.log(json);
+      //setUser(json.userdata);
+      // console.log(user);
+      //setIsLoggedIn(true);
+
+      if (json.success) {
+        localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('user',JSON.stringify(json.userdata));
+        // localStorage.setItem('email',json.userdata.email);
+        navigate("/home");
+        toast.success("Login Successful!");
+      } else {
+        alert("Enter Valid Email and Password");
+      }
+    } else {
+      // Handle error here
+      console.error("Failed to fetch data:", response.statusText);
+    }
+
+    setLoggingIn(false);
+
+ // const handleSubmit = (event) => {
+ //   event.preventDefault();
+ //   const data = new FormData(event.currentTarget);
+ //   console.log({
+ //     email: data.get('email'),
+ //     password: data.get('password'),
+ //   });
+ };
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -77,13 +138,15 @@ export default function SignIn() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  autoComplete="given-name"
-                  name="username"
+                  autoComplete="email"
+                  name="email"
                   required
                   fullWidth
-                  id="username"
-                  label="Username or Email"
+                  id="email"
+                  label="Email"
                   autoFocus
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -94,7 +157,9 @@ export default function SignIn() {
                   label="Password"
                   type="password"
                   id="password"
-                  autoComplete="new-password"
+                  autoComplete="password"
+                  value={formData.password}
+                  onChange={handleChange}
                 />
               </Grid>
             </Grid>
