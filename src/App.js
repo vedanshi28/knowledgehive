@@ -1,27 +1,50 @@
-import './index.css';
-import NavBar from './components/NavBar';
-import Home from './components/Home';
-import Features from './components/Features';
-import Contact from './components/Contact';
-import About from './components/About';
-import Footer from './components/Footer';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {Routes,Route,Navigate} from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
+import RootLayout from "../src/root/RootLayout";
+import AuthLayout from '../src/auth/AuthLayout'
+import SignUp from "../src/auth/signup";
+import SignIn from "../src/auth/signin";
+import Home from "./root/pages/Home";
 
-function App() {
+import "./index.css";
+import Search from "./root/pages/Search";
+import CreatePost from "./root/pages/CreatePost";
+import EditProfile from "./root/pages/EditProfile";
+import Profile from "./root/pages/Profile";
+import EditPost from "./root/pages/EditPost";
+import PostDetails from "./root/pages/PostDetails";
+import LandingPageLayout from "./landing-page/components/LandingPageLayout";
+
+
+const App = () => {
   return (
     <>
-    <NavBar/>
     <Routes>
-         <Route exact="true" path='/' element={<Home />}/>
-         <Route exact="true" path='/about' element={<About />}/>
-         <Route exact="true" path='/featuress' element={<Features />}/>
-         <Route exact="true" path='/contact' element={<Contact />}/>
-         <Route path="/:anything" element={<Navigate replace to='/' />} />
+    <Route index element={<LandingPageLayout />} />
     </Routes>
-    <Footer/>
+    <main className="flex">
+      <Routes>
+      
+        {/* public routes */}
+        <Route element={<AuthLayout />}>
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+        </Route>
+
+        {/* private routes */}
+        <Route element={<RootLayout />}>
+          <Route path='/home' element={<Home />} />
+          <Route path='/search' element={<Search />} />
+          <Route path='/create-post' element={<CreatePost />} />
+          <Route path='/update-post/:id' element={<EditPost/>} />
+          <Route path='/posts/:id' element={<PostDetails/>} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/update-profile/:id' element={<EditProfile />} />
+        </Route>
+
+      </Routes>
+    </main>
     </>
   );
-}
+};
 
 export default App;
