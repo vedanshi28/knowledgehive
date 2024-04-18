@@ -59,8 +59,10 @@ const darkTheme = createTheme({
 });
 
 export default function SignUp() {
-  const navigate = useNavigate();
-  const { setIsLoggedIn, setUser } = useContext(AppContext);
+  //const [showPass, setShowPass] = useState(false);
+  //const [showConfirmPass, setShowConfirmPass] = useState(false);
+  // const navigate = useNavigate();
+  // const { setIsLoggedIn, setUser } = useContext(AppContext);
   
   const [formData, setFormData] = useState({
     name:"",
@@ -85,6 +87,13 @@ export default function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // console.log(JSON.stringify({
+    //   username: formData.username,
+    //   email: formData.email,
+    //   password: formData.password,
+    //   contact: formData.contact,
+    // }));
 
     const response = await fetch(`http://localhost:5000/api/register`, {
       method: "POST",
