@@ -106,7 +106,7 @@ export default function SignUp() {
         email: formData.email,
         password: formData.password,
         contact: formData.contact,
-        passing_year:formData.passing_year,
+        year_of_passing:formData.passing_year,
         branch:formData.branch
       }),
     });
