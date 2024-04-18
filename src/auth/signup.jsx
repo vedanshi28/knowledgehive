@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useState , useContext} from "react";
 import { AppContext } from "../context/AppContext";
+import toast from "react-hot-toast";
 
 function Copyright(props) {
   return (
@@ -58,16 +59,17 @@ const darkTheme = createTheme({
 });
 
 export default function SignUp() {
-  //const [showPass, setShowPass] = useState(false);
-  //const [showConfirmPass, setShowConfirmPass] = useState(false);
   const navigate = useNavigate();
   const { setIsLoggedIn, setUser } = useContext(AppContext);
   
   const [formData, setFormData] = useState({
+    name:"",
     email: "",
     username: "",
     password: "",
     contact: "",
+    passing_year:"",
+    branch:""
   });
 
 
@@ -90,14 +92,17 @@ export default function SignUp() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        name:formData.name,
         username: formData.username,
         email: formData.email,
         password: formData.password,
         contact: formData.contact,
+        passing_year:formData.passing_year,
+        branch:formData.branch
       }),
     });
-  }
-/*
+  
+
     if (response.ok) {
       const json = await response.json();
       setUser(json.userdata);
@@ -117,7 +122,7 @@ export default function SignUp() {
       console.error("Failed to fetch data:", response.statusText);
     }
   };
-
+/*
   const handleSubmit =  (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -189,6 +194,19 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <TextField
+                  autoComplete="name"
+                  name="name"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  autoFocus
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
@@ -236,6 +254,30 @@ export default function SignUp() {
                   id="contact"
                   autoComplete="contact"
                   value={formData.contact}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="passing_year"
+                  label="Year of Passing"
+                  id="passing_year"
+                  autoComplete="passing_year"
+                  value={formData.passing_year}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="branch"
+                  label="Branch"
+                  id="branch"
+                  autoComplete="branch"
+                  value={formData.branch}
                   onChange={handleChange}
                 />
               </Grid>

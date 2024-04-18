@@ -13,7 +13,7 @@ export default function AppContextProvider({ children }) {
       const storedUser = localStorage.getItem("user");
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser);
-        if(parsedUser != user) setUser(parsedUser);
+        if(parsedUser !== user) setUser(parsedUser);
       }
     }, [localStorage.getItem("user")]);
 
