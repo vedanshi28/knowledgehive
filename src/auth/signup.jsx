@@ -61,8 +61,8 @@ const darkTheme = createTheme({
 export default function SignUp() {
   //const [showPass, setShowPass] = useState(false);
   //const [showConfirmPass, setShowConfirmPass] = useState(false);
-  // const navigate = useNavigate();
-  // const { setIsLoggedIn, setUser } = useContext(AppContext);
+  const navigate = useNavigate();
+  const { setIsLoggedIn, setUser } = useContext(AppContext);
   
   const [formData, setFormData] = useState({
     name:"",
@@ -114,9 +114,9 @@ export default function SignUp() {
 
     if (response.ok) {
       const json = await response.json();
-      setUser(json.userdata);
+      // setUser(json.userdata);
       // console.log(json);
-      setIsLoggedIn(true);
+      // setIsLoggedIn(true);
       if (json.success) {
         // console.log(JSON.stringify(json.userdata));
         // localStorage.setItem("isLoggedIn", true);
