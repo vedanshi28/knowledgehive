@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
+import { AppContext } from '../context/AppContext';
 
 function Copyright(props) {
   return (
@@ -50,6 +51,7 @@ const darkTheme = createTheme({
 export default function SignIn() {
   const navigate = useNavigate();
   const [loggingIn , setLoggingIn] = useState(false);
+  const { setIsLoggedIn , setUser} = useContext(AppContext)
 
   const [formData, setFormData] = useState({
     email: "",
