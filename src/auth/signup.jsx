@@ -11,7 +11,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState , useContext} from "react";
+import { AppContext } from "../context/AppContext";
 
 function Copyright(props) {
   return (
@@ -60,6 +61,7 @@ export default function SignUp() {
   //const [showPass, setShowPass] = useState(false);
   //const [showConfirmPass, setShowConfirmPass] = useState(false);
   const navigate = useNavigate();
+  const { setIsLoggedIn, setUser } = useContext(AppContext);
   
   const [formData, setFormData] = useState({
     email: "",
