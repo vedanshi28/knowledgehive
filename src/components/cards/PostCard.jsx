@@ -3,7 +3,6 @@ import Link from "@mui/material/Link";
 import heart from "../../assets/icons/heart-gray.svg";
 import reply from "../../assets/icons/reply.svg";
 import share from "../../assets/icons/share.svg";
-import { Text } from "lucide-react";
 
 function PostCard({
   id,
@@ -113,13 +112,7 @@ function PostCard({
           </div>
         </div>
         {/* 
-        <DeletePost
-          postId={JSON.stringify(id)}
-          currentUserId={currentUserId}
-          authorId={author.id}
-          parentId={parentId}
-          isComment={isComment}
-        />
+        <DeletePost/>
         */}
       </div>
 

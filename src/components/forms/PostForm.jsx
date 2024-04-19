@@ -69,7 +69,7 @@ export default function PostForm() {
               <label className="shad-form_label">Post Title</label>
               <div className="mt-2">
                 <textarea
-                  className="custom-scrollbar shad-form_message w-full h-10  bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3"
+                  className="custom-scrollbar shad-form_message w-full h-10 pt-2 pl-2 bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3"
                   type="text"
                   name="title"
                   id="tile"
@@ -85,7 +85,7 @@ export default function PostForm() {
               <label className="shad-form_label">Post Link</label>
               <div className="mt-2">
                 <textarea
-                  className="custom-scrollbar shad-form_message w-full h-10  bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3"
+                  className="custom-scrollbar shad-form_message w-full h-10 pt-2 pl-2 bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3"
                   type="text"
                   name="link"
                   id="link"
@@ -101,7 +101,7 @@ export default function PostForm() {
               <label className="shad-form_label">Post Description</label>
               <div className="mt-2">
                 <textarea
-                  className="shad-textarea custom-scrollbar shad-form_message w-full"
+                  className="shad-textarea custom-scrollbar shad-form_message w-full pt-2 pl-2"
                   type="text"
                   name="description"
                   id="description"
@@ -118,7 +118,7 @@ export default function PostForm() {
               <div className="mt-2">
                 <div className="flex flex-center flex-col bg-dark-3 rounded-xl cursor-pointer">
                   <input
-                    className="cursor-pointer"
+                    className="cursor-pointer pt-2 pl-2"
                     type="file"
                     hidden
                     ref={imageRef}
