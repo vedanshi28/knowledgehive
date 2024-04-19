@@ -3,10 +3,10 @@ import { createContext, useEffect, useState } from "react";
 export const AppContext = createContext();
 
 export default function AppContextProvider({ children }) {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn")
   );
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");

@@ -11,8 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { useState , useContext} from "react";
-import { AppContext } from "../context/AppContext";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 function Copyright(props) {
@@ -59,10 +58,7 @@ const darkTheme = createTheme({
 });
 
 export default function SignUp() {
-  //const [showPass, setShowPass] = useState(false);
-  //const [showConfirmPass, setShowConfirmPass] = useState(false);
   const navigate = useNavigate();
-  const { setIsLoggedIn, setUser } = useContext(AppContext);
   
   const [formData, setFormData] = useState({
     name:"",
@@ -88,13 +84,6 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // console.log(JSON.stringify({
-    //   username: formData.username,
-    //   email: formData.email,
-    //   password: formData.password,
-    //   contact: formData.contact,
-    // }));
-
     const response = await fetch(`http://localhost:5000/api/register`, {
       method: "POST",
       headers: {
@@ -114,16 +103,9 @@ export default function SignUp() {
 
     if (response.ok) {
       const json = await response.json();
-      // setUser(json.userdata);
-      // console.log(json);
-      // setIsLoggedIn(true);
       if (json.success) {
-        // console.log(JSON.stringify(json.userdata));
-        // localStorage.setItem("isLoggedIn", true);
-        // localStorage.setItem("user", JSON.stringify(json.userdata));
         navigate("/sign-in");
         toast.success("Sign Up Successful!");
-        // toast.success("Please Login.");
       } else {
         alert("Enter Valid Email and Password");
       }
