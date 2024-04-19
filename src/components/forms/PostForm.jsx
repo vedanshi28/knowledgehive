@@ -6,7 +6,7 @@ import { useState, useRef } from "react";
 import { Button } from "@mui/material";
 import fileupload from "../../assets/icons/file-upload.svg";
 import toast,{Toaster} from 'react-hot-toast';
-//import axios from "axios";
+import axios from "axios";
 
 export default function PostForm() {
   const navigate = useNavigate();
@@ -30,19 +30,19 @@ export default function PostForm() {
       console.log(link);
       console.log(selectedFile);
 
-      // const response = axios.post('', formData, {
-      //  headers: {
-      //    'Content-Type': 'multipart/form-data', // Required for file uploads
-      //  },
-      //});
+       const response = axios.post('http://localhost:5000/api/post/add', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Required for file uploads
+      },
+      });
 
-      //console.log('Upload successful:', response.data);
-      // Handle successful upload (e.g., clear form, show success message)
+      console.log('Upload successful:', response.data);
+      toast('Post Uploaded Successfully!');
+
     } catch (error) {
       console.error(" Upload failed:", error);
-      // Handle upload error (e.g., display error message to user)
     } finally {
-      toast('Post Uploaded Successfully!');
+      
       setTitle('');
       setDesc('');
       setLink('');
