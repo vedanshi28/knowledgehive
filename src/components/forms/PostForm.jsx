@@ -9,10 +9,9 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { AppContext } from "../../context/AppContext";
 
-
 export default function PostForm() {
   const navigate = useNavigate();
-  const {user} = useContext(AppContext)
+  const { user } = useContext(AppContext);
   const imageRef = useRef(null);
   const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
   const [formData, setFormData] = useState({
@@ -24,6 +23,7 @@ export default function PostForm() {
     e.preventDefault();
 
     console.log(formData);
+    // console.log(user.email);
 
     try {
       const response = await fetch(`http://localhost:5000/api/post/add`, {
@@ -33,6 +33,7 @@ export default function PostForm() {
         },
         body: JSON.stringify({
           email: user.email,
+          username: user.username,
           postTitle: formData.postTitle,
           postDesc: formData.postDesc,
         }),
@@ -44,7 +45,7 @@ export default function PostForm() {
         const json = await response.json();
         console.log(json);
         if (json.success) {
-          toast.success("Project Added Successfully!");
+          toast.success("Post Added Successfully!");
         } else {
           toast.error("Error occured!");
         }
@@ -57,6 +58,7 @@ export default function PostForm() {
       setFormData({
         postTitle: "",
         postDesc: "",
+        postImg: "",
       });
       setSelectedFile(null);
     }
@@ -64,8 +66,7 @@ export default function PostForm() {
 
   const handleCancel = () => {
     setFormData({
-      email: "",
-      postId: "",
+      postImg: "",
       postTitle: "",
       postDesc: "",
     });
@@ -141,7 +142,7 @@ export default function PostForm() {
               </div>
             </div>
 
-            <div className="sm:col-span-8">
+            {/* <div className="sm:col-span-8">
               <label className="shad-form_label">Add Photos</label>
               <div className="mt-2">
                 <div className="flex flex-center flex-col bg-dark-3 rounded-xl cursor-pointer">
@@ -191,7 +192,8 @@ export default function PostForm() {
                   )}
                 </div>
               </div>
-            </div>
+            </div> */}
+
           </div>
         </div>
       </div>
@@ -200,7 +202,7 @@ export default function PostForm() {
         <button
           type="button"
           className="text-sm font-semibold leading-6 text-white"
-          onClick={()=>handleCancel()}
+          onClick={() => handleCancel()}
         >
           Cancel
         </button>
