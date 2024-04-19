@@ -1,60 +1,86 @@
-import React from "react";
+import React, { useContext } from "react";
 import FileUploader from "../../shared/FileUploader";
 import { useNavigate } from "react-router-dom";
 import usePreviewImg from "../../hooks/usePreviewImg";
 import { useState, useRef } from "react";
 import { Button } from "@mui/material";
 import fileupload from "../../assets/icons/file-upload.svg";
-import toast,{Toaster} from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import { AppContext } from "../../context/AppContext";
+
 
 export default function PostForm() {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [link, setLink] = useState("");
+  const {user} = useContext(AppContext)
   const imageRef = useRef(null);
   const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
+  const [formData, setFormData] = useState({
+    postTitle: "",
+    postDesc: "",
+  });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("description", desc);
-      formData.append("link", link);
-      formData.append("file", selectedFile);
-      console.log(title);
-      console.log(desc);
-      console.log(link);
-      console.log(selectedFile);
+    console.log(formData);
 
-       const response = axios.post('http://localhost:5000/api/post/add', formData, {
+    try {
+      const response = await fetch(`http://localhost:5000/api/post/add`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'multipart/form-data', // Required for file uploads
-      },
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          postTitle: formData.postTitle,
+          postDesc: formData.postDesc,
+        }),
       });
 
-      console.log('Upload successful:', response.data);
-      toast('Post Uploaded Successfully!');
+      console.log(response);
 
+      if (response.ok) {
+        const json = await response.json();
+        console.log(json);
+        if (json.success) {
+          toast.success("Project Added Successfully!");
+        } else {
+          toast.error("Error occured!");
+        }
+      } else {
+        console.error("Failed to fetch data:", response.statusText);
+      }
     } catch (error) {
       console.error(" Upload failed:", error);
     } finally {
-      
-      setTitle('');
-      setDesc('');
-      setLink('');
+      setFormData({
+        postTitle: "",
+        postDesc: "",
+      });
       setSelectedFile(null);
     }
   };
 
   const handleCancel = () => {
-    setTitle('');
-    setDesc('');
-    setLink('');
+    setFormData({
+      email: "",
+      postId: "",
+      postTitle: "",
+      postDesc: "",
+    });
     setSelectedFile(null);
+  };
+
+  const changeHandler = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: value,
+      };
+    });
   };
 
   return (
@@ -71,12 +97,13 @@ export default function PostForm() {
                 <textarea
                   className="custom-scrollbar shad-form_message w-full h-10 pt-2 pl-2 bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3"
                   type="text"
-                  name="title"
+                  name="postTitle"
                   id="tile"
                   autoComplete="title"
                   placeholder="Write your post title here"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  value={formData.postTitle}
+                  required
+                  onChange={changeHandler}
                 />
               </div>
             </div>
@@ -90,9 +117,9 @@ export default function PostForm() {
                   name="link"
                   id="link"
                   autoComplete="link"
-                  placeholder="Post your link here"
-                  value={link}
-                  onChange={(e) => setLink(e.target.value)}
+                  placeholder="Post your link here (optional)"
+                  value={formData.link}
+                  onChange={changeHandler}
                 />
               </div>
             </div>
@@ -103,12 +130,13 @@ export default function PostForm() {
                 <textarea
                   className="shad-textarea custom-scrollbar shad-form_message w-full pt-2 pl-2"
                   type="text"
-                  name="description"
+                  name="postDesc"
                   id="description"
                   autoComplete="description"
                   placeholder="Write your post description here"
-                  value={desc}
-                  onChange={(e) => setDesc(e.target.value)}
+                  value={formData.postDesc}
+                  required
+                  onChange={changeHandler}
                 />
               </div>
             </div>
@@ -172,7 +200,7 @@ export default function PostForm() {
         <button
           type="button"
           className="text-sm font-semibold leading-6 text-white"
-          onClick={handleCancel}
+          onClick={()=>handleCancel()}
         >
           Cancel
         </button>
@@ -183,7 +211,7 @@ export default function PostForm() {
           Submit
         </button>
       </div>
-      <Toaster/>
+      <Toaster />
     </form>
   );
 }
