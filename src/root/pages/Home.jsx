@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React,{useContext, useEffect} from "react";
 import home from "../../assets/icons/home.svg"
 import PostCard from "../../components/cards/PostCard";
 //import Comment from "./Comment";
@@ -6,7 +6,10 @@ import { AppContext } from "../../context/AppContext";
 import Loader from "../../shared/Loader";
 
 function Home() {
-  const { fetchpost,loading} = useContext(AppContext);
+  const { fetchpost,postData,loading} = useContext(AppContext);
+  useEffect(() => {
+    postData(); 
+  }, []);
   
   return (
     <>
@@ -16,12 +19,12 @@ function Home() {
             <img src={home} width={36} height={36} alt="add" />
             <h3 className="h3-bold md:h3-bold text-left w-full">Home</h3>
           </div>
-          {loading ? (
+         {loading ? (
            <p>Loading posts...</p>
         ) : (
           <>
             {fetchpost.map((post) => (
-              <PostCard key={post.id}/>
+              <PostCard key={post.id} post={post}/>
             ))}
           </>
         )}

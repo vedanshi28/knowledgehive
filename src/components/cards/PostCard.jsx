@@ -4,33 +4,25 @@ import heart from "../../assets/icons/heart-gray.svg";
 import reply from "../../assets/icons/reply.svg";
 import share from "../../assets/icons/share.svg";
 
-function PostCard({
-  id,
-  username,
-  parentId,
-  text,
-  author,
-  community,
-  createdAt,
-  comments,
-  isComment,
-}) {
-  const isPostImg = author.isImg;
+function PostCard({id,post}) {
+  //const isPostImg = author.isImg;
+  if(post){
+    console.log(post.username);
+    console.log(post.postTitle);
+  }
   return (
     <article
-      className={`flex w-full flex-col rounded-xl ${
-        isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
-      }`}
+      className='flex w-full flex-col rounded-xl bg-dark-2 p-7'
     >
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
-            <Link
-              href={`/profile/${author.name}`}
+            <Link                                       //user profile pe click krne vla option
+              href={`/profile/${post.username}`}
               className="relative h-11 w-11"
             >
               <img
-                src={author.image}
+                src={post.image}
                 alt="user_community_image"
                 fill
                 className="cursor-pointer rounded-full"
@@ -42,27 +34,27 @@ function PostCard({
 
           <div className="flex w-full flex-col">
             <Link
-              href={`/profile/${author.name}`}
+              href={`/profile/${post.username}`}
               className="no-underline w-fit"
             >
               <h4 className="cursor-pointer text-bold text-light-1">
-                {author.name}
+                {post.name}
               </h4>
             </Link>
 
 
             <p className="mt-2 text-small-regular text-light-2">
-                  {text.title}
+                  {post.postTitle}
                 </p>
                 <p className="mt-2 text-small-regular text-light-2">
-                  {text.desc}
+                  {post.postDesc}
                 </p>
-            {isPostImg ? (
+            {post.imgUrl ? (
               <>
                 
                 <img
-                  key={author.id}
-                  src={author.imgUrl}
+                  key={post.id}
+                  src={post.imgUrl}
                   alt="post image"
                   className="post-card_img"
                 />
@@ -73,7 +65,7 @@ function PostCard({
               </>
             )}
 
-            <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
+            <div className='mt-5 flex flex-col gap-3'>
               <div className="flex gap-3.5">
                 <img
                   src={heart}
@@ -101,13 +93,14 @@ function PostCard({
                 />
               </div>
 
-              {isComment && comments.length > 0 && (
+        {/*       {isComment && comments.length > 0 && (
                 <Link href={`/post/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
                     {comments.length} repl{comments.length > 1 ? "ies" : "y"}
                   </p>
                 </Link>
               )}
+        */}
             </div>
           </div>
         </div>
@@ -116,7 +109,7 @@ function PostCard({
         */}
       </div>
 
-      {!isComment && comments.length > 0 && (
+     {/*  {!isComment && comments.length > 0 && (
         <div className="ml-1 mt-3 flex items-center gap-2">
           {comments.slice(0, 2).map((comment, index) => (
             <img
@@ -135,7 +128,9 @@ function PostCard({
             </p>
           </Link>
         </div>
+        
       )}
+      */}
     </article>
   );
 }
