@@ -1,23 +1,53 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "@mui/material/Link";
 import heart from "../../assets/icons/heart-gray.svg";
 import reply from "../../assets/icons/reply.svg";
+import deleteicon from "../../assets/icons/delete.svg";
 import share from "../../assets/icons/share.svg";
+import { AppContext } from "../../context/AppContext";
 
-function PostCard({id,post}) {
+function PostCard({ id, post }) {
   //const isPostImg = author.isImg;
-  if(post){
+  //const {setFetchPost} =useContext(AppContext);
+  if (post) {
     console.log(post.username);
+    console.log(post.email);
     console.log(post.postTitle);
+    console.log(post.postDesc);
+    console.log(post.imgUrl);
+    console.log(post.name);
   }
+
+  const deletePost = async (id) => {
+    console.log("Deleting Post..")
+    try {
+      const response = await fetch(`http://localhost:5000/api/post/delete/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        console.log("Post deleted successfully");
+      }
+
+      // Update the state with the filtered posts (without the deleted one)
+      // setFetchPost(post.filter((post) => post.email !== user.email));
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
+
+  const handleDelete = (email, id) => {
+    // if(user.email==post.email){
+    deletePost(id);
+    //}
+  };
+
   return (
-    <article
-      className='flex w-full flex-col rounded-xl bg-dark-2 p-7'
-    >
+    <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
-            <Link                                       //user profile pe click krne vla option
+            <Link //user profile pe click krne vla option
               href={`/profile/${post.username}`}
               className="relative h-11 w-11"
             >
@@ -37,21 +67,19 @@ function PostCard({id,post}) {
               href={`/profile/${post.username}`}
               className="no-underline w-fit"
             >
-              <h4 className="cursor-pointer text-bold text-light-1">
-                {post.name}
+              <h4 className="cursor-pointer text-bold text-light-1 no-underline">
+                {post.username}
               </h4>
             </Link>
 
-
             <p className="mt-2 text-small-regular text-light-2">
-                  {post.postTitle}
-                </p>
-                <p className="mt-2 text-small-regular text-light-2">
-                  {post.postDesc}
-                </p>
+              {post.postTitle}
+            </p>
+            <p className="mt-2 text-small-regular text-light-2">
+              {post.postDesc}
+            </p>
             {post.imgUrl ? (
               <>
-                
                 <img
                   key={post.id}
                   src={post.imgUrl}
@@ -60,12 +88,10 @@ function PostCard({id,post}) {
                 />
               </>
             ) : (
-              <>
-                
-              </>
+              <></>
             )}
 
-            <div className='mt-5 flex flex-col gap-3'>
+            <div className="mt-5 flex flex-col gap-3">
               <div className="flex gap-3.5">
                 <img
                   src={heart}
@@ -91,9 +117,18 @@ function PostCard({id,post}) {
                   height={24}
                   className="cursor-pointer object-contain"
                 />
+
+                <img
+                  src={deleteicon}
+                  alt="delete"
+                  width={24}
+                  height={24}
+                  className="cursor-pointer object-contain"
+                  onClick={handleDelete(post.email, post.id)}
+                />
               </div>
 
-        {/*       {isComment && comments.length > 0 && (
+              {/*       {isComment && comments.length > 0 && (
                 <Link href={`/post/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
                     {comments.length} repl{comments.length > 1 ? "ies" : "y"}
@@ -109,7 +144,7 @@ function PostCard({id,post}) {
         */}
       </div>
 
-     {/*  {!isComment && comments.length > 0 && (
+      {/*  {!isComment && comments.length > 0 && (
         <div className="ml-1 mt-3 flex items-center gap-2">
           {comments.slice(0, 2).map((comment, index) => (
             <img

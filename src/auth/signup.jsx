@@ -11,8 +11,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import toast from "react-hot-toast";
+import { AppContext } from "../context/AppContext";
 
 function Copyright(props) {
   return (
@@ -59,7 +60,8 @@ const darkTheme = createTheme({
 
 export default function SignUp() {
   const navigate = useNavigate();
-  
+  const { setIsLoggedIn, setUser } = useContext(AppContext);
+
   const [formData, setFormData] = useState({
     name:"",
     email: "",
@@ -83,19 +85,19 @@ export default function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    console.log("Sign up in progress")
     const response = await fetch(`http://localhost:5000/api/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name:formData.name,
         username: formData.username,
+        name:formData.name,
         email: formData.email,
         password: formData.password,
         contact: formData.contact,
-        year_of_passing:formData.passing_year,
+        year_of_passing:formData.year_of_passing,
         branch:formData.branch
       }),
     });
@@ -104,6 +106,9 @@ export default function SignUp() {
     if (response.ok) {
       const json = await response.json();
       if (json.success) {
+        setUser(json.userdata);
+       console.log(json);
+        setIsLoggedIn(true);
         navigate("/sign-in");
         toast.success("Sign Up Successful!");
       } else {
@@ -113,53 +118,8 @@ export default function SignUp() {
       console.error("Failed to fetch data:", response.statusText);
     }
   };
-/*
-  const handleSubmit =  (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("username"),
-      email: data.get("email"),
-      password: data.get("password"),
-      contact: data.get("contact"),
-    });
-  }
-    
-    try {
-     // const newUser = await createUserAccount(user);
+  
 
-      if (!newUser) {
-        console.log("SignUp failed.")
-        return;
-      }
-
-      const session = await signInAccount({
-        email: user.email,
-        password: user.password,
-      });
-
-      if (!session) {
-        console.log("Something went wrong. Please login your new account")
-        navigate("/sign-in");
-
-        return;
-      }
-
-      const isLoggedIn = await checkAuthUser();
-
-      if (isLoggedIn) {
-        form.reset();
-
-        navigate("/");
-      } else {
-        console.log("Login failed. Please try again.")
-        return;
-      }
-    } catch (error) {
-      console.log({ error });
-    }
-  };
-*/
   return (
     <ThemeProvider theme={darkTheme}>
       <Container component="main" maxWidth="xs">
@@ -252,10 +212,10 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="passing_year"
+                  name="year_of_passing"
                   label="Year of Passing"
-                  id="passing_year"
-                  autoComplete="passing_year"
+                  id="year_of_passing"
+                  autoComplete="year_of_passing"
                   value={formData.passing_year}
                   onChange={handleChange}
                 />

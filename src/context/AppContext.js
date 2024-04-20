@@ -44,7 +44,8 @@ export default function AppContextProvider({ children }) {
     user,
     setUser,
     fetchpost,
-    postData
+    postData,
+    setFetchPost
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
