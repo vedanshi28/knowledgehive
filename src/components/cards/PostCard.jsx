@@ -21,17 +21,13 @@ function PostCard({ _id, post }) {
       });
 
       if (response.ok) {
-        console.log("Post deleted successfully");
+        // console.log("Post deleted successfully");
         postData();
       }
 
     } catch (error) {
       console.error("Error deleting post:", error);
     }
-  };
-
-  const handleDelete = (email, id) => {
-    deletePost(id);
   };
 
   const handleLike = async() => {
@@ -179,7 +175,7 @@ function PostCard({ _id, post }) {
                     width={24}
                     height={24}
                     className="cursor-pointer object-contain"
-                    onClick={()=>handleDelete(post.email, post._id)}
+                    onClick={()=>deletePost(post._id)}
                   />):null
                 }
                 
