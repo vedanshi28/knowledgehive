@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "@mui/material/Link";
 import unlikedicon from "../../assets/icons/heart-gray.svg";
 import likedicon from "../../assets/icons/heart-filled.svg"
@@ -10,16 +9,8 @@ import { AppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 
 function PostCard({ _id, post }) {
-  //const isPostImg = author.isImg;
-  //const {setFetchPost} =useContext(AppContext);
-  if (post) {
-    console.log(post.username);
-    console.log(post.email);
-    console.log(post.postTitle);
-    console.log(post.postDesc);
-    console.log(post.imgUrl);
-    console.log(post.name);
-  }
+  const [canDelete, setCanDelete] = useState(false);
+  const {user} = useContext(AppContext);
 
   const deletePost = async (id) => {
     console.log("Deleting Post..")
@@ -44,6 +35,12 @@ function PostCard({ _id, post }) {
     deletePost(id);
     //}
   };
+
+  useEffect(()=>{
+    if(user.email === post.email){
+      setCanDelete(true);
+    }
+  },[])
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
@@ -122,15 +119,18 @@ function PostCard({ _id, post }) {
                   className="cursor-pointer object-contain"
                 />
 
-              {/*   <img
-                  src={deleteicon}
-                  alt="delete"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                  onClick={handleDelete(post.email, post.id)}
-                />
-                */}
+                {
+                  canDelete?(<img
+                    src={deleteicon}
+                    alt="delete"
+                    width={24}
+                    height={24}
+                    className="cursor-pointer object-contain"
+                    onClick={()=>handleDelete(post.email, post._id)}
+                  />):null
+                }
+
+                
               </div>
 
               {/*       {isComment && comments.length > 0 && (
