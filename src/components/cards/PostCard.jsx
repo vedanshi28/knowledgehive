@@ -32,6 +32,9 @@ function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
   const [liked, setLiked] = useState(false);
   const {user , postData , fetchpost , setUser } = useContext(AppContext);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const deletePost = async (id) => {
     // console.log("Deleting Post..")
@@ -261,7 +264,11 @@ function PostCard({ id, post }) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Add your comment in this field.
           </Typography>
-          <Button sx={{ color: "#6875F5", mt: 2 }} onClick={handleReply}>Reply</Button>
+          <Button sx={{ color: "#6875F5", mt: 2 }} 
+          onClick={handleReply}
+          >
+            Reply
+            </Button>
         </Box>
       </Modal>
     </article>
