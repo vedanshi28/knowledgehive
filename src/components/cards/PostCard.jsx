@@ -118,6 +118,7 @@ function PostCard({ id, post }) {
     }
   },[posts,user])
 
+
   const handleReply=async()=>{
   try{
    const res= await fetch(`http://localhost:5000/api/post/comment/${post._id}`,{
@@ -126,14 +127,14 @@ function PostCard({ id, post }) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      commentDesc:reply
+      "commentDesc":reply
     })
   })
   const data = await res.json();
   if(data.error) console.log(data.error)
   console.log(data);
-  }catch(e){
-    console.log(e);
+  }catch(error){
+    console.log(error);
   }
   }
 
