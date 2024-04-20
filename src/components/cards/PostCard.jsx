@@ -31,15 +31,10 @@ const style = {
 function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [reply, setReply] = useState('');
-  const { user } = useContext(AppContext);
+  const {user , postData , fetchpost , setUser } = useContext(AppContext);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const deletePost = async () => {
-    console.log("Deleting Post..");
+  const deletePost = async (id) => {
+    // console.log("Deleting Post..")
     try {
       const response = await fetch(
         `http://localhost:5000/api/post/delete/${post._id}`,
@@ -49,51 +44,75 @@ function PostCard({ id, post }) {
       );
 
       if (response.ok) {
-        console.log("Post deleted successfully");
+        // console.log("Post deleted successfully");
+        postData();
       }
 
-      // Update the state with the filtered posts (without the deleted one)
-      // setFetchPost(post.filter((post) => post.email !== user.email));
     } catch (error) {
       console.error("Error deleting post:", error);
     }
   };
 
-  const handleDelete = (email, id) => {
-    if (user.email == post.email) {
-      deletePost(id);
-    }
-  };
+  const handleLike = async() => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/post/like/${post._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "userId": user._id
+        }),
+      });
 
-  useEffect(() => {
-    //if(user.email === post.email){
-    setCanDelete(true);
-    //}
-  }, []);
-
-  const handleLikeAndUnlike = () => {
-    console.log("Like");
-  };
-
-  const handleReply= async ()=>{
-   //if(!user) console.log("Login first");
-   try{
-    const res = await fetch(`http://localhost:5000/api/post/comment/${post._id}`,{
-      method:"POST",
-      header:{
-        "Content-Type":"application/json",
-      },
-      body:{
-        commentDesc: reply
+      
+      if (response.ok) {
+        const json = await response.json();
+        // console.log(json.updatedUser);
+        localStorage.setItem("user", JSON.stringify(json.updatedUser));
+        setUser(json.updatedUser);
+        // console.log("Post Liked Successfully");
       }
-    })
-    const data=await res.json();
-    if(data.error) console.log(data.error);
-    console.log(data);
-   }catch(error){
-    console.log("Error replying to post",error.message)
-   }
+    } catch (error) {
+      console.error("Error liking post:", error);
+    }
   }
+  
+  const handleUnlike = async() => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/post/unlike/${post._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "userId": user._id
+        }),
+      });
+
+      
+      if (response.ok) {
+        const json = await response.json();
+        // console.log(json.updatedUser);
+        localStorage.setItem("user", JSON.stringify(json.updatedUser));
+        setUser(json.updatedUser);
+        // console.log("Post Unliked Successfully");
+      }
+    } catch (error) {
+      console.error("Error unliking post:", error);
+    }
+  }
+
+  useEffect(()=>{
+    if(user.email === post.email){
+      setCanDelete(true);
+    }
+    if(user.liked_posts.includes(post._id)){
+      setLiked(true);
+    }else {
+      setLiked(false);
+    }
+  },[fetchpost,user])
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
@@ -152,7 +171,7 @@ function PostCard({ id, post }) {
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  onChange={handleLikeAndUnlike}
+                  onClick={!liked?()=>handleLike():()=>handleUnlike()}
                 />
                 <img
                   src={replyicon}
@@ -178,9 +197,10 @@ function PostCard({ id, post }) {
                     width={24}
                     height={24}
                     className="cursor-pointer object-contain"
-                    //onClick={()=>handleDelete(post.email, post._id)}
-                  />
-                ) : null}
+                    onClick={()=>deletePost(post._id)}
+                  />):null
+                }
+                
               </div>
 
               {/*       {isComment && comments.length > 0 && (

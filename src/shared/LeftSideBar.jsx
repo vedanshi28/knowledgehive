@@ -81,7 +81,12 @@ const LeftSideBar = () => {
       <Button
         variant="ghost"
         className="shad-button_ghost"
-        onClick={(e) => handleSignOut(e)}>
+        onClick={() => {
+          navigate("/");
+          // setIsLoggedIn(false);
+          localStorage.removeItem("user");
+          localStorage.removeItem("isLoggedIn");
+        }}>
         <LogoutIcon/>
         <p className="small-medium lg:base-medium">Logout</p>
       </Button>

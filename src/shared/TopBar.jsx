@@ -53,7 +53,12 @@ const TopBar = () => {
 
         <div className="flex gap-4">
           <Button
-            onClick={''}>
+            onClick={() => {
+              navigate("/");
+              // setIsLoggedIn(false);
+              localStorage.removeItem("user");
+              localStorage.removeItem("isLoggedIn");
+            }}>
             <LogoutIcon/>
           </Button>
           <Link to={''} className="flex-center gap-3">
