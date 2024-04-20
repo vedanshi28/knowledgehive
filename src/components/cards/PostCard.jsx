@@ -1,5 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import Link from "@mui/material/Link";
+import {
+  Link,
+  Button,
+  Modal,
+  Typography,
+  Box,
+  TextField,
+  Input,
+} from "@mui/material";
 import unlikedicon from "../../assets/icons/heart-gray.svg";
 import likedicon from "../../assets/icons/heart-filled.svg";
 import replyicon from "../../assets/icons/reply.svg";
@@ -24,6 +32,10 @@ function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
   const [liked, setLiked] = useState(false);
   const {user , fetchPosts , posts , setUser } = useContext(AppContext);
+  const [open, setOpen] = useState(false);
+  const [reply,setReply] = useState('');
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const deletePost = async (id) => {
     // console.log("Deleting Post..")
@@ -106,6 +118,25 @@ function PostCard({ id, post }) {
     }
   },[posts,user])
 
+  const handleReply=async()=>{
+  try{
+   const res= await fetch(`http://localhost:5000/api/post/comment/${post._id}`,{
+    method:"POST",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      commentDesc:reply
+    })
+  })
+  const data = await res.json();
+  if(data.error) console.log(data.error)
+  console.log(data);
+  }catch(e){
+    console.log(e);
+  }
+  }
+
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
       <div className="flex items-start justify-between">
@@ -172,7 +203,7 @@ function PostCard({ id, post }) {
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  // onClick={handleOpen}
+                  onClick={handleOpen}
                 />
 
                 <img
@@ -196,23 +227,17 @@ function PostCard({ id, post }) {
                 
               </div>
 
-              {/*       {isComment && comments.length > 0 && (
-                <Link href={`/post/${_id}`}>
+                     
                   <p className="mt-1 text-subtle-medium text-gray-1">
-                    {comments.length} repl{comments.length > 1 ? "ies" : "y"}
+                    {reply.length} repl{reply.length > 1 ? "ies" : "y"}
                   </p>
-                </Link>
-              )}
-        */}
+             
             </div>
           </div>
         </div>
-        {/* 
-        <DeletePost/>
-        */}
       </div>
 
-      {/*  {!isComment && comments.length > 0 && (
+      {/*  {!isComment && reply.length > 0 && (
         <div className="ml-1 mt-3 flex items-center gap-2">
           {comments.slice(0, 2).map((comment, index) => (
             <img
@@ -235,7 +260,7 @@ function PostCard({ id, post }) {
       )}
       */}
 
-      {/* <Modal
+       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -260,7 +285,7 @@ function PostCard({ id, post }) {
             Reply
             </Button>
         </Box>
-      </Modal> */}
+      </Modal> 
       
     </article>
   );
