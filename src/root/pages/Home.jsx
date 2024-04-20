@@ -6,9 +6,9 @@ import { AppContext } from "../../context/AppContext";
 import Loader from "../../shared/Loader";
 
 function Home() {
-  const { fetchpost,postData,loading} = useContext(AppContext);
+  const { posts,fetchPosts,loading} = useContext(AppContext);
   useEffect(() => {
-    postData(); 
+    fetchPosts(); 
   }, []);
   
   return (
@@ -23,7 +23,7 @@ function Home() {
            <p>Loading posts...</p>
         ) : (
           <>
-            {fetchpost.map((post) => (
+            {posts.map((post) => (
               <PostCard key={post._id} post={post}/>
             ))}
           </>

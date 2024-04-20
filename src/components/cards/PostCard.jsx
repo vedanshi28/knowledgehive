@@ -1,23 +1,52 @@
 import React, { useContext, useEffect, useState } from "react";
-import Link from "@mui/material/Link";
+import {
+  Link,
+  Button,
+  Modal,
+  Typography,
+  Box,
+  TextField,
+  Input,
+} from "@mui/material";
 import unlikedicon from "../../assets/icons/heart-gray.svg";
-import likedicon from "../../assets/icons/heart-filled.svg"
-import reply from "../../assets/icons/reply.svg";
+import likedicon from "../../assets/icons/heart-filled.svg";
+import replyicon from "../../assets/icons/reply.svg";
 import deleteicon from "../../assets/icons/delete.svg";
 import share from "../../assets/icons/share.svg";
 import { AppContext } from "../../context/AppContext";
-import toast from "react-hot-toast";
 
-function PostCard({ _id, post }) {
+const ariaLabel = { "aria-label": "description" };
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "black",
+  boxShadow: 24,
+  p: 4,
+};
+
+function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
-  const {user} = useContext(AppContext);
+  const [liked, setLiked] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [reply, setReply] = useState('');
+  const { user } = useContext(AppContext);
 
-  const deletePost = async (id) => {
-    console.log("Deleting Post..")
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const deletePost = async () => {
+    console.log("Deleting Post..");
     try {
-      const response = await fetch(`http://localhost:5000/api/post/delete/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/post/delete/${post._id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         console.log("Post deleted successfully");
@@ -31,23 +60,47 @@ function PostCard({ _id, post }) {
   };
 
   const handleDelete = (email, id) => {
-    // if(user.email==post.email){
-    deletePost(id);
-    //}
+    if (user.email == post.email) {
+      deletePost(id);
+    }
   };
 
-  useEffect(()=>{
-    if(user.email === post.email){
-      setCanDelete(true);
-    }
-  },[])
+  useEffect(() => {
+    //if(user.email === post.email){
+    setCanDelete(true);
+    //}
+  }, []);
+
+  const handleLikeAndUnlike = () => {
+    console.log("Like");
+  };
+
+  const handleReply= async ()=>{
+   //if(!user) console.log("Login first");
+   try{
+    const res = await fetch(`http://localhost:5000/api/post/comment/${post._id}`,{
+      method:"POST",
+      header:{
+        "Content-Type":"application/json",
+      },
+      body:{
+        commentDesc: reply
+      }
+    })
+    const data=await res.json();
+    if(data.error) console.log(data.error);
+    console.log(data);
+   }catch(error){
+    console.log("Error replying to post",error.message)
+   }
+  }
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
-            <Link                    //user profile pe click krne vla option
+            <Link //user profile pe click krne vla option
               href={`/profile/${post.username}`}
               className="relative h-11 w-11"
             >
@@ -94,22 +147,21 @@ function PostCard({ _id, post }) {
             <div className="mt-5 flex flex-col gap-3">
               <div className="flex gap-3.5">
                 <img
-                  src={liked?likedicon:unlikedicon}
+                  src={liked ? likedicon : unlikedicon}
                   alt="heart"
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
                   onChange={handleLikeAndUnlike}
                 />
-                <Link href={`/comment/${_id}`}>
-                  <img
-                    src={reply}
-                    alt="reply"
-                    width={24}
-                    height={24}
-                    className="cursor-pointer object-contain"
-                  />
-                </Link>
+                <img
+                  src={replyicon}
+                  alt="reply"
+                  width={24}
+                  height={24}
+                  className="cursor-pointer object-contain"
+                  onClick={handleOpen}
+                />
 
                 <img
                   src={share}
@@ -119,18 +171,16 @@ function PostCard({ _id, post }) {
                   className="cursor-pointer object-contain"
                 />
 
-                {
-                  canDelete?(<img
+                {canDelete ? (
+                  <img
                     src={deleteicon}
                     alt="delete"
                     width={24}
                     height={24}
                     className="cursor-pointer object-contain"
-                    onClick={()=>handleDelete(post.email, post._id)}
-                  />):null
-                }
-
-                
+                    //onClick={()=>handleDelete(post.email, post._id)}
+                  />
+                ) : null}
               </div>
 
               {/*       {isComment && comments.length > 0 && (
@@ -171,6 +221,29 @@ function PostCard({ _id, post }) {
         
       )}
       */}
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} component="form">
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Comment
+          </Typography>
+          <Input
+            placeholder="Comment here"
+            sx={{ color: "white", borderBottom: "#6875F5", width: "100%" , mt:1}}
+            value={reply}
+            onChange={(e)=>setReply(e.target.value)}
+          />
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Add your comment in this field.
+          </Typography>
+          <Button sx={{ color: "#6875F5", mt: 2 }} onClick={handleReply}>Reply</Button>
+        </Box>
+      </Modal>
     </article>
   );
 }

@@ -9,7 +9,7 @@ export default function AppContextProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn")
   );
-  const [fetchpost, setFetchPost] = useState([]); //fetch post
+  const [posts, setPosts] = useState([]); //fetch post
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -20,13 +20,13 @@ export default function AppContextProvider({ children }) {
   }, [localStorage.getItem("user")]);
 
 
-  const postData = async () => {           //Fetch posts
+  const fetchPosts = async () => {           //Fetch posts
     console.log("Fetching Posts...");
     setLoading(true);
     try {
       const res = await axios.get('http://localhost:5000/api/post/fetch');
       const data = res.data;
-      setFetchPost(data.data);
+      setPosts(data.data);
       setLoading(false);
     } catch (error) {
       console.log("Error occurred during fetch call!");
@@ -36,6 +36,7 @@ export default function AppContextProvider({ children }) {
   };
 
 
+
   const value = {
     loading,
     setLoading,
@@ -43,9 +44,9 @@ export default function AppContextProvider({ children }) {
     setIsLoggedIn,
     user,
     setUser,
-    fetchpost,
-    postData,
-    setFetchPost
+    posts,
+    fetchPosts,
+    setPosts
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
