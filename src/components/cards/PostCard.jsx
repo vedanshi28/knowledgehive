@@ -34,12 +34,7 @@ function PostCard({ _id, post }) {
     deletePost(id);
   };
 
-  const handleLikeAndUnlike = async() => {
-    // console.log(post._id);
-    // console.log(JSON.stringify({
-    //   "userId": user._id
-    // }));
-    
+  const handleLike = async() => {
     try {
       const response = await fetch(`http://localhost:5000/api/post/like/${post._id}`, {
         method: "POST",
@@ -57,10 +52,35 @@ function PostCard({ _id, post }) {
         // console.log(json.updatedUser);
         localStorage.setItem("user", JSON.stringify(json.updatedUser));
         setUser(json.updatedUser);
-        console.log("Post Liked Successfully");
+        // console.log("Post Liked Successfully");
       }
     } catch (error) {
       console.error("Error liking post:", error);
+    }
+  }
+  
+  const handleUnlike = async() => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/post/unlike/${post._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "userId": user._id
+        }),
+      });
+
+      
+      if (response.ok) {
+        const json = await response.json();
+        // console.log(json.updatedUser);
+        localStorage.setItem("user", JSON.stringify(json.updatedUser));
+        setUser(json.updatedUser);
+        // console.log("Post Unliked Successfully");
+      }
+    } catch (error) {
+      console.error("Error unliking post:", error);
     }
   }
 
@@ -68,9 +88,10 @@ function PostCard({ _id, post }) {
     if(user.email === post.email){
       setCanDelete(true);
     }
-    // console.log(user.liked_posts);
     if(user.liked_posts.includes(post._id)){
       setLiked(true);
+    }else {
+      setLiked(false);
     }
   },[fetchpost,user])
 
@@ -131,7 +152,7 @@ function PostCard({ _id, post }) {
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  onClick={()=>handleLikeAndUnlike()}
+                  onClick={!liked?()=>handleLike():()=>handleUnlike()}
                 />
                 <Link href={`/comment/${_id}`}>
                   <img
@@ -161,7 +182,6 @@ function PostCard({ _id, post }) {
                     onClick={()=>handleDelete(post.email, post._id)}
                   />):null
                 }
-
                 
               </div>
 
