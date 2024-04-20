@@ -6,7 +6,7 @@ import replyicon from "../../assets/icons/reply.svg";
 import deleteicon from "../../assets/icons/delete.svg";
 import share from "../../assets/icons/share.svg";
 import { AppContext } from "../../context/AppContext";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const style = {
   position: "absolute",
