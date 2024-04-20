@@ -10,10 +10,11 @@ import toast from "react-hot-toast";
 
 function PostCard({ _id, post }) {
   const [canDelete, setCanDelete] = useState(false);
-  const {user} = useContext(AppContext);
+  const [liked, setLiked] = useState(false);
+  const {user , postData , fetchpost , setUser } = useContext(AppContext);
 
   const deletePost = async (id) => {
-    console.log("Deleting Post..")
+    // console.log("Deleting Post..")
     try {
       const response = await fetch(`http://localhost:5000/api/post/delete/${id}`, {
         method: "DELETE",
@@ -21,26 +22,57 @@ function PostCard({ _id, post }) {
 
       if (response.ok) {
         console.log("Post deleted successfully");
+        postData();
       }
 
-      // Update the state with the filtered posts (without the deleted one)
-      // setFetchPost(post.filter((post) => post.email !== user.email));
     } catch (error) {
       console.error("Error deleting post:", error);
     }
   };
 
   const handleDelete = (email, id) => {
-    // if(user.email==post.email){
     deletePost(id);
-    //}
   };
+
+  const handleLikeAndUnlike = async() => {
+    // console.log(post._id);
+    // console.log(JSON.stringify({
+    //   "userId": user._id
+    // }));
+    
+    try {
+      const response = await fetch(`http://localhost:5000/api/post/like/${post._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "userId": user._id
+        }),
+      });
+
+      
+      if (response.ok) {
+        const json = await response.json();
+        // console.log(json.updatedUser);
+        localStorage.setItem("user", JSON.stringify(json.updatedUser));
+        setUser(json.updatedUser);
+        console.log("Post Liked Successfully");
+      }
+    } catch (error) {
+      console.error("Error liking post:", error);
+    }
+  }
 
   useEffect(()=>{
     if(user.email === post.email){
       setCanDelete(true);
     }
-  },[])
+    // console.log(user.liked_posts);
+    if(user.liked_posts.includes(post._id)){
+      setLiked(true);
+    }
+  },[fetchpost,user])
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
@@ -99,7 +131,7 @@ function PostCard({ _id, post }) {
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  onChange={handleLikeAndUnlike}
+                  onClick={()=>handleLikeAndUnlike()}
                 />
                 <Link href={`/comment/${_id}`}>
                   <img
