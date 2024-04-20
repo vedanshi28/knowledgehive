@@ -31,9 +31,9 @@ const style = {
 function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
   const [liked, setLiked] = useState(false);
-  const {user , fetchPosts , posts , setUser } = useContext(AppContext);
+  const { user, fetchPosts, posts, setUser } = useContext(AppContext);
   const [open, setOpen] = useState(false);
-  const [reply,setReply] = useState('');
+  const [reply, setReply] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -51,25 +51,26 @@ function PostCard({ id, post }) {
         // console.log("Post deleted successfully");
         fetchPosts();
       }
-
     } catch (error) {
       console.error("Error deleting post:", error);
     }
   };
 
-  const handleLike = async() => {
+  const handleLike = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/post/like/${post._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          "userId": user._id
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/post/like/${post._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: user._id,
+          }),
+        }
+      );
 
-      
       if (response.ok) {
         const json = await response.json();
         // console.log(json.updatedUser);
@@ -80,21 +81,23 @@ function PostCard({ id, post }) {
     } catch (error) {
       console.error("Error liking post:", error);
     }
-  }
-  
-  const handleUnlike = async() => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/post/unlike/${post._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          "userId": user._id
-        }),
-      });
+  };
 
-      
+  const handleUnlike = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/post/unlike/${post._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: user._id,
+          }),
+        }
+      );
+
       if (response.ok) {
         const json = await response.json();
         // console.log(json.updatedUser);
@@ -105,38 +108,42 @@ function PostCard({ id, post }) {
     } catch (error) {
       console.error("Error unliking post:", error);
     }
-  }
+  };
 
-  useEffect(()=>{
-    if(user.email === post.email){
+  useEffect(() => {
+    if (user.email === post.email) {
       setCanDelete(true);
     }
-    if(user.liked_posts.includes(post._id)){
+    if (user.liked_posts.includes(post._id)) {
       setLiked(true);
-    }else {
+    } else {
       setLiked(false);
     }
-  },[posts,user])
+  }, [posts, user]);
 
-
-  const handleReply=async()=>{
-  try{
-   const res= await fetch(`http://localhost:5000/api/post/comment/${post._id}`,{
-    method:"POST",
-    headers:{
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      "commentDesc":reply
-    })
-  })
-  const data = await res.json();
-  if(data.error) console.log(data.error)
-  console.log(data);
-  }catch(error){
-    console.log(error);
-  }
-  }
+  const handleReply = async () => {
+    // console.log(reply);
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/post/comment/${post._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: user.username,
+            commentDesc: reply,
+          }),
+        }
+      );
+      const data = await res.json();
+      if (data.error) console.log(data.error);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
@@ -195,7 +202,7 @@ function PostCard({ id, post }) {
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  onClick={!liked?()=>handleLike():()=>handleUnlike()}
+                  onClick={!liked ? () => handleLike() : () => handleUnlike()}
                 />
 
                 <img
@@ -222,17 +229,15 @@ function PostCard({ id, post }) {
                     width={24}
                     height={24}
                     className="cursor-pointer object-contain"
-                    onClick={()=>deletePost(post._id)}
-                  />):null
-                }
-                
+                    onClick={() => deletePost(post._id)}
+                  />
+                ) : null}
               </div>
 
-                     
-                  <p className="mt-1 text-subtle-medium text-gray-1">
-                    {reply.length} repl{reply.length > 1 ? "ies" : "y"}
-                  </p>
-             
+              <p className="mt-1 text-subtle-medium text-gray-1">
+                {post.comments.length} repl
+                {post.comments.length > 1 ? "ies" : "y"}
+              </p>
             </div>
           </div>
         </div>
@@ -261,7 +266,7 @@ function PostCard({ id, post }) {
       )}
       */}
 
-       <Modal
+      <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -273,21 +278,23 @@ function PostCard({ id, post }) {
           </Typography>
           <Input
             placeholder="Comment here"
-            sx={{ color: "white", borderBottom: "#6875F5", width: "100%" , mt:1}}
+            sx={{
+              color: "white",
+              borderBottom: "#6875F5",
+              width: "100%",
+              mt: 1,
+            }}
             value={reply}
-            onChange={(e)=>setReply(e.target.value)}
+            onChange={(e) => setReply(e.target.value)}
           />
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Add your comment in this field.
           </Typography>
-          <Button sx={{ color: "#6875F5", mt: 2 }} 
-          onClick={handleReply}
-          >
+          <Button sx={{ color: "#6875F5", mt: 2 }} onClick={handleReply}>
             Reply
-            </Button>
+          </Button>
         </Box>
-      </Modal> 
-      
+      </Modal>
     </article>
   );
 }
