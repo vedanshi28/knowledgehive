@@ -31,7 +31,7 @@ const style = {
 function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
   const [liked, setLiked] = useState(false);
-  const {user , postData , fetchpost , setUser } = useContext(AppContext);
+  const {user , fetchPosts , posts , setUser } = useContext(AppContext);
 
   const deletePost = async (id) => {
     // console.log("Deleting Post..")
@@ -45,7 +45,7 @@ function PostCard({ id, post }) {
 
       if (response.ok) {
         // console.log("Post deleted successfully");
-        postData();
+        fetchPosts();
       }
 
     } catch (error) {
@@ -112,7 +112,7 @@ function PostCard({ id, post }) {
     }else {
       setLiked(false);
     }
-  },[fetchpost,user])
+  },[posts,user])
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
@@ -173,13 +173,14 @@ function PostCard({ id, post }) {
                   className="cursor-pointer object-contain"
                   onClick={!liked?()=>handleLike():()=>handleUnlike()}
                 />
+
                 <img
                   src={replyicon}
                   alt="reply"
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  onClick={handleOpen}
+                  // onClick={handleOpen}
                 />
 
                 <img
@@ -242,7 +243,7 @@ function PostCard({ id, post }) {
       )}
       */}
 
-      <Modal
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -263,7 +264,8 @@ function PostCard({ id, post }) {
           </Typography>
           <Button sx={{ color: "#6875F5", mt: 2 }} onClick={handleReply}>Reply</Button>
         </Box>
-      </Modal>
+      </Modal> */}
+      
     </article>
   );
 }

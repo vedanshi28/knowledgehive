@@ -35,8 +35,6 @@ export default function AppContextProvider({ children }) {
     }
   };
 
-
-
   const value = {
     loading,
     setLoading,
