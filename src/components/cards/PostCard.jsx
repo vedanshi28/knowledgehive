@@ -1,3 +1,4 @@
+import React, { useContext, useEffect } from "react";
 import React, { useContext, useState } from "react";
 import Link from "@mui/material/Link";
 import unlikedicon from "../../assets/icons/heart-gray.svg";
@@ -8,12 +9,10 @@ import share from "../../assets/icons/share.svg";
 import { AppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 
-function PostCard({ id, post }) {
+function PostCard({ _id, post }) {
   //const isPostImg = author.isImg;
-  const {user} =useContext(AppContext);
-  const [liked, setLiked]=useState(false);
+  //const {setFetchPost} =useContext(AppContext);
   if (post) {
-    console.log(post._id);
     console.log(post.username);
     console.log(post.email);
     console.log(post.postTitle);
@@ -22,29 +21,10 @@ function PostCard({ id, post }) {
     console.log(post.name);
   }
 
-  const handleLikeAndUnlike=async()=>{
-    setLiked(true);
-    if(!user) toast("You must be logged in first");
-      try{
-        const res = await fetch(`http://localhost:5000/api/post/like/${post._id}`,{
-          method:"POST",
-          headers:{
-            "Content-Type":"application/json",
-          },
-        })
-        const data =await res.json();
-        if(data.error) toast("Error liking post:");
-        console.log(data);
-      }
-      catch(error){
-        toast("Error liking post:", error);
-      }
-  }
-/*
-  const deletePost = async () => {
+  const deletePost = async (id) => {
     console.log("Deleting Post..")
     try {
-      const response = await fetch(`http://localhost:5000/api/post/delete/${post._id}`, {
+      const response = await fetch(`http://localhost:5000/api/post/delete/${id}`, {
         method: "DELETE",
       });
 
@@ -59,12 +39,12 @@ function PostCard({ id, post }) {
     }
   };
 
-  const handleDelete = (email, postId) => {
+  const handleDelete = (email, id) => {
     // if(user.email==post.email){
-    deletePost(postId);
+    deletePost(id);
     //}
   };
-*/
+
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
       <div className="flex items-start justify-between">
@@ -124,7 +104,7 @@ function PostCard({ id, post }) {
                   className="cursor-pointer object-contain"
                   onChange={handleLikeAndUnlike}
                 />
-                <Link href={`/comment/${id}`}>
+                <Link href={`/comment/${_id}`}>
                   <img
                     src={reply}
                     alt="reply"
@@ -148,13 +128,13 @@ function PostCard({ id, post }) {
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  onClick={handleDelete(post.email, post._id)}
+                  onClick={handleDelete(post.email, post.id)}
                 />
                 */}
               </div>
 
               {/*       {isComment && comments.length > 0 && (
-                <Link href={`/post/${id}`}>
+                <Link href={`/post/${_id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
                     {comments.length} repl{comments.length > 1 ? "ies" : "y"}
                   </p>
@@ -182,7 +162,7 @@ function PostCard({ id, post }) {
             />
           ))}
 
-          <Link href={`/post/${id}`}>
+          <Link href={`/post/${_id}`}>
             <p className="mt-1 text-subtle-medium text-gray-1">
               {comments.length} repl{comments.length > 1 ? "ies" : "y"}
             </p>

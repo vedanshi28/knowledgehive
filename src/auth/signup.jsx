@@ -97,7 +97,7 @@ export default function SignUp() {
         email: formData.email,
         password: formData.password,
         contact: formData.contact,
-        year_of_passing:formData.year_of_passing,
+        year_of_passing: formData.year_of_passing,
         branch:formData.branch
       }),
     });
@@ -216,7 +216,7 @@ export default function SignUp() {
                   label="Year of Passing"
                   id="year_of_passing"
                   autoComplete="year_of_passing"
-                  value={formData.passing_year}
+                  value={formData.year_of_passing}
                   onChange={handleChange}
                 />
               </Grid>
