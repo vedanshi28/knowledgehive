@@ -68,7 +68,7 @@ export default function SignUp() {
     username: "",
     password: "",
     contact: "",
-    passing_year:"",
+    year_of_passing:"",
     branch:""
   });
 

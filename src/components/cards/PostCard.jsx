@@ -1,15 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Link from "@mui/material/Link";
-import heart from "../../assets/icons/heart-gray.svg";
+import unlikedicon from "../../assets/icons/heart-gray.svg";
+import likedicon from "../../assets/icons/heart-filled.svg"
 import reply from "../../assets/icons/reply.svg";
 import deleteicon from "../../assets/icons/delete.svg";
 import share from "../../assets/icons/share.svg";
 import { AppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 function PostCard({ id, post }) {
   //const isPostImg = author.isImg;
-  //const {setFetchPost} =useContext(AppContext);
+  const {user} =useContext(AppContext);
+  const [liked, setLiked]=useState(false);
   if (post) {
+    console.log(post._id);
     console.log(post.username);
     console.log(post.email);
     console.log(post.postTitle);
@@ -18,10 +22,29 @@ function PostCard({ id, post }) {
     console.log(post.name);
   }
 
-  const deletePost = async (id) => {
+  const handleLikeAndUnlike=async()=>{
+    setLiked(true);
+    if(!user) toast("You must be logged in first");
+      try{
+        const res = await fetch(`http://localhost:5000/api/post/like/${post._id}`,{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+          },
+        })
+        const data =await res.json();
+        if(data.error) toast("Error liking post:");
+        console.log(data);
+      }
+      catch(error){
+        toast("Error liking post:", error);
+      }
+  }
+/*
+  const deletePost = async () => {
     console.log("Deleting Post..")
     try {
-      const response = await fetch(`http://localhost:5000/api/post/delete/${id}`, {
+      const response = await fetch(`http://localhost:5000/api/post/delete/${post._id}`, {
         method: "DELETE",
       });
 
@@ -36,18 +59,18 @@ function PostCard({ id, post }) {
     }
   };
 
-  const handleDelete = (email, id) => {
+  const handleDelete = (email, postId) => {
     // if(user.email==post.email){
-    deletePost(id);
+    deletePost(postId);
     //}
   };
-
+*/
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
-            <Link //user profile pe click krne vla option
+            <Link                    //user profile pe click krne vla option
               href={`/profile/${post.username}`}
               className="relative h-11 w-11"
             >
@@ -81,7 +104,7 @@ function PostCard({ id, post }) {
             {post.imgUrl ? (
               <>
                 <img
-                  key={post.id}
+                  key={post._id}
                   src={post.imgUrl}
                   alt="post image"
                   className="post-card_img"
@@ -94,11 +117,12 @@ function PostCard({ id, post }) {
             <div className="mt-5 flex flex-col gap-3">
               <div className="flex gap-3.5">
                 <img
-                  src={heart}
+                  src={liked?likedicon:unlikedicon}
                   alt="heart"
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
+                  onChange={handleLikeAndUnlike}
                 />
                 <Link href={`/comment/${id}`}>
                   <img
@@ -118,14 +142,15 @@ function PostCard({ id, post }) {
                   className="cursor-pointer object-contain"
                 />
 
-                <img
+              {/*   <img
                   src={deleteicon}
                   alt="delete"
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  onClick={handleDelete(post.email, post.id)}
+                  onClick={handleDelete(post.email, post._id)}
                 />
+                */}
               </div>
 
               {/*       {isComment && comments.length > 0 && (
