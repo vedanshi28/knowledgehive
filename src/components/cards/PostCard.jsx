@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "@mui/material/Link";
 import heart from "../../assets/icons/heart-gray.svg";
 import reply from "../../assets/icons/reply.svg";
@@ -7,9 +7,8 @@ import share from "../../assets/icons/share.svg";
 import { AppContext } from "../../context/AppContext";
 
 function PostCard({ _id, post }) {
-  //const isPostImg = author.isImg;
-  //const {setFetchPost} =useContext(AppContext);
-  // console.log(post)
+  const [canDelete, setCanDelete] = useState(false);
+  const {user} = useContext(AppContext);
 
   const deletePost = async (_id) => {
     console.log("Deleting Post..")
@@ -34,6 +33,12 @@ function PostCard({ _id, post }) {
     deletePost(_id);
     //}
   };
+
+  useEffect(()=>{
+    if(user.email === post.email){
+      setCanDelete(true);
+    }
+  },[])
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
@@ -111,14 +116,18 @@ function PostCard({ _id, post }) {
                   className="cursor-pointer object-contain"
                 />
 
-                <img
-                  src={deleteicon}
-                  alt="delete"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                  onClick={()=>handleDelete(post.email, post._id)}
-                />
+                {
+                  canDelete?(<img
+                    src={deleteicon}
+                    alt="delete"
+                    width={24}
+                    height={24}
+                    className="cursor-pointer object-contain"
+                    onClick={()=>handleDelete(post.email, post._id)}
+                  />):null
+                }
+
+                
               </div>
 
               {/*       {isComment && comments.length > 0 && (
