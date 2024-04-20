@@ -1,21 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Link,
-  Button,
-  Modal,
-  Typography,
-  Box,
-  TextField,
-  Input,
-} from "@mui/material";
+import { Link, Button, Modal, Typography, Box, Input } from "@mui/material";
 import unlikedicon from "../../assets/icons/heart-gray.svg";
 import likedicon from "../../assets/icons/heart-filled.svg";
 import replyicon from "../../assets/icons/reply.svg";
 import deleteicon from "../../assets/icons/delete.svg";
 import share from "../../assets/icons/share.svg";
 import { AppContext } from "../../context/AppContext";
-
-const ariaLabel = { "aria-label": "description" };
+import toast, { Toaster } from "react-hot-toast";
 
 const style = {
   position: "absolute",
@@ -31,9 +22,10 @@ const style = {
 function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
   const [liked, setLiked] = useState(false);
-  const { user, fetchPosts, posts, setUser } = useContext(AppContext);
+  const { user, fetchPosts, posts, setUser, setPosts } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [reply, setReply] = useState("");
+  const [isReplying, setIsReplying] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -139,12 +131,18 @@ function PostCard({ id, post }) {
       );
       const data = await res.json();
       if (data.error) console.log(data.error);
+      setPosts({ ...posts, comments: [...posts.comments, data.reply] });
+      toast.success("Comment posted successfully");
       console.log(data);
+      setReply("");
     } catch (error) {
       console.log(error);
+    }finally{
+      setIsReplying(false);
     }
   };
 
+  //if(!user) return null
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
       <div className="flex items-start justify-between">
