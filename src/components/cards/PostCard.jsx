@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Link from "@mui/material/Link";
 import heart from "../../assets/icons/heart-gray.svg";
 import reply from "../../assets/icons/reply.svg";
@@ -6,22 +6,15 @@ import deleteicon from "../../assets/icons/delete.svg";
 import share from "../../assets/icons/share.svg";
 import { AppContext } from "../../context/AppContext";
 
-function PostCard({ id, post }) {
+function PostCard({ _id, post }) {
   //const isPostImg = author.isImg;
   //const {setFetchPost} =useContext(AppContext);
-  if (post) {
-    console.log(post.username);
-    console.log(post.email);
-    console.log(post.postTitle);
-    console.log(post.postDesc);
-    console.log(post.imgUrl);
-    console.log(post.name);
-  }
+  // console.log(post)
 
-  const deletePost = async (id) => {
+  const deletePost = async (_id) => {
     console.log("Deleting Post..")
     try {
-      const response = await fetch(`http://localhost:5000/api/post/delete/${id}`, {
+      const response = await fetch(`http://localhost:5000/api/post/delete/${_id}`, {
         method: "DELETE",
       });
 
@@ -36,9 +29,9 @@ function PostCard({ id, post }) {
     }
   };
 
-  const handleDelete = (email, id) => {
+  const handleDelete = (email, _id) => {
     // if(user.email==post.email){
-    deletePost(id);
+    deletePost(_id);
     //}
   };
 
@@ -81,7 +74,7 @@ function PostCard({ id, post }) {
             {post.imgUrl ? (
               <>
                 <img
-                  key={post.id}
+                  key={post._id}
                   src={post.imgUrl}
                   alt="post image"
                   className="post-card_img"
@@ -100,7 +93,7 @@ function PostCard({ id, post }) {
                   height={24}
                   className="cursor-pointer object-contain"
                 />
-                <Link href={`/comment/${id}`}>
+                <Link href={`/comment/${_id}`}>
                   <img
                     src={reply}
                     alt="reply"
@@ -124,12 +117,12 @@ function PostCard({ id, post }) {
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  onClick={handleDelete(post.email, post.id)}
+                  onClick={()=>handleDelete(post.email, post._id)}
                 />
               </div>
 
               {/*       {isComment && comments.length > 0 && (
-                <Link href={`/post/${id}`}>
+                <Link href={`/post/${_id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
                     {comments.length} repl{comments.length > 1 ? "ies" : "y"}
                   </p>
@@ -157,7 +150,7 @@ function PostCard({ id, post }) {
             />
           ))}
 
-          <Link href={`/post/${id}`}>
+          <Link href={`/post/${_id}`}>
             <p className="mt-1 text-subtle-medium text-gray-1">
               {comments.length} repl{comments.length > 1 ? "ies" : "y"}
             </p>
