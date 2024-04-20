@@ -1,13 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Link,
-  Button,
-  Modal,
-  Typography,
-  Box,
-  TextField,
-  Input,
-} from "@mui/material";
+import Link from "@mui/material/Link";
 import unlikedicon from "../../assets/icons/heart-gray.svg";
 import likedicon from "../../assets/icons/heart-filled.svg";
 import replyicon from "../../assets/icons/reply.svg";
@@ -31,10 +23,7 @@ const style = {
 function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
   const [liked, setLiked] = useState(false);
-  const {user , postData , fetchpost , setUser } = useContext(AppContext);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const {user , fetchPosts , posts , setUser } = useContext(AppContext);
 
   const deletePost = async (id) => {
     // console.log("Deleting Post..")
@@ -48,7 +37,7 @@ function PostCard({ id, post }) {
 
       if (response.ok) {
         // console.log("Post deleted successfully");
-        postData();
+        fetchPosts();
       }
 
     } catch (error) {
@@ -115,7 +104,7 @@ function PostCard({ id, post }) {
     }else {
       setLiked(false);
     }
-  },[fetchpost,user])
+  },[posts,user])
 
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
@@ -176,13 +165,14 @@ function PostCard({ id, post }) {
                   className="cursor-pointer object-contain"
                   onClick={!liked?()=>handleLike():()=>handleUnlike()}
                 />
+
                 <img
                   src={replyicon}
                   alt="reply"
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                  onClick={handleOpen}
+                  // onClick={handleOpen}
                 />
 
                 <img
@@ -245,7 +235,7 @@ function PostCard({ id, post }) {
       )}
       */}
 
-      <Modal
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -270,7 +260,8 @@ function PostCard({ id, post }) {
             Reply
             </Button>
         </Box>
-      </Modal>
+      </Modal> */}
+      
     </article>
   );
 }
