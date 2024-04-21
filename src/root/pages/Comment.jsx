@@ -47,11 +47,11 @@ export default function Comment() {
             <p>Loading comments...</p>
           ) : (
             <>
-           
+           <div>
             {posts?.comments?.map((comment) => (
               <CommentCard key={comment._id} comment={comment} />
             ))}
-           
+           </div>
           </>
           )}
         </Box>
