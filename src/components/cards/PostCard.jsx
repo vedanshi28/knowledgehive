@@ -228,7 +228,7 @@ function PostCard({ id, post }) {
                 >
                   {post.comments.length} repl
                   {post.comments.length > 1 ? "ies" : "y"}
-                  {showComment && <Comment/>}
+                  {showComment && <Comment comments={posts.comments}/>}
                 </p>
               </div>
               <div className="flex gap-3.5">
