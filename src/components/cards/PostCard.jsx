@@ -2,9 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, Button, Modal, Typography, Box, Input } from "@mui/material";
 import unlikedicon from "../../assets/icons/heart-gray.svg";
 import likedicon from "../../assets/icons/heart-filled.svg";
-import replyicon from "../../assets/icons/reply.svg";
 import deleteicon from "../../assets/icons/delete.svg";
-import share from "../../assets/icons/share.svg";
 import { AppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 import Comment from "../../root/pages/Comment";
@@ -32,7 +30,8 @@ function PostCard({ id, post }) {
   const handleClose = () => setOpen(false);
   const [showComment, setShowComment] = useState(false);
 
-  const deletePost = async (id) => {
+
+  const deletePost = async () => {
     // console.log("Deleting Post..")
     try {
       const response = await fetch(
@@ -133,6 +132,7 @@ function PostCard({ id, post }) {
           }),
         }
       );
+      //console.log(res);
       const data = await res.json();
       console.log(data);
       setPosts({ ...posts, comments:[...posts.comments, data]});

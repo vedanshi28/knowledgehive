@@ -314,7 +314,7 @@
     width: 56%;
   }
   .about{
-    font-size: 35px;
+    font-size: 40px;
     font-weight: 500;
   }
   .box-shadow{
@@ -335,7 +335,7 @@
 
 
 .container {
-  max-width: 1024px;
+  max-width: 1300px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;

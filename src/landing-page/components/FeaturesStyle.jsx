@@ -17,8 +17,6 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    width: 100%;
-    max-width: 1350px;
     padding: 10px 0px 100px 0;
     gap: 12px;
     @media (max-width: 960px) {
@@ -31,6 +29,7 @@ export const CardContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
     gap: 28px;
     flex-wrap: wrap;
     // display: grid;

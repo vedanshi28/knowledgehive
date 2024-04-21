@@ -9,8 +9,8 @@ export const Features = () => {
   return (
     <section className="features mt-16 pt-16" id="features">
       <Container id="features">
-        <Row>
-          <Col size={12}>
+        
+          <Col className="w-full">
             <TrackVisibility>
               {({ isVisible }) => (
                 <div
@@ -32,7 +32,7 @@ export const Features = () => {
               )}
             </TrackVisibility>
           </Col>
-        </Row>
+        
       </Container>
     </section>
   );

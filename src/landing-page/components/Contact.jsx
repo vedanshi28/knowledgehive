@@ -19,7 +19,7 @@ const Container = styled.div`
 
 const ContactForm = styled.form`
   width: 100%;
-  max-width: 600px;
+  max-width: 570px;
   display: flex;
   justigy-content:center;
   flex-direction: column;
