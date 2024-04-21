@@ -4,9 +4,9 @@ import knowledgehive from "../assets/knowledgehive.png";
 function About() {
   return (
     <div className="flex flex-row" id="about">
-            <div className="relative mx-auto  mt-14 items-center w-[40%]">
-              <h2 className='text-white about'>About Knowledge Hive✌️</h2>
-              <div>
+            <div className="relative ml-auto mr-10 items-center w-[30%]">
+              <h2 className='text-white about w-full mt-14'>About Knowledge Hive✌️</h2>
+              <div className='flex flex-col'>
                 <p className='text-gray-300 mt-14 pt-8 font-medium text-xl'>Struggling to find the perfect study materials? Want to connect with classmates who share your academic interests? Look no further! The KNOWLEDGE HIVE is your one-stop shop for student success.</p>
                 <p className='text-gray-300 mt-6 font-medium text-xl'>The Knowledge Hive is more than just a website; it's a vibrant online community dedicated to empowering students. We're here to help you learn more effectively, collaborate seamlessly, and achieve your academic goals.</p>
               </div>

@@ -27,7 +27,8 @@ export default function Comment({comments}) {
   const { loading } = useContext(AppContext);
   // console.log(posts);
   // console.log(posts.comments);
-  const fiveComments=comments.slice(0,5);
+  const fiveComments=comments.sort((a, b) => b.createdAt - a.createdAt)
+  const topFiveComments=fiveComments.slice(0,5);
   
   const handleClose = () => {
     setOpen(false);
@@ -49,9 +50,10 @@ export default function Comment({comments}) {
           ) : (
             <>
            
-            {fiveComments?.map((comment,index) => (
-              <CommentCard key={index} comment={comment} />
-            ))}
+        {fiveComments?.map((comment,index) => (
+          <CommentCard key={index} comment={comment} />
+        ))}
+            
           </>
           )}
         </Box>
