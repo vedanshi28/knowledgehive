@@ -37,21 +37,6 @@ export default function AppContextProvider({ children }) {
     }
   };
 
- /* const fetchComments = async () => {           //Fetch comments
-    console.log("Fetching Comments...");
-    setLoading(true);
-    try {
-      const res = await axios.get('');
-      const data = res.data;
-      setPosts(data.data);
-      setLoading(false);
-    } catch (error) {
-      console.log("Error occurred during comments fetch call!");
-      console.error(error);
-      setLoading(false);
-    }
-  };
-  */
 
   const value = {
     loading,

@@ -25,7 +25,7 @@ function Home() {
           ) : (
             <>
               {posts?.map((post) => (
-                <PostCard key={post._id} post={post} />
+                <PostCard key={post._id} post={post}/>
               ))}
             </>
           )}

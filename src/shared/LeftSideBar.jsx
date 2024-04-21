@@ -1,22 +1,18 @@
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-
 import { sidebarLinks } from "../constant";
 import Button from "@mui/material/Button";
 import profile from "../assets/icons/profile-placeholder.svg"
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const LeftSideBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  //const { user, setUser, setIsAuthenticated, isLoading } = useUserContext();
-
-  //const { mutate: signOut } = useSignOutAccount();
+  const { user } = useContext(AppContext);
 
   const handleSignOut = async (e) => {
     e.preventDefault();
-   // signOut();
-   // setIsAuthenticated(false);
-   // setUser(INITIAL_USER);
     navigate("/sign-in");
   };
   const handleClick=()=>{
@@ -44,8 +40,8 @@ const LeftSideBar = () => {
               className="h-14 w-14 rounded-full"
             />
             <div className="flex flex-col">
-              <p className="body-bold">Vedanshi</p>
-              <p className="small-regular text-light-3">@vedanshi</p>
+              <p className="body-bold">{user.name}</p>
+              <p className="small-regular text-light-3">{user.username}</p>
             </div>
           </NavLink>
         
@@ -88,7 +84,7 @@ const LeftSideBar = () => {
           localStorage.removeItem("isLoggedIn");
         }}>
         <LogoutIcon/>
-        <p className="small-medium lg:base-medium">Logout</p>
+        <p className="small-medium lg:base-medium" onClick={handleSignOut}>Logout</p>
       </Button>
     </nav>
   );

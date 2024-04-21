@@ -29,8 +29,7 @@ function PostCard({ id, post }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [showComment, setShowComment] = useState(false);
-
-
+  
   const deletePost = async () => {
     // console.log("Deleting Post..")
     try {
@@ -132,7 +131,7 @@ function PostCard({ id, post }) {
           }),
         }
       );
-      //console.log(res);
+      console.log(res);
       const data = await res.json();
       console.log(data);
       setPosts({ ...posts, comments:[...posts.comments, data]});
@@ -226,14 +225,17 @@ function PostCard({ id, post }) {
                   {post.comments.length} repl
                   {post.comments.length > 1 ? "ies" : "y"}
                   {showComment && (
+                    <>
                     <Comment
                       comments={post.comments}
+                      commentLength={post.comments.length}
                     />
+                    </>
                   )}
                 </p>
               </div>
               <div className="flex gap-3.5">
-                {canDelete ? (
+               {canDelete ? (
                   <img
                     src={deleteicon}
                     alt="delete"
