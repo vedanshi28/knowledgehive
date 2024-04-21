@@ -18,7 +18,7 @@ export default function CommentCard({ comment }) {
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
             <Link //user profile pe click krne vla option
-              href={`/profile/${comment[1].username}`}
+              href={`/profile/${comment.username}`}
               className="relative h-11 w-11"
             >
               <img
@@ -34,21 +34,21 @@ export default function CommentCard({ comment }) {
 
           <div className="flex w-full flex-col">
             <Link
-              href={`/profile/${comment[1].username}`}
+              href={`/profile/${comment.username}`}
               className="no-underline w-fit"
             >
               <h4 className="cursor-pointer text-bold text-light-1 no-underline">
-                {comment[1].username}
+                {comment.username}
               </h4>
             </Link>
             <p className="mt-2 text-small-regular text-light-2">
-              {comment[1].commentDesc}
+              {comment.commentDesc}
             </p>
 
             <div className="mt-5 flex flex-row gap-3 items-center justify-between">
               <div className="flex gap-3.5">
                 <p className="text-subtle-medium text-gray-1 cursor-pointer">
-                  {comment[1].date}
+                  {comment.date}
                 </p>
                 {/*comment */}
               </div>
