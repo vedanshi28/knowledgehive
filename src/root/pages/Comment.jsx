@@ -10,11 +10,11 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 1000,
   height:600,
   bgcolor: 'black',
   border: '2px solid #000',
   boxShadow: 24,
+  overflowY:'auto',
   pt: 2,
   px: 4,
   pb: 3,
@@ -27,6 +27,7 @@ export default function Comment({comments}) {
   const { loading } = useContext(AppContext);
   // console.log(posts);
   // console.log(posts.comments);
+  const fiveComments=comments.slice(0,5);
   
   const handleClose = () => {
     setOpen(false);
@@ -41,14 +42,14 @@ export default function Comment({comments}) {
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: 400 }}>
-          <h2 id="parent-modal-title">Comments</h2>
+          <h1 id="parent-modal-title" className='font-bold'>Comments</h1>
           
           {loading ? (
             <p>Loading comments...</p>
           ) : (
             <>
            
-            {comments?.map((comment,index) => (
+            {fiveComments?.map((comment,index) => (
               <CommentCard key={index} comment={comment} />
             ))}
           </>

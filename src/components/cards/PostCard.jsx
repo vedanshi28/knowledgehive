@@ -223,7 +223,7 @@ function PostCard({ id, post }) {
                 />
 
                 <p
-                  className="text-subtle-medium text-gray-1 cursor-pointer"
+                  className="text-subtle-medium text-gray-400 cursor-pointer"
                   onClick={handleShowComment}
                 >
                   {post.comments.length} repl
