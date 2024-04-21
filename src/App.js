@@ -13,6 +13,7 @@ import Profile from "./root/pages/Profile";
 import EditPost from "./root/pages/EditPost";
 import PostDetails from "./root/pages/PostDetails";
 import LandingPageLayout from "./landing-page/components/LandingPageLayout";
+import CommentCard from "./components/cards/CommentCard";
 
 
 const App = () => {

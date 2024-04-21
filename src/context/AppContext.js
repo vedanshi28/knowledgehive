@@ -10,6 +10,7 @@ export default function AppContextProvider({ children }) {
     localStorage.getItem("isLoggedIn")
   );
   const [posts, setPosts] = useState([]); //fetch post
+  const [comments, setComments] = useState([]);  //fetch comments
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -27,13 +28,30 @@ export default function AppContextProvider({ children }) {
       const res = await axios.get('http://localhost:5000/api/post/fetch');
       const data = res.data;
       setPosts(data.data);
+      setComments(data.data);
       setLoading(false);
     } catch (error) {
-      console.log("Error occurred during fetch call!");
+      console.log("Error occurred during posts fetch call!");
       console.error(error);
       setLoading(false);
     }
   };
+
+ /* const fetchComments = async () => {           //Fetch comments
+    console.log("Fetching Comments...");
+    setLoading(true);
+    try {
+      const res = await axios.get('');
+      const data = res.data;
+      setPosts(data.data);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error occurred during comments fetch call!");
+      console.error(error);
+      setLoading(false);
+    }
+  };
+  */
 
   const value = {
     loading,
@@ -44,7 +62,9 @@ export default function AppContextProvider({ children }) {
     setUser,
     posts,
     fetchPosts,
-    setPosts
+    setPosts,
+    comments,
+    setComments
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

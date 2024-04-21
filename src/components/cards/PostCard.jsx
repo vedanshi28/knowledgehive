@@ -7,6 +7,7 @@ import deleteicon from "../../assets/icons/delete.svg";
 import share from "../../assets/icons/share.svg";
 import { AppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
+import Comment from "../../root/pages/Comment";
 
 const style = {
   position: "absolute",
@@ -28,6 +29,7 @@ function PostCard({ id, post }) {
   const [isReplying, setIsReplying] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [showComment, setShowComment] = useState(false);
 
   const deletePost = async (id) => {
     // console.log("Deleting Post..")
@@ -103,14 +105,14 @@ function PostCard({ id, post }) {
   };
 
   useEffect(() => {
-    if (user.email === post.email) {
-      setCanDelete(true);
-    }
-    if (user.liked_posts.includes(post._id)) {
-      setLiked(true);
-    } else {
-      setLiked(false);
-    }
+    //if (user.email === post.email) {
+    setCanDelete(true);
+    //}
+    //if (user.liked_posts.includes(post._id)) {
+    setLiked(true);
+    //} else {
+    setLiked(false);
+    //}
   }, [posts, user]);
 
   const handleReply = async () => {
@@ -137,9 +139,17 @@ function PostCard({ id, post }) {
       setReply("");
     } catch (error) {
       console.log(error);
-    }finally{
+    } finally {
       setIsReplying(false);
     }
+  };
+
+  // useEffect(() => {
+  //  fetchComments();
+  // }, []);
+
+  const handleShowComment = () => {
+    setShowComment(!showComment);
   };
 
   //if(!user) return null
@@ -192,7 +202,7 @@ function PostCard({ id, post }) {
               <></>
             )}
 
-            <div className="mt-5 flex flex-col gap-3">
+            <div className="mt-5 flex flex-row gap-3 items-center justify-between">
               <div className="flex gap-3.5">
                 <img
                   src={liked ? likedicon : unlikedicon}
@@ -212,30 +222,27 @@ function PostCard({ id, post }) {
                   onClick={handleOpen}
                 />
 
-                <img
-                  src={share}
-                  alt="share"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
-
+                <p
+                  className="text-subtle-medium text-gray-1 cursor-pointer"
+                  onClick={handleShowComment}
+                >
+                  {post.comments.length} repl
+                  {post.comments.length > 1 ? "ies" : "y"}
+                  {showComment && <Comment/>}
+                </p>
+              </div>
+              <div className="flex gap-3.5">
                 {canDelete ? (
                   <img
                     src={deleteicon}
                     alt="delete"
                     width={24}
                     height={24}
-                    className="cursor-pointer object-contain"
+                    className="cursor-pointer object-contain flex justify-end"
                     onClick={() => deletePost(post._id)}
                   />
                 ) : null}
               </div>
-
-              <p className="mt-1 text-subtle-medium text-gray-1">
-                {post.comments.length} repl
-                {post.comments.length > 1 ? "ies" : "y"}
-              </p>
             </div>
           </div>
         </div>
