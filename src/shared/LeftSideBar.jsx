@@ -9,9 +9,12 @@ import { AppContext } from "../context/AppContext";
 const LeftSideBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { user, setIsLoggedIn } = useContext(AppContext);
+  const { user } = useContext(AppContext);
 
-  
+  const handleSignOut = async (e) => {
+    e.preventDefault();
+    navigate("/sign-in");
+  };
   const handleClick=()=>{
     //navigate("/profile");
   }
@@ -30,7 +33,7 @@ const LeftSideBar = () => {
         ) : (
           )}
         */}
-          <NavLink to={'/profile'} className="flex gap-3 items-center" onClick={handleClick}>
+          <NavLink to={''} className="flex gap-3 items-center" onClick={handleClick}>
             <img
               src={profile}
               alt="profile"
@@ -75,13 +78,13 @@ const LeftSideBar = () => {
         variant="ghost"
         className="shad-button_ghost"
         onClick={() => {
-          setIsLoggedIn(false);
+          navigate("/");
+          // setIsLoggedIn(false);
           localStorage.removeItem("user");
           localStorage.removeItem("isLoggedIn");
-          window.location.href = '/sign-in';
         }}>
         <LogoutIcon/>
-        <p className="small-medium lg:base-medium">Logout</p>
+        <p className="small-medium lg:base-medium" onClick={handleSignOut}>Logout</p>
       </Button>
     </nav>
   );
