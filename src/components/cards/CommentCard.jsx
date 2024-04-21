@@ -7,10 +7,6 @@ export default function CommentCard({ comment }) {
   const [open, setOpen] = useState(true);
   const { posts, loading } = useContext(AppContext);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   if(!comment) return <p>No comments yet</p>
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
