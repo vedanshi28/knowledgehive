@@ -106,17 +106,18 @@ function PostCard({ id, post }) {
   };
 
   useEffect(() => {
-    //if (user.email === post.email) {
+    if (user.email === post.email) {
     setCanDelete(true);
-    //}
-    //if (user.liked_posts.includes(post._id)) {
+    }
+    if (user.liked_posts.includes(post._id)) {
     setLiked(true);
-    //} else {
+    } else {
     setLiked(false);
-    //}
+    }
   }, [posts, user]);
 
   const handleReply = async () => {
+    if (!user) return alert("Please login first to add a comment");
     // console.log(reply);
     try {
       const res = await fetch(
@@ -133,11 +134,11 @@ function PostCard({ id, post }) {
         }
       );
       const data = await res.json();
-      if (data.error) console.log(data.error);
-      setPosts({ ...posts, comments: [...posts.comments, data.reply] });
-      toast.success("Comment posted successfully");
       console.log(data);
+      setPosts({ ...posts, comments:[...posts.comments, data]});
+      toast.success("Comment posted successfully");
       setReply("");
+      handleClose();
     } catch (error) {
       console.log(error);
     } finally {
@@ -145,15 +146,12 @@ function PostCard({ id, post }) {
     }
   };
 
-  // useEffect(() => {
-  //  fetchComments();
-  // }, []);
 
   const handleShowComment = () => {
     setShowComment(!showComment);
   };
 
-  //if(!user) return null
+  if (!user) return null;
   return (
     <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
       <div className="flex items-start justify-between">
@@ -227,7 +225,11 @@ function PostCard({ id, post }) {
                 >
                   {post.comments.length} repl
                   {post.comments.length > 1 ? "ies" : "y"}
-                  {showComment && <Comment comments={post.comments} />}
+                  {showComment && (
+                    <Comment
+                      comments={post.comments}
+                    />
+                  )}
                 </p>
               </div>
               <div className="flex gap-3.5">
@@ -247,29 +249,6 @@ function PostCard({ id, post }) {
         </div>
       </div>
 
-      {/*  {!isComment && reply.length > 0 && (
-        <div className="ml-1 mt-3 flex items-center gap-2">
-          {comments.slice(0, 2).map((comment, index) => (
-            <img
-              key={index}
-              src={comment.author.image}
-              alt={`user_${index}`}
-              width={24}
-              height={24}
-              className={`${index !== 0 && "-ml-5"} rounded-full object-cover`}
-            />
-          ))}
-
-          <Link href={`/post/${_id}`}>
-            <p className="mt-1 text-subtle-medium text-gray-1">
-              {comments.length} repl{comments.length > 1 ? "ies" : "y"}
-            </p>
-          </Link>
-        </div>
-        
-      )}
-      */}
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -281,7 +260,7 @@ function PostCard({ id, post }) {
             Comment
           </Typography>
           <Input
-            placeholder="Comment here"
+            placeholder="Add Comment"
             sx={{
               color: "white",
               borderBottom: "#6875F5",

@@ -1,10 +1,10 @@
 import * as React from "react";
-import { useState, useContext } from "react";
+import {  useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { Link } from "@mui/material";
 
 export default function CommentCard({ comment }) {
-  const { posts, loading } = useContext(AppContext);
+  const { posts } = useContext(AppContext);
 
   if(!comment) return <p>No comments yet</p>
   return (

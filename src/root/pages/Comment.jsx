@@ -22,7 +22,7 @@ const style = {
 
   
 
-export default function Comment({comments}) {
+export default function Comment({comments,lastComment}) {
   const [open, setOpen] = useState(true);
   const { loading } = useContext(AppContext);
   // console.log(posts);
@@ -50,7 +50,7 @@ export default function Comment({comments}) {
           ) : (
             <>
            
-        {fiveComments?.map((comment,index) => (
+        {topFiveComments?.map((comment,index) => (
           <CommentCard key={index} comment={comment} />
         ))}
             

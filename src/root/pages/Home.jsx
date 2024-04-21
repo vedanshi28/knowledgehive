@@ -11,6 +11,7 @@ function Home() {
     fetchPosts();
   }, []);
 
+  if(!posts) return <p>No posts yet</p>
   return (
     <>
       <div className="flex flex-1">
@@ -23,7 +24,7 @@ function Home() {
             <p>Loading posts...</p>
           ) : (
             <>
-              {posts.map((post) => (
+              {posts?.map((post) => (
                 <PostCard key={post._id} post={post} />
               ))}
             </>
