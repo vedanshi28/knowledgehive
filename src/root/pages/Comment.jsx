@@ -25,7 +25,8 @@ const style = {
 export default function Comment({comments}) {
   const [open, setOpen] = useState(true);
   const { loading } = useContext(AppContext);
-  
+  // console.log(posts);
+  // console.log(posts.comments);
   
   const handleClose = () => {
     setOpen(false);
@@ -46,6 +47,7 @@ export default function Comment({comments}) {
             <p>Loading comments...</p>
           ) : (
             <>
+           
             {comments?.map((comment,index) => (
               <CommentCard key={index} comment={comment} />
             ))}
