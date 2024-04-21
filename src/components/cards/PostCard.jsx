@@ -8,6 +8,7 @@ import share from "../../assets/icons/share.svg";
 import { AppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 import Comment from "../../root/pages/Comment";
+import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 
 const style = {
   position: "absolute",
@@ -212,13 +213,11 @@ function PostCard({ id, post }) {
                   className="cursor-pointer object-contain"
                   onClick={!liked ? () => handleLike() : () => handleUnlike()}
                 />
-
-                <img
-                  src={replyicon}
-                  alt="reply"
+                <AddCommentOutlinedIcon
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
+                  style={{ color: "#404063" }}
                   onClick={handleOpen}
                 />
 

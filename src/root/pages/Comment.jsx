@@ -41,7 +41,7 @@ export default function Comment({comments}) {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
+        <Box sx={{ ...style, width: 500, scrollbarWidth:'none' }}>
           <h1 id="parent-modal-title" className='font-bold'>Comments</h1>
           
           {loading ? (
