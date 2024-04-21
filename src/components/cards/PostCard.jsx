@@ -224,6 +224,7 @@ function PostCard({ id, post }) {
                 >
                   {post.comments.length} repl
                   {post.comments.length > 1 ? "ies" : "y"}
+                  {console.log(post.comments)}
                   {showComment && (
                     <>
                     <Comment

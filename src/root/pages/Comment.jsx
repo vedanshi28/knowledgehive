@@ -22,11 +22,11 @@ const style = {
 
 export default function Comment({ comments, commentLength }) {
   const [open, setOpen] = useState(true);
-  const { loading } = useContext(AppContext);
-  // console.log(posts);
-  // console.log(posts.comments);
-  const fiveComments = comments.sort((a, b) => b.createdAt - a.createdAt);
-  const topFiveComments = fiveComments.slice(0, 5);
+  const { loading,posts } = useContext(AppContext);
+  const timestamp=comments.date;
+  
+  const fiveComments = comments.sort((a, b) => b.timestamp - a.timestamp);
+  const topFiveComments = fiveComments.slice(-5);
 
   const handleClose = () => {
     setOpen(false);

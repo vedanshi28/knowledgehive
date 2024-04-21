@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { AppContext } from "../context/AppContext";
 
 function Copyright(props) {
@@ -59,7 +59,7 @@ const darkTheme = createTheme({
 export default function SignIn() {
   const navigate = useNavigate();
   const [loggingIn, setLoggingIn] = useState(false);
-  const { setIsLoggedIn, setUser } = useContext(AppContext);
+  const { setIsLoggedIn, setUser, user } = useContext(AppContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -112,6 +112,7 @@ export default function SignIn() {
       }
     } else {
       // Handle error here
+      if(!user) toast("Invalid email or password")
       console.error("Failed to fetch data:", response.statusText);
     }
     
@@ -189,6 +190,7 @@ export default function SignIn() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+      <Toaster/>
     </ThemeProvider>
   );
 }

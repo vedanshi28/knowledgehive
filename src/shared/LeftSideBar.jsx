@@ -9,20 +9,17 @@ import { AppContext } from "../context/AppContext";
 const LeftSideBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { user } = useContext(AppContext);
+  const { user, setIsLoggedIn } = useContext(AppContext);
 
-  const handleSignOut = async (e) => {
-    e.preventDefault();
-    navigate("/sign-in");
-  };
+  
   const handleClick=()=>{
-    navigate("/profile");
+    //navigate("/profile");
   }
 
   return (
     <nav className="leftsidebar">
       <div className="flex flex-col gap-11">
-        <Link to="/" className="flex gap-3 items-center">
+        <Link to="" className="flex gap-3 items-center">
           <h1 className="font-bold text-2xl">Knowledge Hive</h1>
         </Link>
 
@@ -78,13 +75,13 @@ const LeftSideBar = () => {
         variant="ghost"
         className="shad-button_ghost"
         onClick={() => {
-          navigate("/");
-          // setIsLoggedIn(false);
+          setIsLoggedIn(false);
           localStorage.removeItem("user");
           localStorage.removeItem("isLoggedIn");
+          window.location.href = '/sign-in';
         }}>
         <LogoutIcon/>
-        <p className="small-medium lg:base-medium" onClick={handleSignOut}>Logout</p>
+        <p className="small-medium lg:base-medium">Logout</p>
       </Button>
     </nav>
   );
