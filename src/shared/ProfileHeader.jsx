@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "@mui/material/Link";
 import profile from "../assets/icons/profile-placeholder.svg";
 import edit from "../assets/icons/edit.svg";
+import { AppContext } from "../context/AppContext";
 
 //interface Props {
 //  accountId: string;
@@ -14,6 +15,7 @@ import edit from "../assets/icons/edit.svg";
 //}
 
 function ProfileHeader() {
+  const { user }=useContext(AppContext);
   
   return (
     <div className="flex flex-1">
@@ -31,10 +33,10 @@ function ProfileHeader() {
 
             <div className="flex-1">
               <h2 className="text-left text-heading3-bold text-light-1">
-                Vedanshi
+                {user.name}
               </h2>
               <p className="text-base-medium text-gray-1 text-violet-400">
-                @vedanshi
+                {user.username}
               </p>
             </div>
           </div>

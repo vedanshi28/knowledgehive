@@ -11,9 +11,7 @@ import CreatePost from "./root/pages/CreatePost";
 import EditProfile from "./root/pages/EditProfile";
 import Profile from "./root/pages/Profile";
 import EditPost from "./root/pages/EditPost";
-import PostDetails from "./root/pages/PostDetails";
 import LandingPageLayout from "./landing-page/components/LandingPageLayout";
-import CommentCard from "./components/cards/CommentCard";
 
 
 const App = () => {
@@ -37,7 +35,6 @@ const App = () => {
           <Route path='/search' element={<Search />} />
           <Route path='/create-post' element={<CreatePost />} />
           <Route path='/update-post/:id' element={<EditPost/>} />
-          <Route path='/posts/:id' element={<PostDetails/>} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/update-profile/:id' element={<EditProfile />} />
         </Route>

@@ -1,47 +1,30 @@
-//import Image from "next/image";
-//import { currentUser } from "@clerk/nextjs";
-//import { redirect } from "next/navigation";
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
-import { TabPanel } from "@mui/base/TabPanel";
 
-import { profileTabs } from "../../constant";
 import ProfileHeader from "../../shared/ProfileHeader";
-
-import Tabs from "@mui/material/Tabs";
-import { TabsList } from "@mui/base/TabsList";
-import { Tab } from "@mui/base/Tab";
 import PostCard from "../../components/cards/PostCard";
-import { posts,user } from "../../constant";
+import { AppContext } from "../../context/AppContext";
 
-//import ThreadsTab from "@/components/shared/ThreadsTab";
-//import ProfileHeader from "@/components/shared/ProfileHeader";
-//import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-//import { fetchUser } from "@/lib/actions/user.actions";
 const tabs = [
   {
     index: "1",
     label: "Posts",
-    url:"/posts"
+    url: "/posts",
   },
   {
     index: "2",
-    label: "Liked Posts",
-    url: "/liked-posts",
+    label: "Replies",
+    url: "/replies",
   },
 ];
+
 function Profile() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const { profile, setProfile, posts } = useContext(AppContext);
 
   const handleClick = (index) => {
     setActiveTabIndex(index);
   };
-  //const user = await currentUser();
-  //if (!user) return null;
-
-  //const userInfo = await fetchUser(params.id);
-  //if (!userInfo?.onboarded) redirect("/onboarding");
 
   return (
     <div className="flex flex-1">
@@ -68,25 +51,15 @@ function Profile() {
               ))}
             </ul>
             <div className="p-5">
-               <div className="block opacity-100">
+              <div className="block opacity-100">
                 <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit text-blue-gray-500">
                   <a href={tabs[activeTabIndex].url}>
-                  {posts.map((post) => (
-              <PostCard
-                key={post.id}
-                id={post.id}
-                currentUserId={user.username}
-                parentId={post.parentId}
-                content={post.text}
-                author={post.author}
-                createdAt={post.createdAt}
-                comments={post.children}
-                isComment={post.isComment}
-              />
-            ))}
-                    </a>
-                    </p>
-               </div>
+                    {posts.map((post) => (
+                      <PostCard key={post._id} posts={posts} />
+                    ))}
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
