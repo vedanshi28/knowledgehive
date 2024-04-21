@@ -21,6 +21,8 @@ export default function AppContextProvider({ children }) {
   }, [localStorage.getItem("user")]);
 
 
+  
+
   const fetchPosts = async () => {           //Fetch posts
     console.log("Fetching Posts...");
     setLoading(true);
