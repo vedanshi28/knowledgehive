@@ -22,11 +22,11 @@ const style = {
 
   
 
-export default function Comment() {
+export default function Comment({comments}) {
   const [open, setOpen] = useState(true);
-  const { posts , loading , comments} = useContext(AppContext);
-  console.log(posts);
-  console.log(posts.comments);
+  const { loading } = useContext(AppContext);
+  // console.log(posts);
+  // console.log(posts.comments);
   
   const handleClose = () => {
     setOpen(false);
@@ -48,8 +48,8 @@ export default function Comment() {
           ) : (
             <>
            <div>
-            {posts?.comments?.map((comment) => (
-              <CommentCard key={comment._id} comment={comment} />
+            {comments?.map((comment,index) => (
+              <CommentCard key={index} comment={comment} />
             ))}
            </div>
           </>
