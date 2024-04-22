@@ -4,15 +4,6 @@ import profile from "../assets/icons/profile-placeholder.svg";
 import edit from "../assets/icons/edit.svg";
 import { AppContext } from "../context/AppContext";
 
-//interface Props {
-//  accountId: string;
-//  authUserId: string;
-//  name: string;
-//  username: string;
-//  imgUrl: string;
-//  bio: string;
-//  type?: string;
-//}
 
 function ProfileHeader() {
   const { user }=useContext(AppContext);

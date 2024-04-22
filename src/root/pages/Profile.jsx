@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import ProfileHeader from "../../shared/ProfileHeader";
 import PostCard from "../../components/cards/PostCard";
 import { AppContext } from "../../context/AppContext";
@@ -20,7 +19,7 @@ const tabs = [
 
 function Profile() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const { profile, setProfile, posts } = useContext(AppContext);
+  const { posts, loading } = useContext(AppContext);
 
   const handleClick = (index) => {
     setActiveTabIndex(index);
@@ -54,9 +53,15 @@ function Profile() {
               <div className="block opacity-100">
                 <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit text-blue-gray-500">
                   <a href={tabs[activeTabIndex].url}>
-                    {posts.map((post) => (
-                      <PostCard key={post._id} posts={posts} />
-                    ))}
+                    {loading ? (
+                      <p>Loading posts...</p>
+                    ) : (
+                      <>
+                        {posts.map((post) => (
+                          <PostCard key={post._id} posts={posts} />
+                        ))}
+                      </>
+                    )}
                   </a>
                 </p>
               </div>

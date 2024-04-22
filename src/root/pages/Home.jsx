@@ -1,9 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import home from "../../assets/icons/home.svg";
 import PostCard from "../../components/cards/PostCard";
-//import Comment from "./Comment";
 import { AppContext } from "../../context/AppContext";
-import Loader from "../../shared/Loader";
 
 function Home() {
   const { posts, fetchPosts, loading } = useContext(AppContext);

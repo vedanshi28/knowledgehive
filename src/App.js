@@ -12,6 +12,7 @@ import EditProfile from "./root/pages/EditProfile";
 import Profile from "./root/pages/Profile";
 import EditPost from "./root/pages/EditPost";
 import LandingPageLayout from "./landing-page/components/LandingPageLayout";
+import UserPage from "./root/pages/UserPage";
 
 
 const App = () => {
@@ -35,7 +36,8 @@ const App = () => {
           <Route path='/search' element={<Search />} />
           <Route path='/create-post' element={<CreatePost />} />
           <Route path='/update-post/:id' element={<EditPost/>} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:username' element={<Profile />} />
+          <Route path='/userprofile/:username' element={<UserPage />} />
           <Route path='/update-profile/:id' element={<EditProfile />} />
         </Route>
 

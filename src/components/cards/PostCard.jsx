@@ -29,7 +29,7 @@ function PostCard({ id, post }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [showComment, setShowComment] = useState(false);
-  
+
   const deletePost = async () => {
     // console.log("Deleting Post..")
     try {
@@ -105,12 +105,12 @@ function PostCard({ id, post }) {
 
   useEffect(() => {
     if (user.email === post.email) {
-    setCanDelete(true);
+      setCanDelete(true);
     }
     if (user.liked_posts.includes(post._id)) {
-    setLiked(true);
+      setLiked(true);
     } else {
-    setLiked(false);
+      setLiked(false);
     }
   }, [posts, user]);
 
@@ -134,7 +134,7 @@ function PostCard({ id, post }) {
       console.log(res);
       const data = await res.json();
       console.log(data);
-      setPosts({ ...posts, comments:[...posts.comments, data]});
+      setPosts({ ...posts, comments: [...posts.comments, data] });
       toast.success("Comment posted successfully");
       setReply("");
       handleClose();
@@ -144,7 +144,6 @@ function PostCard({ id, post }) {
       setIsReplying(false);
     }
   };
-
 
   const handleShowComment = () => {
     setShowComment(!showComment);
@@ -157,11 +156,11 @@ function PostCard({ id, post }) {
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
             <Link //user profile pe click krne vla option
-              href={`/profile/${post.username}`}
+              href={`/userprofile/${post.username}`}
               className="relative h-11 w-11"
             >
               <img
-                src={post.image}
+                src={""}
                 alt="user_community_image"
                 fill
                 className="cursor-pointer rounded-full"
@@ -172,9 +171,8 @@ function PostCard({ id, post }) {
           </div>
 
           <div className="flex w-full flex-col">
-            <Link
-              href={`/profile/${post.username}`}
-              className="no-underline w-fit"
+            <Link //user profile pe click krne vla option
+              href={`/userprofile/${post.username}`}
             >
               <h4 className="cursor-pointer text-bold text-light-1 no-underline">
                 {post.username}
@@ -224,19 +222,18 @@ function PostCard({ id, post }) {
                 >
                   {post.comments.length} repl
                   {post.comments.length > 1 ? "ies" : "y"}
-                  {console.log(post.comments)}
                   {showComment && (
                     <>
-                    <Comment
-                      comments={post.comments}
-                      commentLength={post.comments.length}
-                    />
+                      <Comment
+                        comments={post.comments}
+                        commentLength={post.comments.length}
+                      />
                     </>
                   )}
                 </p>
               </div>
               <div className="flex gap-3.5">
-               {canDelete ? (
+                {canDelete ? (
                   <img
                     src={deleteicon}
                     alt="delete"

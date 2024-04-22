@@ -41,22 +41,6 @@ export default function AppContextProvider({ children }) {
   };
 
 
-  const fetchProfile = async () => {           //Fetch user profile
-    console.log("Fetching User Profile...");
-    setLoading(true);
-    try {
-      const res = await axios.get('http://localhost:5000/api/user/profile/sanxkar');
-      const data = res.data;
-      setPosts(data.data);
-      setComments(data.data);
-      setLoading(false);
-    } catch (error) {
-      console.log("Error occurred during posts fetch call!");
-      console.error(error);
-      setLoading(false);
-    }
-  };
-
 
   const value = {
     loading,

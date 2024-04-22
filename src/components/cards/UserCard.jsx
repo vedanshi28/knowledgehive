@@ -1,22 +1,9 @@
-"use client";
 import React from "react";
 import Button from "@mui/material/Button";
-//import { useRouter } from "next/navigation";
 
 
-//interface Props {
-//  id: string;
- // name: string;
- // username: string;
- // imgUrl: string;
- // personType: string;
-//}
-
-function UserCard({ id, name, username, imgUrl, personType }) {
-  //const router = useRouter();
-
-  //const isCommunity = personType === "Community";
-
+function UserCard({ id, name, username, imgUrl }) {
+  
   return (
     <article className='user-card'>
       <div className='user-card_avatar'>
