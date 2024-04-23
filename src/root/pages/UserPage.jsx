@@ -21,6 +21,7 @@ const tabs = [
 
 function UserPage() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [fetchingPosts, setFetchingPosts] = useState(false);
 
   const handleClick = (index) => {
     setActiveTabIndex(index);
@@ -77,16 +78,19 @@ function UserPage() {
     let res;
 
     try {
+      setFetchingPosts(true);
        res = await axios.get(
         'http://localhost:5000/api/post/fetch'
       );
       const data = res.data;
       setUserPosts(data.data);
-      console.log(data)
+       //console.log(data)
     } catch (error) {
       console.log("Error occurred during fetch call!");
       console.error(error);
       return;
+    }finally{
+      setFetchingPosts(false);
     }
 
     filteredData = res.data.data.filter((r) => {
@@ -133,11 +137,11 @@ function UserPage() {
               <div className="block opacity-100">
                 <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit text-blue-gray-500">
                   <a href={tabs[activeTabIndex].url}>
-                    {filteredData.length === 0 ? (
+                    {!fetchingPosts && userPosts.length===0 ? (
                       <p>No posts yet...</p>
                     ) : (
                       <>
-                        {filteredData.map((post) => (
+                        {userPosts.map((post) => (
                           <PostCard key={post._id} post={post} />
                         ))}
                       </>
