@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import PostCard from "../../components/cards/PostCard";
 import UserProfileHeader from "../../shared/UserProfileHeader";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { AppContext } from "../../context/AppContext";
 
@@ -27,7 +27,7 @@ function UserPage() {
     setActiveTabIndex(index);
   };
 
-  const { loading, setOtherUsers, otherUsers, posts, setLoading, setUserPosts , userPosts} =
+  const { setOtherUsers, otherUsers,  setLoading, setUserPosts , userPosts} =
     useContext(AppContext);
   const location = useLocation();
   let filteredData;
@@ -96,7 +96,7 @@ function UserPage() {
     filteredData = res.data.data.filter((r) => {
       if (r.username === location.pathname.split("/").at(-1)) return r;
     });
-    console.log(filteredData)
+    //console.log(filteredData)
     setUserPosts(filteredData);
 
     setLoading(false);
@@ -115,7 +115,7 @@ function UserPage() {
         <div className="max-w-5xl flex-start gap-3 justify-start w-full">
           <UserProfileHeader otherUsers={otherUsers} />
         </div>
-        <div className="w-2/3">
+        <div className="w-11/12">
           <div className="relative right-0">
             <ul
               className="relative flex flex-wrap p-1 list-none rounded-xl bg-blue-gray-50/60"
