@@ -22,34 +22,30 @@ const tabs = [
 function Profile() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [fetchingPosts, setFetchingPosts] = useState(false);
-  const {  setLoading, setUserPosts , userPosts} =
-    useContext(AppContext);
+  const { setLoading, setUserPosts, userPosts } = useContext(AppContext);
   const location = useLocation();
   let filteredData;
-
 
   const handleClick = (index) => {
     setActiveTabIndex(index);
   };
 
-  async function getUserPosts(){
+  async function getUserPosts() {
     console.log("Fetching User Posts...");
     setLoading(true);
     let res;
 
     try {
       setFetchingPosts(true);
-       res = await axios.get(
-        'http://localhost:5000/api/post/fetch'
-      );
+      res = await axios.get("http://localhost:5000/api/post/fetch");
       const data = res.data;
       setUserPosts(data.data);
-       //console.log(data)
+      //console.log(data)
     } catch (error) {
       console.log("Error occurred during fetch call!");
       console.error(error);
       return;
-    }finally{
+    } finally {
       setFetchingPosts(false);
     }
 
@@ -64,10 +60,8 @@ function Profile() {
     return;
   }
   useEffect(() => {
-    getUserPosts()
+    getUserPosts();
   }, []);
-
-
 
   return (
     <div className="flex flex-1">
@@ -77,8 +71,7 @@ function Profile() {
         </div>
         <div className="w-11/12">
           <div className="relative right-0">
-            
-          <ul
+            <ul
               className="relative flex flex-wrap p-1 list-none rounded-xl bg-blue-gray-50/60"
               data-tabs="tabs"
               role="list"
@@ -94,19 +87,17 @@ function Profile() {
                 </li>
               ))}
             </ul>
-            
+
             <div className="p-3">
-                
-            {!fetchingPosts && userPosts.length===0 ? (
-                      <p>No posts yet...</p>
-                    ) : (
-                      <>
-                        {userPosts.map((post) => (
-                          <PostCard key={post._id} post={post} />
-                        ))}
-                      </>
-                    )}
-                
+              {!fetchingPosts && userPosts.length === 0 ? (
+                <p>No posts yet...</p>
+              ) : (
+                <>
+                  {userPosts.map((post) => (
+                    <PostCard key={post._id} post={post} />
+                  ))}
+                </>
+              )}
             </div>
           </div>
         </div>

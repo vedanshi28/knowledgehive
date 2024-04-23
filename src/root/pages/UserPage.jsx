@@ -27,7 +27,7 @@ function UserPage() {
     setActiveTabIndex(index);
   };
 
-  const { setOtherUsers, otherUsers,  setLoading, setUserPosts , userPosts} =
+  const { setOtherUsers, otherUsers, setLoading, setUserPosts, userPosts } =
     useContext(AppContext);
   const location = useLocation();
   let filteredData;
@@ -71,25 +71,22 @@ function UserPage() {
     fetchUser();
   }, []);
 
-
-  async function getUserPosts(){
+  async function getUserPosts() {
     console.log("Fetching User Posts...");
     setLoading(true);
     let res;
 
     try {
       setFetchingPosts(true);
-       res = await axios.get(
-        'http://localhost:5000/api/post/fetch'
-      );
+      res = await axios.get("http://localhost:5000/api/post/fetch");
       const data = res.data;
       setUserPosts(data.data);
-       //console.log(data)
+      //console.log(data)
     } catch (error) {
       console.log("Error occurred during fetch call!");
       console.error(error);
       return;
-    }finally{
+    } finally {
       setFetchingPosts(false);
     }
 
@@ -104,11 +101,9 @@ function UserPage() {
     return;
   }
   useEffect(() => {
-    getUserPosts()
+    getUserPosts();
   }, []);
- 
 
-  
   return (
     <div className="flex flex-1">
       <div className="common-container">
@@ -137,7 +132,7 @@ function UserPage() {
               <div className="block opacity-100">
                 <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit text-blue-gray-500">
                   <a href={tabs[activeTabIndex].url}>
-                    {!fetchingPosts && userPosts.length===0 ? (
+                    {!fetchingPosts && userPosts.length === 0 ? (
                       <p>No posts yet...</p>
                     ) : (
                       <>

@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function UserCard({ id, name, username, imgUrl }) {
-  const { otherUsers, setLoading, setOtherUsers } = useContext(AppContext)
+  const { otherUsers, setLoading, setOtherUsers } = useContext(AppContext);
   const location = useLocation();
 
   async function fetchUser() {
@@ -48,27 +48,27 @@ function UserCard({ id, name, username, imgUrl }) {
   }, []);
 
   return (
-    <article className='user-card'>
-      <div className='user-card_avatar'>
-        <div className='relative h-12 w-12'>
+    <article className="user-card">
+      <div className="user-card_avatar">
+        <div className="relative h-12 w-12">
           <img
             src={imgUrl}
-            alt='user_logo'
+            alt="user_logo"
             fill
-            className='rounded-full object-cover'
+            className="rounded-full object-cover"
           />
         </div>
 
-        <div className='flex-1 text-ellipsis'>
+        <div className="flex-1 text-ellipsis">
           <Link href={`/userprofile/${otherUsers.username}`}>
-          <h4 className='text-base-semibold text-light-1'>{name}</h4>
-          <p className='text-small-medium text-gray-1'>@{username}</p>
+            <h4 className="text-base-semibold text-light-1">{name}</h4>
+            <p className="text-small-medium text-gray-1">@{username}</p>
           </Link>
         </div>
       </div>
 
       <Button
-        className='user-card_btn'
+        className="user-card_btn"
         href={`/userprofile/${otherUsers.username}`}
       >
         View

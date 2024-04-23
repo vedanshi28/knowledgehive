@@ -149,7 +149,6 @@ function PostCard({ id, post }) {
   const handleShowComment = () => {
     setShowComment(!showComment);
   };
-  
 
   if (!user) return null;
   return (
