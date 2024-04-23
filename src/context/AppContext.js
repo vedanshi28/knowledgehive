@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export const AppContext = createContext();
 
@@ -13,6 +14,7 @@ export default function AppContextProvider({ children }) {
   const [comments, setComments] = useState([]);  //fetch comments
   const [profile, setProfile] = useState([]);    //fetch user profile
   const [otherUsers , setOtherUsers] = useState([]);  //fetch other user !current
+  const [userPosts , setUserPosts] = useState([]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -42,8 +44,6 @@ export default function AppContextProvider({ children }) {
   };
 
 
-
-
   const value = {
     loading,
     setLoading,
@@ -59,7 +59,9 @@ export default function AppContextProvider({ children }) {
     profile,
     setProfile,
     otherUsers,
-    setOtherUsers
+    setOtherUsers,
+    userPosts,
+    setUserPosts
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

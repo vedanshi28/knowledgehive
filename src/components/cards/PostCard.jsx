@@ -29,7 +29,7 @@ function PostCard({ id, post }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [showComment, setShowComment] = useState(false);
-  console.log(posts)
+  //console.log(posts)
 
   const deletePost = async () => {
     // console.log("Deleting Post..")
@@ -175,6 +175,7 @@ function PostCard({ id, post }) {
           <div className="flex w-full flex-col">
             <Link //user profile pe click krne vla option
               href={`/userprofile/${post.username}`}
+              className="no-underline"
             >
               <h4 className="cursor-pointer text-bold text-light-1 no-underline">
                 {post.username}

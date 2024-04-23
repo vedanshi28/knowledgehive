@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import PostCard from "../../components/cards/PostCard";
 import UserProfileHeader from "../../shared/UserProfileHeader";
-
+import { useLocation, useParams } from "react-router-dom";
+import axios from "axios";
 import { AppContext } from "../../context/AppContext";
-import { useParams } from "react-router-dom";
 
 const tabs = [
   {
@@ -21,42 +21,95 @@ const tabs = [
 
 function UserPage() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  
+
   const handleClick = (index) => {
     setActiveTabIndex(index);
   };
 
-  const { user, loading, setOtherUsers, otherUsers, posts} = useContext(AppContext)
-	const { username } = useParams();
-	const [fetchingdata, setFetchingData] = useState(true);
+  const { loading, setOtherUsers, otherUsers, posts, setLoading, setUserPosts , userPosts} =
+    useContext(AppContext);
+  const location = useLocation();
+  let filteredData;
 
-	useEffect(() => {
-		const getUser = async () => {
-			if (!user) return;
-			setFetchingData(true);
-			try {
-				const res = await fetch(`http://localhost:5000/api/user/profile/${username}`);
-				const data = await res.json();
-				setOtherUsers(data);
-        //console.log(data)
-			} catch (error) {
-				console.log("Error", error.message, "error");
-				setOtherUsers([]);
-			} finally {
-				setFetchingData(false);
-			}
-		};
+  async function fetchUser() {
+    console.log("Fetching User...");
+    setLoading(true);
+    let username = location.pathname.split("/").at(-1);
+    // console.log(username);
 
-		getUser();
-	}, [ username ]);
-  //console.log(otherUsers)
+    const response = await fetch(
+      `http://localhost:5000/api/user/profile/${username}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    // console.log(response);
+
+    if (response.ok) {
+      const json = await response.json();
+      setOtherUsers(json.data);
+      // console.log(json.data);
+
+      if (json.success) {
+        console.log("success");
+      } else {
+        console.log("failure");
+      }
+    } else {
+      console.error("Failed to fetch data:", response.statusText);
+    }
+
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
 
+  async function getUserPosts(){
+    console.log("Fetching User Posts...");
+    setLoading(true);
+    let res;
+
+    try {
+       res = await axios.get(
+        'http://localhost:5000/api/post/fetch'
+      );
+      const data = res.data;
+      setUserPosts(data.data);
+      console.log(data)
+    } catch (error) {
+      console.log("Error occurred during fetch call!");
+      console.error(error);
+      return;
+    }
+
+    filteredData = res.data.data.filter((r) => {
+      if (r.username === location.pathname.split("/").at(-1)) return r;
+    });
+    console.log(filteredData)
+    setUserPosts(filteredData);
+
+    setLoading(false);
+
+    return;
+  }
+  useEffect(() => {
+    getUserPosts()
+  }, []);
+ 
+
+  
   return (
     <div className="flex flex-1">
       <div className="common-container">
         <div className="max-w-5xl flex-start gap-3 justify-start w-full">
-          <UserProfileHeader otherUsers={otherUsers}/>
+          <UserProfileHeader otherUsers={otherUsers} />
         </div>
         <div className="w-2/3">
           <div className="relative right-0">
@@ -80,12 +133,12 @@ function UserPage() {
               <div className="block opacity-100">
                 <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit text-blue-gray-500">
                   <a href={tabs[activeTabIndex].url}>
-                    {loading ? (
-                      <p>Loading posts...</p>
+                    {filteredData.length === 0 ? (
+                      <p>No posts yet...</p>
                     ) : (
                       <>
-                        {posts.map((post) => (
-                          <PostCard key={post._id} posts={posts} />
+                        {filteredData.map((post) => (
+                          <PostCard key={post._id} post={post} />
                         ))}
                       </>
                     )}

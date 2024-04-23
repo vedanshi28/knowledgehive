@@ -4,16 +4,7 @@ import { communities,similarminds } from "../constant";
 import Button from "@mui/material/Button";
 
 function RightSideBar() {
-  //const user = await currentUser();
-  //if (!user) return null;
-
-  //const similarMinds = await fetchUsers({
-  //  userId: user.id,
-   // pageSize: 4,
-  //});
-
-  //const suggestedCOmmunities = await fetchCommunities({ pageSize: 4 });
-
+  
   return (
     <section className='custom-scrollbar rightsidebar'>
       <div className='flex flex-1 flex-col justify-start'>

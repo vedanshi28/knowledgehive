@@ -1,9 +1,52 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Button from "@mui/material/Button";
-
+import { AppContext } from "../../context/AppContext";
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function UserCard({ id, name, username, imgUrl }) {
-  
+  const { otherUsers, setLoading, setOtherUsers } = useContext(AppContext)
+  const location = useLocation();
+
+  async function fetchUser() {
+    console.log("Fetching User...");
+    setLoading(true);
+    let username = location.pathname.split("/").at(-1);
+    // console.log(username);
+
+    const response = await fetch(
+      `http://localhost:5000/api/user/profile/${username}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    // console.log(response);
+
+    if (response.ok) {
+      const json = await response.json();
+      setOtherUsers(json.data);
+      // console.log(json.data);
+
+      if (json.success) {
+        console.log("success");
+      } else {
+        console.log("failure");
+      }
+    } else {
+      console.error("Failed to fetch data:", response.statusText);
+    }
+
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <article className='user-card'>
       <div className='user-card_avatar'>
@@ -17,14 +60,16 @@ function UserCard({ id, name, username, imgUrl }) {
         </div>
 
         <div className='flex-1 text-ellipsis'>
+          <Link href={`/userprofile/${otherUsers.username}`}>
           <h4 className='text-base-semibold text-light-1'>{name}</h4>
           <p className='text-small-medium text-gray-1'>@{username}</p>
+          </Link>
         </div>
       </div>
 
       <Button
         className='user-card_btn'
-        onClick={''}
+        href={`/userprofile/${otherUsers.username}`}
       >
         View
       </Button>
