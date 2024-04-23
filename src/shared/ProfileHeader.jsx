@@ -1,12 +1,62 @@
-import React, { useContext } from "react";
 import Link from "@mui/material/Link";
 import profile from "../assets/icons/profile-placeholder.svg";
 import edit from "../assets/icons/edit.svg";
 import { AppContext } from "../context/AppContext";
+import * as React from 'react';
+import { useContext , useState} from "react";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { Input } from "@mui/material";
+import toast, { Toaster } from "react-hot-toast";
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  color:'white',
+  bgcolor: 'black',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 function ProfileHeader() {
   const { user }=useContext(AppContext);
+  const [open, setOpen] = React.useState(false);
+  const [newData , setNewData] = useState({
+    name:'',
+    contact:''
+  });
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleUpdate = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/user/profile/${user.username}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...newData
+          }),
+        }
+      );
+      //console.log(res);
+      const data = await res.json();
+      console.log(data);
+      setNewData('')
+      toast.success("Updated Changes Successfully!")
+    } catch (error) {
+      console.log(error);
+    }
+  };
   
   return (
     <div className="flex flex-1">
@@ -31,13 +81,11 @@ function ProfileHeader() {
               </p>
             </div>
           </div>
-          <Link href="/profile/edit">
             <div className="flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2 ">
               <img src={edit} alt="edit" width={16} height={16} />
 
-              <p className="text-light-2 max-sm:hidden">Edit</p>
+              <button className="text-light-2 max-sm:hidden" onClick={handleOpen}>Edit</button>
             </div>
-          </Link>
         </div>
 
         <p className="mt-6 max-w-lg text-base-regular text-light-2">
@@ -45,7 +93,47 @@ function ProfileHeader() {
           IIST, Indore 🧑‍💻🎓
         </p>
       </div>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} component="form">
+          <Typography id="modal-modal-title" variant="h6" component="h2" sx={{mb:2}}>
+            Edit Profile
+          </Typography>
+          <Input
+            placeholder="Name"
+            sx={{
+              color: "white",
+              borderBottom: "#6875F5",
+              width: "100%",
+              mt: 2,
+            }}
+            value={newData.name}
+            onChange={(e) => setNewData({...newData, name:e.target.value})}
+          />
+          <Input
+            placeholder="Contact"
+            sx={{
+              color: "white",
+              borderBottom: "#6875F5",
+              width: "100%",
+              mt: 3,
+            }}
+            value={newData.contact}
+            onChange={(e) => setNewData({...newData, contact:e.target.value})}
+          />
+          <Button sx={{ color: "#6875F5", mt: 4 }} onClick={handleUpdate}>
+            Save
+          </Button>
+        </Box>
+      </Modal>
+      <Toaster/>
     </div>
+    
   );
 }
 

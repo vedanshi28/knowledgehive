@@ -29,6 +29,7 @@ function PostCard({ id, post }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [showComment, setShowComment] = useState(false);
+  console.log(posts)
 
   const deletePost = async () => {
     // console.log("Deleting Post..")
@@ -131,9 +132,9 @@ function PostCard({ id, post }) {
           }),
         }
       );
-      console.log(res);
+      //console.log(res);
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
       setPosts({ ...posts, comments: [...posts.comments, data] });
       toast.success("Comment posted successfully");
       setReply("");
@@ -148,6 +149,7 @@ function PostCard({ id, post }) {
   const handleShowComment = () => {
     setShowComment(!showComment);
   };
+  
 
   if (!user) return null;
   return (

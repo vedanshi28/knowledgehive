@@ -12,6 +12,7 @@ export default function AppContextProvider({ children }) {
   const [posts, setPosts] = useState([]); //fetch post
   const [comments, setComments] = useState([]);  //fetch comments
   const [profile, setProfile] = useState([]);    //fetch user profile
+  const [otherUsers , setOtherUsers] = useState([]);  //fetch other user !current
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -42,6 +43,7 @@ export default function AppContextProvider({ children }) {
 
 
 
+
   const value = {
     loading,
     setLoading,
@@ -55,7 +57,9 @@ export default function AppContextProvider({ children }) {
     comments,
     setComments,
     profile,
-    setProfile
+    setProfile,
+    otherUsers,
+    setOtherUsers
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
