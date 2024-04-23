@@ -1,6 +1,4 @@
-import Link from "@mui/material/Link";
 import profile from "../assets/icons/profile-placeholder.svg";
-import edit from "../assets/icons/edit.svg";
 import { AppContext } from "../context/AppContext";
 import * as React from "react";
 import { useContext, useState } from "react";
@@ -10,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Input } from "@mui/material";
 import toast, { Toaster } from "react-hot-toast";
+import ModeEditIcon from "@mui/icons-material/ModeEditOutline";
 
 const style = {
   position: "absolute",
@@ -82,14 +81,7 @@ function ProfileHeader() {
             </div>
           </div>
           <div className="flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2 ">
-            <img
-              src={edit}
-              alt="edit"
-              width={16}
-              height={16}
-              onClick={handleOpen}
-            />
-
+            <ModeEditIcon width={16} height={16} onClick={handleOpen} style={{ color: "#404063"}}/>
             <button className="text-light-2 max-sm:hidden" onClick={handleOpen}>
               Edit
             </button>

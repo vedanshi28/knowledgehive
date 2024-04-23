@@ -43,9 +43,7 @@ function UserCard({ id, name, username, imgUrl }) {
     setLoading(false);
   }
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+ 
 
   return (
     <article className="user-card">
@@ -60,16 +58,15 @@ function UserCard({ id, name, username, imgUrl }) {
         </div>
 
         <div className="flex-1 text-ellipsis">
-          <Link href={`/userprofile/${otherUsers.username}`}>
             <h4 className="text-base-semibold text-light-1">{name}</h4>
             <p className="text-small-medium text-gray-1">@{username}</p>
-          </Link>
         </div>
       </div>
 
       <Button
         className="user-card_btn"
         href={`/userprofile/${otherUsers.username}`}
+        onClick={fetchUser}
       >
         View
       </Button>

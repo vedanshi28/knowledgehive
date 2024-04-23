@@ -4,9 +4,12 @@ import unlikedicon from "../../assets/icons/heart-gray.svg";
 import likedicon from "../../assets/icons/heart-filled.svg";
 import deleteicon from "../../assets/icons/delete.svg";
 import { AppContext } from "../../context/AppContext";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import Comment from "../../root/pages/Comment";
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import Popover from "@mui/material/Popover";
 
 const style = {
   position: "absolute",
@@ -23,13 +26,50 @@ function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
   const [liked, setLiked] = useState(false);
   const { user, fetchPosts, posts, setUser, setPosts } = useContext(AppContext);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); //Comment modal
   const [reply, setReply] = useState("");
   const [isReplying, setIsReplying] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [showComment, setShowComment] = useState(false);
-  //console.log(posts)
+  const [canedit, setCanEdit] = useState(false);
+  const [openEditPost, setOpenEditPost] = useState(false); //Edit post modal
+  const handleEditOpen = () => setOpenEditPost(true);
+  const handleEditClose = () => setOpenEditPost(false);
+  const [editPostData, setEditPostData] = useState({
+    postTitle: post.postTitle,
+    postDesc: post.postDesc,
+  });
+
+
+  const editPost = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/post/update/${post._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...editPostData,
+          }),
+        }
+      );
+      //console.log(res);
+      const data = await res.json();
+      console.log(data);
+      setEditPostData("");
+      toast.success("Edited Post Successfully!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (user.email === post.email) {
+      setCanEdit(true);
+    }
+  });
 
   const deletePost = async () => {
     // console.log("Deleting Post..")
@@ -235,6 +275,16 @@ function PostCard({ id, post }) {
                 </p>
               </div>
               <div className="flex gap-3.5">
+                {canedit ? (
+                  <ModeEditOutlineOutlinedIcon
+                    width={100}
+                    height={100}
+                    style={{ color: "#404063" }}
+                    onClick={handleEditOpen}
+                    className="cursor-pointer"
+                  />
+                ) : null}
+
                 {canDelete ? (
                   <img
                     src={deleteicon}
@@ -252,7 +302,7 @@ function PostCard({ id, post }) {
       </div>
 
       <Modal
-        open={open}
+        open={open} //Comment Modal
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -280,6 +330,54 @@ function PostCard({ id, post }) {
           </Button>
         </Box>
       </Modal>
+
+      <Modal
+        open={openEditPost} // Edit post Modal
+        onClose={handleEditClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} component="form">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            sx={{ mb: 2 }}
+          >
+            Edit Post
+          </Typography>
+          <Input
+            placeholder="Title"
+            sx={{
+              color: "white",
+              borderBottom: "#6875F5",
+              width: "100%",
+              mt: 2,
+            }}
+            value={editPostData.postTitle}
+            onChange={(e) =>
+              setEditPostData({ ...editPostData, postTitle: e.target.value })
+            }
+          />
+          <Input
+            placeholder="Description"
+            sx={{
+              color: "white",
+              borderBottom: "#6875F5",
+              width: "100%",
+              mt: 3,
+            }}
+            value={editPostData.postDesc}
+            onChange={(e) =>
+              setEditPostData({ ...editPostData, postDesc: e.target.value })
+            }
+          />
+          <Button sx={{ color: "#6875F5", mt: 4 }} onClick={editPost}>
+            Save
+          </Button>
+        </Box>
+      </Modal>
+      <Toaster />
     </article>
   );
 }
