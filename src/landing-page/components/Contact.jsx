@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import emailjs from "emailjs-com";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const Container = styled.div`
   display: flex;
@@ -151,6 +151,7 @@ export default function Contact() {
                 <ContactButton id="btn" type="submit" value="Send Message" className='hover:text-white' />
               </ContactForm>
               </Container>
+              <Toaster/>
       </div>
   )
 }

@@ -4,25 +4,12 @@ import seacrh from "../../assets/icons/search-gray.svg"
 import filter from "../../assets/icons/filter.svg"
 import UserCard from "../../components/cards/UserCard";
 import { similarminds } from "../../constant";
-import useDebounce from "../../hooks/useDebounce";
-import PostCard from "../../components/cards/PostCard";
-import { posts,user } from "../../constant";
-//import { useGetPosts, useSearchPosts } from "@/lib/react-query/queries";
-
-//export type SearchResultProps = {
-//  isSearchFetching: boolean;
-//  searchedPosts: any;
-//};
-
 
 
 const Search = () => {
   const { ref, inView } = useInView();
- // const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
 
   const [searchValue, setSearchValue] = useState("");
-  const debouncedSearch = useDebounce(searchValue, 500);
- // const { data: searchedPosts, isFetching: isSearchFetching } = useSearchPosts(debouncedSearch);
 
   return (
     <div className="explore-container">
