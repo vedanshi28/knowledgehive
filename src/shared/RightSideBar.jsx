@@ -2,6 +2,8 @@ import React from "react";
 import UserCard from "../components/cards/UserCard";
 import { communities, similarminds } from "../constant";
 import Button from "@mui/material/Button";
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+  
 
 function RightSideBar() {
   return (
@@ -11,20 +13,20 @@ function RightSideBar() {
           Create Communities &nbsp; <i class="fa-solid fa-plus"></i>
         </Button>
         <h3 className="text-heading4-medium text-light-1 mt-6">
-          Suggested Communities
+          Suggested Categories
         </h3>
 
         <div className="mt-7 flex w-[350px] flex-col gap-9 text-indigo-400">
-          {communities.map((community) => (
-            <UserCard
-              key={community.id}
-              id={community.id}
-              name={community.name}
-              username={community.username}
-              imgUrl={community.image}
-              personType="Community"
-            />
-          ))}
+          <div role="presentation">
+            <Breadcrumbs aria-label="breadcrumb">
+              <div className="inline flex-col">
+               <button className="bg-indigo-400 rounded-2xl w-10 text-center px-3 py-1 mx-1 my-1 font-medium text-black text-xs h-6">All</button>
+               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-black text-xs h-6">Computer Science</button>
+               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-black text-xs h-6">Information Technology</button>
+               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-black text-xs h-6 mt-2">Artifical Intelligence</button>
+              </div>
+            </Breadcrumbs>
+          </div>
         </div>
       </div>
 

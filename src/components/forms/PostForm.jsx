@@ -205,7 +205,7 @@ export default function PostForm() {
                 <select
                  // value={value}
                   //onChange={(e) => onChange(e.target.value)}
-                  className="w-full text-gray-500 bg-dark-3 py-3 pl-1 rounded-xl"
+                  className="w-full text-gray-400 bg-dark-3 py-3 pl-1 rounded-xl"
                 >
                   <option disabled selected>Choose a Category</option>
                   {options.map((option) => (
