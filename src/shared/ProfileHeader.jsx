@@ -29,6 +29,7 @@ function ProfileHeader() {
   const [newData, setNewData] = useState({
     name: "",
     contact: "",
+    userdesc:""
   });
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -131,6 +132,19 @@ function ProfileHeader() {
             value={newData.contact}
             onChange={(e) =>
               setNewData({ ...newData, contact: e.target.value })
+            }
+          />
+          <Input
+            placeholder="Bio"
+            sx={{
+              color: "white",
+              borderBottom: "#6875F5",
+              width: "100%",
+              mt: 3,
+            }}
+            value={newData.userdesc}
+            onChange={(e) =>
+              setNewData({ ...newData, userdesc: e.target.value })
             }
           />
           <Button sx={{ color: "#6875F5", mt: 4 }} onClick={handleUpdate}>

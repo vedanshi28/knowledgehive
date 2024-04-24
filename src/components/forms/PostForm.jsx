@@ -8,6 +8,10 @@ import fileupload from "../../assets/icons/file-upload.svg";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { AppContext } from "../../context/AppContext";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+
+
 
 export default function PostForm() {
   const navigate = useNavigate();
@@ -17,6 +21,7 @@ export default function PostForm() {
   const [formData, setFormData] = useState({
     postTitle: "",
     postDesc: "",
+    //postCategory: ""
   });
 
   const handleSubmit = async (e) => {
@@ -194,6 +199,23 @@ export default function PostForm() {
               </div>
             </div> */}
 
+            <div className="sm:col-span-8">
+              <label className="shad-form_label">Category</label>
+              <div className="mt-2">
+                <select
+                 // value={value}
+                  //onChange={(e) => onChange(e.target.value)}
+                  className="w-full text-gray-500 bg-dark-3 py-3 pl-1 rounded-xl"
+                >
+                  <option disabled selected>Choose a Category</option>
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -217,3 +239,11 @@ export default function PostForm() {
     </form>
   );
 }
+
+const options = [
+  [ "Web Development" ],
+  [  "Game Development" ],
+  [  "Android Development" ],
+  [ "Java Development" ],
+  [  "Others" ],
+];

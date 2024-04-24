@@ -11,12 +11,7 @@ const tabs = [
     index: "1",
     label: "Posts",
     url: "/posts",
-  },
-  {
-    index: "2",
-    label: "Replies",
-    url: "/replies",
-  },
+  }
 ];
 
 function Profile() {
