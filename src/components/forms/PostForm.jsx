@@ -241,9 +241,8 @@ export default function PostForm() {
 }
 
 const options = [
-  [ "Web Development" ],
-  [  "Game Development" ],
-  [  "Android Development" ],
-  [ "Java Development" ],
-  [  "Others" ],
+  [ "All" ],
+  [  "Computer Science" ],
+  [  "Information Technology" ],
+  [ "Artifical Intelligence" ]
 ];
