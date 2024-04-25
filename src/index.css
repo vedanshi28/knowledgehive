@@ -414,7 +414,25 @@
     margin: 0.3rem;
   }
 }
-  
+
+.rounded-tag-dropdown {
+  /* Styles for the dropdown container */
+  background-color: black;
+}
+
+.rounded-tag {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px; /* Adjust radius as needed */
+  background-color: #020202;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.rounded-tag.selected {
+  background-color: #1d1d1d; /* Optional styling for selected tags */
+  border-radius: 20px;
+}
  
   
 }

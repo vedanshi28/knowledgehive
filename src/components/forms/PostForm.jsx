@@ -11,8 +11,6 @@ import { AppContext } from "../../context/AppContext";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-
-
 export default function PostForm() {
   const navigate = useNavigate();
   const { user } = useContext(AppContext);
@@ -23,6 +21,24 @@ export default function PostForm() {
     postDesc: "",
     //postCategory: ""
   });
+
+  const [selectedTags, setSelectedTags] = useState([]);
+  const options = [
+    { value: "All", label: "All" },
+    { value: "Computer Science", label: "Computer Science" },
+    { value: "Information Technology", label: "Information Technology" },
+    { value: "Artifical Intelligence", label: "Artifical Intelligence" },
+  ];
+
+  const handleTagClick = (option) => {
+    setSelectedTags([...selectedTags, option.value]); // Add selected tag to state
+  };
+
+  const removeTag = (index) => {
+    const newTags = [...selectedTags]; // Create a copy of the tags array
+    newTags.splice(index, 1); // Remove the tag at the given index
+    setSelectedTags(newTags);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -202,6 +218,35 @@ export default function PostForm() {
             <div className="sm:col-span-8">
               <label className="shad-form_label">Category</label>
               <div className="mt-2">
+                <div className="rounded-tag-dropdown">
+                  <p>Choose a category</p>
+                {/*   {isOpen && (*/}
+                    <ul>
+                      {options.map((option) => (
+                        <li
+                          key={option.value}
+                          className="rounded-tag"
+                          onClick={() => handleTagClick(option)}
+                        >
+                          {option.label}
+                        </li>
+                      ))}
+                    </ul>
+                {/*   )}*/}
+                  <div className="selected-tags">
+                    {/* Display selected tags with rounded styling */}
+                    {selectedTags.map((tag,index) => (
+                      <>
+                      <span key={tag} className="rounded-tag selected">
+                        {tag}
+                        <button onClick={() => removeTag(index)} className="ml-2">x</button>
+                      </span>
+                      
+                      </>
+                    ))}
+                  </div>
+                </div>
+                {/* 
                 <select
                  // value={value}
                   //onChange={(e) => onChange(e.target.value)}
@@ -214,6 +259,7 @@ export default function PostForm() {
                     </option>
                   ))}
                 </select>
+                */}
               </div>
             </div>
           </div>
@@ -241,8 +287,8 @@ export default function PostForm() {
 }
 
 const options = [
-  [ "All" ],
-  [  "Computer Science" ],
-  [  "Information Technology" ],
-  [ "Artifical Intelligence" ]
+  ["All"],
+  ["Computer Science"],
+  ["Information Technology"],
+  ["Artifical Intelligence"],
 ];
