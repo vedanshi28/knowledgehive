@@ -224,7 +224,7 @@ export default function PostForm() {
                   <p>Choose a category</p>
 
                   <ul>
-                    {options.map((option) => (
+                    {options?.map((option) => (
                       <li
                         key={option.value}
                         className="rounded-tag"
@@ -237,7 +237,7 @@ export default function PostForm() {
 
                   <div>
                     <>
-                      {selectedTags.map((tag, index) => (
+                      {selectedTags?.map((tag, index) => (
                         <>
                           <span
                             key={tag}

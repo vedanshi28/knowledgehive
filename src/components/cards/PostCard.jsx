@@ -40,22 +40,6 @@ function PostCard({ id, post }) {
     postTitle: post.postTitle,
     postDesc: post.postDesc,
   });
-  //const [selectedCategory, setSelectedCategory] = useState('all');
-
-  //useEffect(() => {
-  //  const fetchPosts = async () => {
-  //    const response = await fetch('/api/posts'); // Replace with your API endpoint
-  //    const fetchedPosts = await response.json();
-  //    setPosts(fetchedPosts);
-  //  };
-
-   // fetchPosts();
-  //}, []);
-
-  //const handleCategoryChange = (category) => {
-  //  setSelectedCategory(category);
-  //};
-
 
   const editPost = async () => {
     try {
