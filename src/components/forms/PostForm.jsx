@@ -18,10 +18,10 @@ export default function PostForm() {
   const [formData, setFormData] = useState({
     postTitle: "",
     postDesc: "",
-    //category: "",
+    category: "",
   });
 
-  //const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const options = [
     { value: "All", label: "All", color: "black" },
     { value: "Computer Science", label: "Computer Science" },
@@ -29,16 +29,17 @@ export default function PostForm() {
     { value: "Artifical Intelligence", label: "Artifical Intelligence" },
   ];
 
-  /* const handleTagClick = (option) => {
-    setSelectedTags([...selectedTags, option.value]); // Add selected tag to state
+  const handleTagClick = (option) => {
+    setSelectedTags([...selectedTags, option.value]);
   };
 
   const removeTag = (index) => {
-    const newTags = [...selectedTags]; // Create a copy of the tags array
-    newTags.splice(index, 1); // Remove the tag at the given index
-   setSelectedTags(newTags);
+    const newTags = [...selectedTags];
+    newTags.splice(index, 1);
+    setSelectedTags(newTags);
   };
-*/
+  //console.log(selectedTags)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
@@ -54,7 +55,7 @@ export default function PostForm() {
           username: user.username,
           postTitle: formData.postTitle,
           postDesc: formData.postDesc,
-          //category: formData.category,
+          category: selectedTags,
         }),
       });
 
@@ -62,7 +63,7 @@ export default function PostForm() {
 
       if (response.ok) {
         const json = await response.json();
-        //console.log(json);
+        console.log(json);
         if (json.success) {
           toast.success("Post Added Successfully!");
         } else {
@@ -78,7 +79,7 @@ export default function PostForm() {
         postTitle: "",
         postDesc: "",
         //postImg: "",
-        //category: "",
+        category: "",
       });
       setSelectedFile(null);
     }
@@ -89,14 +90,14 @@ export default function PostForm() {
       postImg: "",
       postTitle: "",
       postDesc: "",
-      //category: "",
+      category: "",
     });
     setSelectedFile(null);
   };
 
-  //const handleChange=(e)=>{
-  //  setSelectedTags(e.value);
-  //}
+  const handleChange = (e) => {
+    setSelectedTags(e.value);
+  };
   const changeHandler = (event) => {
     const { name, value } = event.target;
 
@@ -223,94 +224,42 @@ export default function PostForm() {
               <div className="mt-2">
                 <div className="rounded-tag-dropdown">
                   <p>Choose a category</p>
-                  {/*   {isOpen && (*/}
-                  {/* 
-                    <ul>
-                      {options.map((option) => (
-                        <li
-                          key={option.value}
-                          className="rounded-tag"
-                          onClick={() => handleTagClick(option)}
-                        >
-                          {option.label}
-                        </li>
-                      ))}
-                    </ul>
-                    */}
-                  {/*   )}*/}
+
+                  <ul>
+                    {options.map((option) => (
+                      <li
+                        key={option.value}
+                        className="rounded-tag"
+                        onClick={() => handleTagClick(option)}
+                      >
+                        {option.label}
+                      </li>
+                    ))}
+                  </ul>
 
                   <div>
-
                     <>
-                      <Select
-                        options={options}
-                        labelField="label"
-                        valueField="value"
-                        id='category'
-                        name="category"
-                        //value={formData.category}
-                        //onChange={changeHandler}
-                        multi
-                        color="bg-dark-3"
-                        className="bg-dark-3"
-                        placeholder="Select..."
-                        styles={{
-                          option: (provided, state) => ({
-                            ...provided,
-                            backgroundColor: state.isSelected ? '#eee' : 'black',
-                            color: 'black',
-                            ':hover': { backgroundColor: 'black' },
-                          }),
-                        }}
-                      />
-                      {/* 
-                      {selectedTags.map((tag,index) => (
-                      <>
-                      <span key={tag} className="rounded-tag selected">
-                        {tag}
-                        <button onClick={() => removeTag(index)} className="ml-2">x</button>
-                      </span>
-                      </>
-                    ))}
-                      */}
+                      {selectedTags.map((tag, index) => (
+                        <>
+                          <span
+                            key={tag}
+                            className="rounded-tag selected"
+                            onChange={handleChange}
+                            value={selectedTags}
+                          >
+                            {tag}
+                            <button
+                              onClick={() => removeTag(index)}
+                              className="ml-2"
+                            >
+                              x
+                            </button>
+                          </span>
+                        </>
+                      ))}
                     </>
-
-                    {/* <Select
-                      options={options}
-                      sx={{ width: "690px", backgroundColor:"#121212"}}
-                      isMulti
-                      placeholder="Choose a Category"
-                      defaultValue={selectedTags}
-                      onChange={changeHandler}
-                      styles={{
-                        placeholder:(baseStyles,state)=>({
-                          ...baseStyles,
-                          color:"gray"
-                        }),
-                        container: (provided) => ({
-                          ...provided,
-                          backgroundColor: '#121212',
-                        }),
-                      }}
-                    />
-                     */}
                   </div>
                 </div>
-
-                {/* 
-                <select
-                 // value={value}
-                  //onChange={(e) => onChange(e.target.value)}
-                  className="w-full text-gray-400 bg-dark-3 py-3 pl-1 rounded-xl"
-                >
-                  <option disabled selected>Choose a Category</option>
-                  {options.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                */}
               </div>
             </div>
           </div>
