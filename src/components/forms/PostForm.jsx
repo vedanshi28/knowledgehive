@@ -8,11 +8,10 @@ import fileupload from "../../assets/icons/file-upload.svg";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { AppContext } from "../../context/AppContext";
-import Select from "react-dropdown-select";
 
 export default function PostForm() {
   const navigate = useNavigate();
-  const { user } = useContext(AppContext);
+  const { user,selectedTags, setSelectedTags } = useContext(AppContext);
   const imageRef = useRef(null);
   const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
   const [formData, setFormData] = useState({
@@ -21,7 +20,6 @@ export default function PostForm() {
     category: "",
   });
 
-  const [selectedTags, setSelectedTags] = useState([]);
   const options = [
     { value: "All", label: "All", color: "black" },
     { value: "Computer Science", label: "Computer Science" },
@@ -42,7 +40,7 @@ export default function PostForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    //console.log(formData);
 
     try {
       const response = await fetch(`http://localhost:5000/api/post/add`, {
@@ -59,11 +57,11 @@ export default function PostForm() {
         }),
       });
 
-      console.log(response);
+      //console.log(response);
 
       if (response.ok) {
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         if (json.success) {
           toast.success("Post Added Successfully!");
         } else {
