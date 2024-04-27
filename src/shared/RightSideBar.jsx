@@ -21,10 +21,10 @@ function RightSideBar() {
           <div role="presentation">
             <Breadcrumbs aria-label="breadcrumb">
               <div className="inline flex-col">
-               <button className="bg-indigo-400 rounded-2xl w-10 text-center px-3 py-1 mx-1 my-1 font-medium text-black text-xs h-6">All</button>
-               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-black text-xs h-6">Computer Science</button>
-               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-black text-xs h-6">Information Technology</button>
-               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-black text-xs h-6 mt-2">Artifical Intelligence</button>
+               <button className="bg-indigo-400 rounded-2xl w-10 text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6">All</button>
+               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6">Computer Science</button>
+               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6">Information Technology</button>
+               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6 mt-2">Artifical Intelligence</button>
               </div>
             </Breadcrumbs>
           </div>
