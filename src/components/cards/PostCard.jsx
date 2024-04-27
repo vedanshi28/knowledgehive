@@ -25,7 +25,7 @@ const style = {
 function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
   const [liked, setLiked] = useState(false);
-  const { user, fetchPosts, posts, setUser, setPosts } = useContext(AppContext);
+  const { user, fetchPosts, posts, setUser, setPosts, filteredPosts } = useContext(AppContext);
   const [open, setOpen] = useState(false); //Comment modal
   const [reply, setReply] = useState("");
   const [isReplying, setIsReplying] = useState(false);
@@ -40,6 +40,21 @@ function PostCard({ id, post }) {
     postTitle: post.postTitle,
     postDesc: post.postDesc,
   });
+  //const [selectedCategory, setSelectedCategory] = useState('all');
+
+  //useEffect(() => {
+  //  const fetchPosts = async () => {
+  //    const response = await fetch('/api/posts'); // Replace with your API endpoint
+  //    const fetchedPosts = await response.json();
+  //    setPosts(fetchedPosts);
+  //  };
+
+   // fetchPosts();
+  //}, []);
+
+  //const handleCategoryChange = (category) => {
+  //  setSelectedCategory(category);
+  //};
 
 
   const editPost = async () => {

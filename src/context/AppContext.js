@@ -15,6 +15,7 @@ export default function AppContextProvider({ children }) {
   const [profile, setProfile] = useState([]);    //fetch user profile
   const [otherUsers , setOtherUsers] = useState([]);  //fetch other user !current
   const [userPosts , setUserPosts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -24,8 +25,6 @@ export default function AppContextProvider({ children }) {
     }
   }, [localStorage.getItem("user")]);
 
-
-  
 
   const fetchPosts = async () => {           //Fetch posts
     console.log("Fetching Posts...");
@@ -43,7 +42,26 @@ export default function AppContextProvider({ children }) {
     }
   };
 
+  const fetchCategoryPosts = async () => {           //Fetch category posts
+    setLoading(true);
+    try {
+      const res = await axios.get('http://localhost:5000/api/category/fetch');
+      const data = res.data;
+      selectedCategory(data.data);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error occurred during posts fetch call!");
+      console.error(error);
+      setLoading(false);
+    }
+  };
 
+  const filteredPosts = selectedCategory
+    ? posts.filter((post) => post.category === selectedCategory)
+    : posts;
+
+  console.log(filteredPosts)
+  
   const value = {
     loading,
     setLoading,
@@ -61,7 +79,11 @@ export default function AppContextProvider({ children }) {
     otherUsers,
     setOtherUsers,
     userPosts,
-    setUserPosts
+    setUserPosts,
+    selectedCategory, 
+    setSelectedCategory,
+    fetchCategoryPosts,
+    filteredPosts
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

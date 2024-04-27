@@ -4,7 +4,7 @@ import PostCard from "../../components/cards/PostCard";
 import { AppContext } from "../../context/AppContext";
 
 function Home() {
-  const { posts, fetchPosts, loading } = useContext(AppContext);
+  const { posts, fetchPosts, loading, filteredPosts } = useContext(AppContext);
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -22,7 +22,7 @@ function Home() {
             <p>Loading posts...</p>
           ) : (
             <>
-              {posts?.map((post) => (
+              {filteredPosts?.map((post) => (
                 <PostCard key={post._id} post={post}/>
               ))}
             </>

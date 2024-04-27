@@ -90,8 +90,7 @@ function ProfileHeader() {
         </div>
 
         <p className="mt-6 max-w-lg text-base-regular text-light-2">
-          I'm Vedanshi Mishra pursuing Btech in Information Technology from
-          IIST, Indore 🧑‍💻🎓
+          {user.userdesc}
         </p>
       </div>
 

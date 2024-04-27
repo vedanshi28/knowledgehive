@@ -8,8 +8,7 @@ import fileupload from "../../assets/icons/file-upload.svg";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { AppContext } from "../../context/AppContext";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import Select from "react-dropdown-select";
 
 export default function PostForm() {
   const navigate = useNavigate();
@@ -19,32 +18,30 @@ export default function PostForm() {
   const [formData, setFormData] = useState({
     postTitle: "",
     postDesc: "",
-    //postCategory: ""
+    //category: "",
   });
 
-  const [selectedTags, setSelectedTags] = useState([]);
+  //const [selectedTags, setSelectedTags] = useState([]);
   const options = [
-    { value: "All", label: "All" },
+    { value: "All", label: "All", color: "black" },
     { value: "Computer Science", label: "Computer Science" },
     { value: "Information Technology", label: "Information Technology" },
     { value: "Artifical Intelligence", label: "Artifical Intelligence" },
   ];
 
-  const handleTagClick = (option) => {
+  /* const handleTagClick = (option) => {
     setSelectedTags([...selectedTags, option.value]); // Add selected tag to state
   };
 
   const removeTag = (index) => {
     const newTags = [...selectedTags]; // Create a copy of the tags array
     newTags.splice(index, 1); // Remove the tag at the given index
-    setSelectedTags(newTags);
+   setSelectedTags(newTags);
   };
-
+*/
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     console.log(formData);
-    // console.log(user.email);
 
     try {
       const response = await fetch(`http://localhost:5000/api/post/add`, {
@@ -57,6 +54,7 @@ export default function PostForm() {
           username: user.username,
           postTitle: formData.postTitle,
           postDesc: formData.postDesc,
+          //category: formData.category,
         }),
       });
 
@@ -64,7 +62,7 @@ export default function PostForm() {
 
       if (response.ok) {
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         if (json.success) {
           toast.success("Post Added Successfully!");
         } else {
@@ -79,7 +77,8 @@ export default function PostForm() {
       setFormData({
         postTitle: "",
         postDesc: "",
-        postImg: "",
+        //postImg: "",
+        //category: "",
       });
       setSelectedFile(null);
     }
@@ -90,10 +89,14 @@ export default function PostForm() {
       postImg: "",
       postTitle: "",
       postDesc: "",
+      //category: "",
     });
     setSelectedFile(null);
   };
 
+  //const handleChange=(e)=>{
+  //  setSelectedTags(e.value);
+  //}
   const changeHandler = (event) => {
     const { name, value } = event.target;
 
@@ -220,7 +223,8 @@ export default function PostForm() {
               <div className="mt-2">
                 <div className="rounded-tag-dropdown">
                   <p>Choose a category</p>
-                {/*   {isOpen && (*/}
+                  {/*   {isOpen && (*/}
+                  {/* 
                     <ul>
                       {options.map((option) => (
                         <li
@@ -232,20 +236,67 @@ export default function PostForm() {
                         </li>
                       ))}
                     </ul>
-                {/*   )}*/}
-                  <div className="selected-tags">
-                    {/* Display selected tags with rounded styling */}
-                    {selectedTags.map((tag,index) => (
+                    */}
+                  {/*   )}*/}
+
+                  <div>
+
+                    <>
+                      <Select
+                        options={options}
+                        labelField="label"
+                        valueField="value"
+                        id='category'
+                        name="category"
+                        //value={formData.category}
+                        //onChange={changeHandler}
+                        multi
+                        color="bg-dark-3"
+                        className="bg-dark-3"
+                        placeholder="Select..."
+                        styles={{
+                          option: (provided, state) => ({
+                            ...provided,
+                            backgroundColor: state.isSelected ? '#eee' : 'black',
+                            color: 'black',
+                            ':hover': { backgroundColor: 'black' },
+                          }),
+                        }}
+                      />
+                      {/* 
+                      {selectedTags.map((tag,index) => (
                       <>
                       <span key={tag} className="rounded-tag selected">
                         {tag}
                         <button onClick={() => removeTag(index)} className="ml-2">x</button>
                       </span>
-                      
                       </>
                     ))}
+                      */}
+                    </>
+
+                    {/* <Select
+                      options={options}
+                      sx={{ width: "690px", backgroundColor:"#121212"}}
+                      isMulti
+                      placeholder="Choose a Category"
+                      defaultValue={selectedTags}
+                      onChange={changeHandler}
+                      styles={{
+                        placeholder:(baseStyles,state)=>({
+                          ...baseStyles,
+                          color:"gray"
+                        }),
+                        container: (provided) => ({
+                          ...provided,
+                          backgroundColor: '#121212',
+                        }),
+                      }}
+                    />
+                     */}
                   </div>
                 </div>
+
                 {/* 
                 <select
                  // value={value}
@@ -285,10 +336,3 @@ export default function PostForm() {
     </form>
   );
 }
-
-const options = [
-  ["All"],
-  ["Computer Science"],
-  ["Information Technology"],
-  ["Artifical Intelligence"],
-];

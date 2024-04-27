@@ -280,6 +280,10 @@
     @apply h-40  bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 !important;
   }
 
+  .shad-dropdown{
+    @apply  bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3
+  }
+
   /* Button */
   .shad-button_primary {
     @apply bg-primary-500 hover:bg-primary-500 text-light-1 flex gap-2 !important;
