@@ -4,8 +4,14 @@ import PostCard from "../../components/cards/PostCard";
 import { AppContext } from "../../context/AppContext";
 
 function Home() {
-  const { posts, fetchPosts, loading, selectedCategory, fetchCategoryPosts, category} =
-    useContext(AppContext);
+  const {
+    posts,
+    fetchPosts,
+    loading,
+    selectedCategory,
+    fetchCategoryPosts,
+    category,
+  } = useContext(AppContext);
   const [filteredPosts, setFilteredPosts] = useState([]);
   useEffect(() => {
     fetchPosts();
@@ -13,22 +19,21 @@ function Home() {
   useEffect(() => {
     fetchCategoryPosts();
   }, []);
-  console.log(selectedCategory)
-  console.log(category)
+  //console.log(selectedCategory)
+  //console.log(category)
 
-
-  const filterPosts = (selectedCategory ,category) => {
+  const filterPosts = (selectedCategory, category) => {
     if (!category) {
       return posts;
     }
-    return selectedCategory.filter((post) =>  post.category === category);
+    return selectedCategory.filter((post) => post.category === category);
   };
 
   useEffect(() => {
     const filtered = filterPosts(selectedCategory, category);
-    console.log(filtered)
+    //console.log(filtered)
     setFilteredPosts(filtered);
-  }, [selectedCategory,  category]);
+  }, [selectedCategory, category]);
 
   if (!posts) return <p>No posts yet</p>;
   return (
@@ -54,16 +59,16 @@ function Home() {
             <p>Loading posts...</p>
           ) : (
             <>
-              {filteredPosts?.length > 0 ? (
+              {!filteredPosts ? (
                 <ul>
-                  {filteredPosts?.map((post) => (
+                  {posts?.map((post) => (
                     <PostCard key={post._id} post={post} />
                   ))}
                 </ul>
               ) : (
                 <>
-                  {posts?.map((post) => (
-                    <PostCard key={post._id} post={post} />
+                  {filteredPosts?.map((post) => (
+                    <PostCard key={post.id} post={post} />
                   ))}
                 </>
               )}

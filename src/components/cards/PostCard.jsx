@@ -7,9 +7,7 @@ import { AppContext } from "../../context/AppContext";
 import toast, { Toaster } from "react-hot-toast";
 import Comment from "../../root/pages/Comment";
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import Popover from "@mui/material/Popover";
 
 const style = {
   position: "absolute",
@@ -261,13 +259,13 @@ function PostCard({ id, post }) {
                   className="text-subtle-medium text-gray-400 cursor-pointer"
                   onClick={handleShowComment}
                 >
-                  {post.comments.length} repl
-                  {post.comments.length > 1 ? "ies" : "y"}
+                  {post.comments?.length} repl
+                  {post.comments?.length > 1 ? "ies" : "y"}
                   {showComment && (
                     <>
                       <Comment
                         comments={post.comments}
-                        commentLength={post.comments.length}
+                        commentLength={post.comments?.length}
                       />
                     </>
                   )}
