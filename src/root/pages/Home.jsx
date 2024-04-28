@@ -22,13 +22,26 @@ function Home() {
   }, []);
   //console.log(posts)
   //console.log(category)
+  const filterPosts=(posts, category)=> {
+    if (!category) {
+      return posts; // Return all posts if no category is selected
+    }
+    return posts.filter((post) => post.category === category);
+  }
 
+  useEffect(() => {
+    const newFilteredPosts = filterPosts(posts, category);
+    console.log(newFilteredPosts)
+    setFilteredPosts(newFilteredPosts);
+  }, [category]);
+  
 
+/*
   const filterPosts = (posts, category) => {
     if (!category) {
       return posts;
     }
-    return posts.filter((post) => post.category === category);
+    return posts.category?.filter((post) => post.category === category);
   };
 
   useEffect(() => {
@@ -37,7 +50,7 @@ function Home() {
     setFilteredPosts(filtered);
   }, [posts, category]);
   //console.log(filteredPosts)
-
+*/
   if (!posts) return <p>No posts yet</p>;
   return (
     <>
