@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import home from "../../assets/icons/home.svg";
 import PostCard from "../../components/cards/PostCard";
 import { AppContext } from "../../context/AppContext";
+import CategoryCard from "../../components/cards/CategoryCard"
 
 function Home() {
   const {
@@ -34,6 +35,7 @@ function Home() {
     //console.log(filtered)
     setFilteredPosts(filtered);
   }, [selectedCategory, category]);
+  console.log(filteredPosts)
 
   if (!posts) return <p>No posts yet</p>;
   return (
@@ -68,7 +70,7 @@ function Home() {
               ) : (
                 <>
                   {filteredPosts?.map((post) => (
-                    <PostCard key={post.id} post={post} />
+                    <CategoryCard key={post._id} post={post} />
                   ))}
                 </>
               )}
