@@ -31,7 +31,7 @@ function Home() {
 
   useEffect(() => {
     const newFilteredPosts = filterPosts(posts, category);
-    console.log(newFilteredPosts)
+    //console.log(newFilteredPosts)
     setFilteredPosts(newFilteredPosts);
   }, [category]);
   
@@ -75,7 +75,7 @@ function Home() {
             <p>Loading posts...</p>
           ) : (
             <>
-              {!filteredPosts ? (
+              {filteredPosts?.length > 0 ? (
                 <ul>
                   {posts?.map((post) => (
                     <PostCard key={post._id} post={post} />
@@ -84,7 +84,7 @@ function Home() {
               ) : (
                 <>
                   {filteredPosts?.map((post) => (
-                    <CategoryCard key={post._id} post={post} />
+                    <PostCard key={post._id} post={post} />
                   ))}
                 </>
               )}
