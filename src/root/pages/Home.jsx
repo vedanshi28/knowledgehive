@@ -20,22 +20,23 @@ function Home() {
   useEffect(() => {
     fetchCategoryPosts();
   }, []);
-  //console.log(selectedCategory)
+  //console.log(posts)
   //console.log(category)
 
-  const filterPosts = (selectedCategory, category) => {
+
+  const filterPosts = (posts, category) => {
     if (!category) {
       return posts;
     }
-    return selectedCategory.filter((post) => post.category === category);
+    return posts.filter((post) => post.category === category);
   };
 
   useEffect(() => {
-    const filtered = filterPosts(selectedCategory, category);
-    //console.log(filtered)
+    const filtered = filterPosts(posts, category);
+    console.log(filtered)
     setFilteredPosts(filtered);
-  }, [selectedCategory, category]);
-  console.log(filteredPosts)
+  }, [posts, category]);
+  //console.log(filteredPosts)
 
   if (!posts) return <p>No posts yet</p>;
   return (

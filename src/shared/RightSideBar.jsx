@@ -32,10 +32,10 @@ const handleClick=(category)=>{
           <div role="presentation">
             <Breadcrumbs aria-label="breadcrumb">
               <div className="inline flex-col">
-               <button className="bg-indigo-400 rounded-2xl w-10 text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"  onClick={()=>handleClick('All')} >All</button>
-               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"  onClick={()=>handleClick('Computer Science')}>Computer Science</button>
-               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"    onClick={()=>handleClick('Information Technology')}>Information Technology</button>
-               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6 mt-2"    onClick={()=>handleClick('Artifical Intelligence')}>Artifical Intelligence</button>
+               <button className="bg-indigo-400 rounded-2xl w-10 text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"  onClick={()=>handleClick('all')} >All</button>
+               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"  onClick={()=>handleClick('cse')}>Computer Science</button>
+               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"    onClick={()=>handleClick('it')}>Information Technology</button>
+               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6 mt-2"    onClick={()=>handleClick('ai')}>Artifical Intelligence</button>
               </div>
             </Breadcrumbs>
           </div>

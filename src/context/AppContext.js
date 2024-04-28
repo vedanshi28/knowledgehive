@@ -15,7 +15,7 @@ export default function AppContextProvider({ children }) {
   const [profile, setProfile] = useState([]);    //fetch user profile
   const [otherUsers , setOtherUsers] = useState([]);  //fetch other user !current
   const [userPosts , setUserPosts] = useState([]);
-  const [category, setCategory] = useState('All');
+  const [category, setCategory] = useState('all');
   const [selectedCategory, setSelectedCategory] = useState([]);
 
   useEffect(() => {
