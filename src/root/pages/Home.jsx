@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import home from "../../assets/icons/home.svg";
 import PostCard from "../../components/cards/PostCard";
 import { AppContext } from "../../context/AppContext";
-import CategoryCard from "../../components/cards/CategoryCard";
 
 function Home() {
   const { posts, fetchPosts, loading, selectedCategory, fetchCategoryPosts, category} =
