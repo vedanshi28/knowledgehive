@@ -12,7 +12,7 @@ import Profile from "./root/pages/Profile";
 import EditPost from "./root/pages/EditPost";
 import LandingPageLayout from "./landing-page/components/LandingPageLayout";
 import UserPage from "./root/pages/UserPage";
-
+import CategoryCard from "./components/cards/CategoryCard";
 
 const App = () => {
   return (
@@ -37,6 +37,7 @@ const App = () => {
           <Route path='/update-post/:id' element={<EditPost/>} />
           <Route path='/profile/:username' element={<Profile />} />
           <Route path='/userprofile/:username' element={<UserPage />} />
+          <Route path='/home/All' element={<Home />} />
         </Route>
 
       </Routes>

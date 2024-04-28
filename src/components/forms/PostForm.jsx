@@ -11,7 +11,7 @@ import { AppContext } from "../../context/AppContext";
 
 export default function PostForm() {
   const navigate = useNavigate();
-  const { user,selectedTags, setSelectedTags } = useContext(AppContext);
+  const { user,selectedCategory, setSelectedCategory } = useContext(AppContext);
   const imageRef = useRef(null);
   const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
   const [formData, setFormData] = useState({
@@ -21,22 +21,22 @@ export default function PostForm() {
   });
 
   const options = [
-    { value: "All", label: "All", color: "black" },
-    { value: "Computer Science", label: "Computer Science" },
-    { value: "Information Technology", label: "Information Technology" },
-    { value: "Artifical Intelligence", label: "Artifical Intelligence" },
+    { id:'1', value: "All", label: "All"},
+    { id:'2', value: "Computer Science", label: "Computer Science" },
+    { id:'3', value: "Information Technology", label: "Information Technology" },
+    { id:'4', value: "Artifical Intelligence", label: "Artifical Intelligence" },
   ];
 
   const handleTagClick = (option) => {
-    setSelectedTags([...selectedTags, option.value]);
+    setSelectedCategory([...selectedCategory, option.value]);
   };
 
   const removeTag = (index) => {
-    const newTags = [...selectedTags];
+    const newTags = [...selectedCategory];
     newTags.splice(index, 1);
-    setSelectedTags(newTags);
+    setSelectedCategory(newTags);
   };
-  //console.log(selectedTags)
+  //console.log(selectedCategory)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,7 +53,7 @@ export default function PostForm() {
           username: user.username,
           postTitle: formData.postTitle,
           postDesc: formData.postDesc,
-          category: selectedTags,
+          category: selectedCategory,
         }),
       });
 
@@ -94,7 +94,7 @@ export default function PostForm() {
   };
 
   const handleChange = (e) => {
-    setSelectedTags(e.value);
+    setSelectedCategory(e.value);
   };
   const changeHandler = (event) => {
     const { name, value } = event.target;
@@ -237,13 +237,13 @@ export default function PostForm() {
 
                   <div>
                     <>
-                      {selectedTags?.map((tag, index) => (
+                      {selectedCategory?.map((tag, index) => (
                         <>
                           <span
                             key={tag}
                             className="rounded-tag selected"
                             onChange={handleChange}
-                            value={selectedTags}
+                            value={selectedCategory}
                           >
                             {tag}
                             <button

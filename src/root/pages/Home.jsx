@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import home from "../../assets/icons/home.svg";
 import PostCard from "../../components/cards/PostCard";
 import { AppContext } from "../../context/AppContext";
+import CategoryCard from "../../components/cards/CategoryCard";
 
 function Home() {
-  const { posts, fetchPosts, loading, selectedCategory, fetchCategoryPosts } =
+  const { posts, fetchPosts, loading, selectedCategory, fetchCategoryPosts, category} =
     useContext(AppContext);
   const [filteredPosts, setFilteredPosts] = useState([]);
   useEffect(() => {
@@ -14,17 +15,19 @@ function Home() {
     fetchCategoryPosts();
   }, []);
 
-  const filterPosts = (posts, selectedCategory) => {
-    if (!selectedCategory) {
+
+  const filterPosts = (selectedCategory ,category) => {
+    if (!category) {
       return posts;
     }
-    return posts.filter((post) => post.category === selectedCategory);
+    return selectedCategory.filter((post) =>  post.category === category);
   };
 
   useEffect(() => {
-    const filtered = filterPosts(posts, selectedCategory);
+    const filtered = filterPosts(selectedCategory, category);
+    console.log(filtered)
     setFilteredPosts(filtered);
-  }, [posts, selectedCategory]);
+  }, [selectedCategory,  category]);
 
   if (!posts) return <p>No posts yet</p>;
   return (
