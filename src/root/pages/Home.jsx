@@ -14,6 +14,8 @@ function Home() {
   useEffect(() => {
     fetchCategoryPosts();
   }, []);
+  console.log(selectedCategory)
+  console.log(category)
 
 
   const filterPosts = (selectedCategory ,category) => {
@@ -53,15 +55,15 @@ function Home() {
             <p>Loading posts...</p>
           ) : (
             <>
-              {filteredPosts.length > 0 ? (
+              {filteredPosts?.length > 0 ? (
                 <ul>
-                  {filteredPosts.map((post) => (
+                  {filteredPosts?.map((post) => (
                     <PostCard key={post._id} post={post} />
                   ))}
                 </ul>
               ) : (
                 <>
-                  {posts.map((post) => (
+                  {posts?.map((post) => (
                     <PostCard key={post._id} post={post} />
                   ))}
                 </>
