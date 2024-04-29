@@ -294,9 +294,6 @@ function PostCard({ id, post }) {
                 ) : null}
               </div>
             </div>
-            <p className="mt-2 text-sm text-gray-500">
-              {post.category}
-            </p>
           </div>
         </div>
       </div>

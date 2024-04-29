@@ -5,10 +5,8 @@ import Button from "@mui/material/Button";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
-import { useLocation } from "react-router-dom";
   
 function RightSideBar() {
- const navigate = useNavigate();
  const {category , setCategory} = useContext(AppContext);
 
 

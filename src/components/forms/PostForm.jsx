@@ -6,7 +6,6 @@ import { useState, useRef } from "react";
 import { Button } from "@mui/material";
 import fileupload from "../../assets/icons/file-upload.svg";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
 import { AppContext } from "../../context/AppContext";
 
 export default function PostForm() {
