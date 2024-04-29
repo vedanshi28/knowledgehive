@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useReducer } from "react";
 import { Link, Button, Modal, Typography, Box, Input } from "@mui/material";
 import unlikedicon from "../../assets/icons/heart-gray.svg";
 import likedicon from "../../assets/icons/heart-filled.svg";
@@ -57,16 +58,18 @@ function PostCard({ id, post }) {
       const data = await res.json();
       console.log(data);
       setEditPostData("");
+      fetchPosts();
       toast.success("Edited Post Successfully!");
     } catch (error) {
       console.log(error);
     }
   };
+  
   useEffect(() => {
     if (user.email === post.email) {
       setCanEdit(true);
     }
-  },[]);
+  },[posts,user]);
 
   const deletePost = async () => {
     // console.log("Deleting Post..")
