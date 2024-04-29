@@ -66,7 +66,7 @@ function PostCard({ id, post }) {
     if (user.email === post.email) {
       setCanEdit(true);
     }
-  });
+  },[]);
 
   const deletePost = async () => {
     // console.log("Deleting Post..")
@@ -182,6 +182,7 @@ function PostCard({ id, post }) {
       setIsReplying(false);
     }
   };
+ 
 
   const handleShowComment = () => {
     setShowComment(!showComment);

@@ -23,7 +23,6 @@ const style = {
 export default function Comment({ comments, commentLength }) {
   const [open, setOpen] = useState(true);
   const { loading,posts } = useContext(AppContext);
-  const timestamp=comments.date;
   
   const fiveComments = comments.sort((a, b) => b.timestamp - a.timestamp);
   const topFiveComments = fiveComments.slice(-5);

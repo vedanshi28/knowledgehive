@@ -79,6 +79,7 @@ export default function PostForm() {
         category: "",
       });
       setSelectedFile(null);
+      setSelectedCategory(null)
     }
   };
 
