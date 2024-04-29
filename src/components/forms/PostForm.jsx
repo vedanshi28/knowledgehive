@@ -21,10 +21,10 @@ export default function PostForm() {
   });
 
   const options = [
-    { id:'1', value: "all", label: "All"},
-    { id:'2', value: "cse", label: "Computer Science" },
-    { id:'3', value: "it", label: "Information Technology" },
-    { id:'4', value: "ai", label: "Artifical Intelligence" },
+    { id:'1', value: "all", label: "all"},
+    { id:'2', value: "cse", label: "cse" },
+    { id:'3', value: "it", label: "it" },
+    { id:'4', value: "ai", label: "ai" },
   ];
 
   const handleTagClick = (option) => {

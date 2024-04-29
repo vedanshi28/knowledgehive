@@ -14,7 +14,6 @@ function RightSideBar() {
 
 const handleClick=(category)=>{
   setCategory(category);
-  navigate('/home');
  }
  //console.log(category)
 
