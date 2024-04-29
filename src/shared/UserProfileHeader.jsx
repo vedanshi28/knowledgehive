@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import profile from "../assets/icons/profile-placeholder.svg";
-import edit from "../assets/icons/edit.svg";
-import { AppContext } from "../context/AppContext";
 
 function UserProfileHeader({ otherUsers }) {
-  console.log(otherUsers)
+  //console.log(otherUsers)
   return (
     <div className="flex flex-1">
       <div className="common-container">

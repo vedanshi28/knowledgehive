@@ -24,7 +24,7 @@ const style = {
 };
 
 function ProfileHeader() {
-  const { user } = useContext(AppContext);
+  const { user, otherUsers } = useContext(AppContext);
   const [open, setOpen] = React.useState(false);
   const [newData, setNewData] = useState({
     name: "",
@@ -57,6 +57,7 @@ function ProfileHeader() {
       console.log(error);
     }
   };
+
 
   return (
     <div className="flex flex-1">
