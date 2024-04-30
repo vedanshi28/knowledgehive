@@ -43,14 +43,6 @@ const LeftSideBar = () => {
           <h1 className="font-bold text-2xl">Knowledge Hive</h1>
         </Link>
 
-       {/* {loading  ? (
-          <div className="h-14">
-            <p>Loading profile</p>
-          </div>
-        ) : (
-          
-          )}
-        */}
            <div className="flex gap-3 items-center cursor-pointer" onClick={fetchProfile}>
             <img
               src={profile}

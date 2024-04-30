@@ -1,7 +1,7 @@
 import profile from "../assets/icons/profile-placeholder.svg";
 import { AppContext } from "../context/AppContext";
 import * as React from "react";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -24,12 +24,12 @@ const style = {
 };
 
 function ProfileHeader() {
-  const { user, otherUsers } = useContext(AppContext);
+  const { user, otherUsers, setUser } = useContext(AppContext);
   const [open, setOpen] = React.useState(false);
   const [newData, setNewData] = useState({
     name: "",
     contact: "",
-    userdesc:""
+    userdesc: "",
   });
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -52,12 +52,17 @@ function ProfileHeader() {
       const data = await res.json();
       console.log(data);
       setNewData("");
-      toast.success("Updated Changes Successfully!");
+      console.log(data.updatedUser);
+      console.log("response OK");
+      toast.success("Updatced Changes Successfully!");
+      setUser(data.updatedUser);
+      localStorage.setItem("user", JSON.stringify(data.updatedUser));
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {}, [user]);
 
   return (
     <div className="flex flex-1">
@@ -83,7 +88,12 @@ function ProfileHeader() {
             </div>
           </div>
           <div className="flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2 ">
-            <ModeEditIcon width={16} height={16} onClick={handleOpen} style={{ color: "#404063"}}/>
+            <ModeEditIcon
+              width={16}
+              height={16}
+              onClick={handleOpen}
+              style={{ color: "#404063" }}
+            />
             <button className="text-light-2 max-sm:hidden" onClick={handleOpen}>
               Edit
             </button>

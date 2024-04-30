@@ -172,18 +172,26 @@ function PostCard({ id, post }) {
           }),
         }
       );
+      
+      if(res.ok){
+        console.log("response OK");
+        toast.success("Comment posted successfully");
+        fetchPosts();
+      }
+
       //console.log(res);
       const data = await res.json();
       //console.log(data);
       setPosts({ ...posts, comments: [...posts.comments, data] });
-      toast.success("Comment posted successfully");
       setReply("");
       handleClose();
+      
     } catch (error) {
       console.log(error);
     } finally {
       setIsReplying(false);
     }
+  
   };
 
  
