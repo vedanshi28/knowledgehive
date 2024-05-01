@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import profile from "../assets/icons/profile-placeholder.svg";
+import { AppContext } from "../context/AppContext";
 
 function UserProfileHeader({ otherUsers }) {
   //console.log(otherUsers);
+  const { userProfile, getUser } = useContext(AppContext);
+
+  useEffect(() => {
+    getUser();
+  }, []);
+  console.log(userProfile);
+  console.log(otherUsers)
+
+  const desc = userProfile.filter(user => user.name === otherUsers.name).map(user => user.userdesc);
+
   return (
     <div className="flex flex-1">
       <div className="common-container">
@@ -26,12 +37,10 @@ function UserProfileHeader({ otherUsers }) {
               </p>
             </div>
           </div>
-          
         </div>
 
         <p className="mt-6 max-w-lg text-base-regular text-light-2">
-          I'm Vedanshi Mishra pursuing Btech in Information Technology from
-          IIST, Indore 🧑‍💻🎓
+          {desc}
         </p>
       </div>
     </div>

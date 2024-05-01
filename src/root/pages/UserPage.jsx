@@ -48,7 +48,7 @@ function UserPage() {
     if (response.ok) {
       const json = await response.json();
       setOtherUsers(json.data);
-       console.log(json.data);
+      // console.log(json.data);
 
       if (json.success) {
         console.log("success");
