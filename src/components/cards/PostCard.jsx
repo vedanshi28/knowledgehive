@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useReducer } from "react";
 import { Link, Button, Modal, Typography, Box, Input } from "@mui/material";
 import unlikedicon from "../../assets/icons/heart-gray.svg";
 import likedicon from "../../assets/icons/heart-filled.svg";
@@ -24,7 +23,8 @@ const style = {
 function PostCard({ id, post }) {
   const [canDelete, setCanDelete] = useState(false);
   const [liked, setLiked] = useState(false);
-  const { user, fetchPosts, posts, setUser, setPosts, filteredPosts } = useContext(AppContext);
+  const { user, fetchPosts, posts, setUser, setPosts, filteredPosts } =
+    useContext(AppContext);
   const [open, setOpen] = useState(false); //Comment modal
   const [reply, setReply] = useState("");
   const [isReplying, setIsReplying] = useState(false);
@@ -64,12 +64,12 @@ function PostCard({ id, post }) {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     if (user.email === post.email) {
       setCanEdit(true);
     }
-  },[posts,user]);
+  }, [posts, user]);
 
   const deletePost = async () => {
     // console.log("Deleting Post..")
@@ -172,8 +172,8 @@ function PostCard({ id, post }) {
           }),
         }
       );
-      
-      if(res.ok){
+
+      if (res.ok) {
         console.log("response OK");
         toast.success("Comment posted successfully");
         fetchPosts();
@@ -185,16 +185,12 @@ function PostCard({ id, post }) {
       setPosts({ ...posts, comments: [...posts.comments, data] });
       setReply("");
       handleClose();
-      
     } catch (error) {
       console.log(error);
     } finally {
       setIsReplying(false);
     }
-  
   };
-
- 
 
   const handleShowComment = () => {
     setShowComment(!showComment);

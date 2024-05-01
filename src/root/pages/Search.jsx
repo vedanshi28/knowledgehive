@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import seacrh from "../../assets/icons/search-gray.svg"
-import filter from "../../assets/icons/filter.svg"
+import { useState } from "react";
+import seacrh from "../../assets/icons/search-gray.svg";
+import filter from "../../assets/icons/filter.svg";
 import UserCard from "../../components/cards/UserCard";
 import { similarminds } from "../../constant";
 
-
 const Search = () => {
-  const { ref, inView } = useInView();
-
   const [searchValue, setSearchValue] = useState("");
 
   return (
@@ -16,12 +12,7 @@ const Search = () => {
       <div className="explore-inner_container">
         <h2 className="h3-bold md:h2-bold w-full">Search</h2>
         <div className="flex gap-1 px-4 w-full rounded-lg bg-dark-4">
-          <img
-            src={seacrh}
-            width={24}
-            height={24}
-            alt="search"
-          />
+          <img src={seacrh} width={24} height={24} alt="search" />
           <input
             type="text"
             placeholder="Search"
@@ -40,29 +31,22 @@ const Search = () => {
 
         <div className="flex-center gap-3 bg-dark-3 rounded-xl px-4 py-2 cursor-pointer">
           <p className="small-medium md:base-medium text-light-2">All</p>
-          <img
-            src={filter}
-            width={20}
-            height={20}
-            alt="filter"
-          />
+          <img src={filter} width={20} height={20} alt="filter" />
         </div>
       </div>
 
       <div className="mt-10 flex flex-col gap-20 w-full">
-      {similarminds.map((people) => (
-                <UserCard
-                  key={people.id}
-                  id={people.id}
-                  name={people.name}
-                  username={people.username}
-                  imgUrl={people.image}
-                  personType='User'
-                />
-              ))}
+        {similarminds.map((people) => (
+          <UserCard
+            key={people.id}
+            id={people.id}
+            name={people.name}
+            username={people.username}
+            imgUrl={people.image}
+            personType="User"
+          />
+        ))}
       </div>
-
-      
     </div>
   );
 };

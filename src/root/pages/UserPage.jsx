@@ -11,7 +11,7 @@ const tabs = [
     index: "1",
     label: "Posts",
     url: "/posts",
-  }
+  },
 ];
 
 function UserPage() {

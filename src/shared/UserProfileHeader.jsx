@@ -10,9 +10,11 @@ function UserProfileHeader({ otherUsers }) {
     getUser();
   }, []);
   console.log(userProfile);
-  console.log(otherUsers)
+  console.log(otherUsers);
 
-  const desc = userProfile.filter(user => user.name === otherUsers.name).map(user => user.userdesc);
+  const desc = userProfile
+    .filter((user) => user.name === otherUsers.name)
+    .map((user) => user.userdesc);
 
   return (
     <div className="flex flex-1">
@@ -39,9 +41,7 @@ function UserProfileHeader({ otherUsers }) {
           </div>
         </div>
 
-        <p className="mt-6 max-w-lg text-base-regular text-light-2">
-          {desc}
-        </p>
+        <p className="mt-6 max-w-lg text-base-regular text-light-2">{desc}</p>
       </div>
     </div>
   );

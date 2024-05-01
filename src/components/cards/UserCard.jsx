@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import { AppContext } from "../../context/AppContext";
 import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 function UserCard({ id, name, username, imgUrl }) {
   const { otherUsers, setLoading, setOtherUsers } = useContext(AppContext);
@@ -42,7 +41,6 @@ function UserCard({ id, name, username, imgUrl }) {
 
     setLoading(false);
   }
- 
 
   return (
     <article className="user-card">
@@ -57,8 +55,8 @@ function UserCard({ id, name, username, imgUrl }) {
         </div>
 
         <div className="flex-1 text-ellipsis">
-            <h4 className="text-base-semibold text-light-1">{name}</h4>
-            <p className="text-small-medium text-gray-1">@{username}</p>
+          <h4 className="text-base-semibold text-light-1">{name}</h4>
+          <p className="text-small-medium text-gray-1">@{username}</p>
         </div>
       </div>
 

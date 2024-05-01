@@ -24,7 +24,7 @@ const style = {
 };
 
 function ProfileHeader() {
-  const { user, otherUsers, setUser } = useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
   const [open, setOpen] = React.useState(false);
   const [newData, setNewData] = useState({
     name: "",

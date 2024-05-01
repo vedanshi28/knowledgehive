@@ -1,8 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { AppContext } from "../../context/AppContext";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import CommentCard from "../../components/cards/CommentCard";
 
 const style = {
@@ -22,10 +21,6 @@ const style = {
 
 export default function Comment({ comments, commentLength }) {
   const [open, setOpen] = useState(true);
-  const { loading,posts } = useContext(AppContext);
-  
-  const fiveComments = comments.sort((a, b) => b.timestamp - a.timestamp);
-  const topFiveComments = fiveComments.slice(-5);
 
   const handleClose = () => {
     setOpen(false);
@@ -46,7 +41,7 @@ export default function Comment({ comments, commentLength }) {
           <h2 className="text-gray-400 mt-10">No comments yet</h2>
         ) : (
           <>
-            {topFiveComments?.map((comment, index) => (
+            {comments?.map((comment, index) => (
               <CommentCard key={index} comment={comment} />
             ))}
           </>

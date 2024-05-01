@@ -1,19 +1,17 @@
 import React, { useContext } from "react";
 import UserCard from "../components/cards/UserCard";
-import { communities, similarminds } from "../constant";
+import { similarminds } from "../constant";
 import Button from "@mui/material/Button";
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import { useNavigate } from "react-router-dom";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { AppContext } from "../context/AppContext";
-  
+
 function RightSideBar() {
- const {category , setCategory} = useContext(AppContext);
+  const { category, setCategory } = useContext(AppContext);
 
-
-const handleClick=(category)=>{
-  setCategory(category);
- }
- //console.log(category)
+  const handleClick = (category) => {
+    setCategory(category);
+  };
+  //console.log(category)
 
   return (
     <section className="custom-scrollbar rightsidebar">
@@ -29,10 +27,30 @@ const handleClick=(category)=>{
           <div role="presentation">
             <Breadcrumbs aria-label="breadcrumb">
               <div className="inline flex-col">
-               <button className="bg-indigo-400 rounded-2xl w-10 text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"  onClick={()=>handleClick('all')} >All</button>
-               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"  onClick={()=>handleClick('cse')}>Computer Science</button>
-               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"    onClick={()=>handleClick('it')}>Information Technology</button>
-               <button className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6 mt-2"    onClick={()=>handleClick('ai')}>Artifical Intelligence</button>
+                <button
+                  className="bg-indigo-400 rounded-2xl w-10 text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"
+                  onClick={() => handleClick("all")}
+                >
+                  All
+                </button>
+                <button
+                  className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"
+                  onClick={() => handleClick("cse")}
+                >
+                  Computer Science
+                </button>
+                <button
+                  className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6"
+                  onClick={() => handleClick("it")}
+                >
+                  Information Technology
+                </button>
+                <button
+                  className="bg-indigo-400 rounded-2xl text-center px-3 py-1 mx-1 my-1 font-medium text-white text-xs h-6 mt-2"
+                  onClick={() => handleClick("ai")}
+                >
+                  Artifical Intelligence
+                </button>
               </div>
             </Breadcrumbs>
           </div>

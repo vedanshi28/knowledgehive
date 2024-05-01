@@ -33,7 +33,10 @@ function Footer() {
             </ul>
           </nav>
           <div className="footer__social">
-            <a href="https://github.com/vedanshi28/knowledgehive" className="footer__social-link">
+            <a
+              href="https://github.com/vedanshi28/knowledgehive"
+              className="footer__social-link"
+            >
               <i class="fa-brands fa-github"></i>
             </a>
             <a href="#" className="footer__social-link">

@@ -4,14 +4,8 @@ import PostCard from "../../components/cards/PostCard";
 import { AppContext } from "../../context/AppContext";
 
 function Home() {
-  const {
-    posts,
-    fetchPosts,
-    loading,
-    fetchCategoryPosts,
-    category
-  } = useContext(AppContext);
-
+  const { posts, fetchPosts, loading, fetchCategoryPosts, category } =
+    useContext(AppContext);
 
   useEffect(() => {
     fetchPosts();
@@ -20,11 +14,10 @@ function Home() {
     fetchCategoryPosts();
   }, []);
 
-
-  const filterPosts = category === 'all'
-  ? posts 
-  : posts.filter((post) => post.category.includes(category));
-  
+  const filterPosts =
+    category === "all"
+      ? posts
+      : posts.filter((post) => post.category.includes(category));
 
   if (!posts) return <p>No posts yet</p>;
   return (
@@ -35,7 +28,7 @@ function Home() {
             <img src={home} width={36} height={36} alt="add" />
             <h3 className="h3-bold md:h3-bold text-left w-full">Home</h3>
           </div>
-          
+
           {loading ? (
             <p>Loading posts...</p>
           ) : (
@@ -45,7 +38,7 @@ function Home() {
                   {filterPosts?.map((post) => (
                     <PostCard key={post._id} post={post} />
                   ))}
-                  </>
+                </>
               ) : (
                 <>
                   {posts?.map((post) => (
