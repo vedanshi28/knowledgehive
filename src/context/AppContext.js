@@ -50,7 +50,7 @@ export default function AppContextProvider({ children }) {
     try {
       const res = await axios.get("http://localhost:5000/api/user");
       const data = res.data;
-      console.log(data);
+      //console.log(data);
       setUserProfile(data.data);
       setLoading(false);
     } catch (error) {

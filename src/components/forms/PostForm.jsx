@@ -1,23 +1,25 @@
 import React, { useContext } from "react";
 import FileUploader from "../../shared/FileUploader";
 import { useNavigate } from "react-router-dom";
-import usePreviewImg from "../../hooks/usePreviewImg";
+//import usePreviewImg from "../../hooks/usePreviewImg";
 import { useState, useRef } from "react";
 import { Button } from "@mui/material";
-import fileupload from "../../assets/icons/file-upload.svg";
+//import fileupload from "../../assets/icons/file-upload.svg";
 import toast, { Toaster } from "react-hot-toast";
 import { AppContext } from "../../context/AppContext";
 
 export default function PostForm() {
   const navigate = useNavigate();
+  const [previewImages, setPreviewImages] = useState([]);
   const { user, selectedCategory, setSelectedCategory } =
     useContext(AppContext);
   const imageRef = useRef(null);
-  const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
+  // const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
   const [formData, setFormData] = useState({
     postTitle: "",
     postDesc: "",
     category: "",
+    postUrl : "",
   });
 
   const options = [
@@ -38,6 +40,23 @@ export default function PostForm() {
   };
   //console.log(selectedCategory)
 
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    const images = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        images.push(event.target.result);
+        if (images.length === files.length) {
+          setPreviewImages(images);
+        }
+      };
+      reader.readAsDataURL(files[i]);
+    }
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     //console.log(formData);
@@ -54,10 +73,11 @@ export default function PostForm() {
           postTitle: formData.postTitle,
           postDesc: formData.postDesc,
           category: selectedCategory,
+          postUrl: formData.postUrl,
         }),
       });
-
-      //console.log(response);
+      console.log(response)
+      
 
       if (response.ok) {
         const json = await response.json();
@@ -79,7 +99,7 @@ export default function PostForm() {
         //postImg: "",
         category: "",
       });
-      setSelectedFile(null);
+      //setSelectedFile(null);
       setSelectedCategory(null);
     }
   };
@@ -91,7 +111,7 @@ export default function PostForm() {
       postDesc: "",
       category: "",
     });
-    setSelectedFile(null);
+    //setSelectedFile(null)
   };
 
   const handleChange = (e) => {
@@ -108,10 +128,28 @@ export default function PostForm() {
     });
   };
 
+  
+
+    
+  const handleImageSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    // const response = await fetch(`http://localhost:8080/upload`, {
+    const response = await fetch(`http://localhost:5000/api/file/upload`, {
+      method: "POST",
+      body: formData,
+    });
+
+    console.log(response);
+    console.log(response.url);
+    setFormData((prevFormData) => {prevFormData.postUrl = response.url});
+     
+  };
+  
+
   return (
-    <form
+    <div
       className="flex flex-col gap-9 w-full max-w-5xl"
-      onSubmit={handleSubmit}
     >
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
@@ -166,6 +204,34 @@ export default function PostForm() {
               </div>
             </div>
 
+ 
+            <div className="sm:col-span-8">
+              <label className="shad-form_label">Add Photos</label>
+              <form className="mt-2" onSubmit={handleImageSubmit}>
+                <div className="flex flex-center flex-col bg-dark-3 rounded-xl cursor-pointer">
+                  <input
+                    type="file"
+                    name="file"
+                    id="input-files"
+                    className="cursor-pointer pt-4 pl-2"
+                    onChange={handleImageChange}
+                    multiple
+                  />
+
+                  {previewImages.map((image, index) => (
+                    <img key={index} src={image} alt={`Preview ${index + 1}`} />
+                  ))}
+                
+                <button
+                  type="submit"
+                  className="rounded-md bg-indigo-600 px-3 py-2 my-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Submit
+                </button>
+                </div>
+              </form>
+            </div>
+            
             {/* <div className="sm:col-span-8">
               <label className="shad-form_label">Add Photos</label>
               <div className="mt-2">
@@ -218,6 +284,7 @@ export default function PostForm() {
               </div>
             </div> */}
 
+            {/*Category */}
             <div className="sm:col-span-8">
               <label className="shad-form_label">Category</label>
               <div className="mt-2">
@@ -274,13 +341,13 @@ export default function PostForm() {
           Cancel
         </button>
         <button
-          type="submit"
+          onClick={()=>handleSubmit()}
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Submit
         </button>
       </div>
       <Toaster />
-    </form>
+    </div>
   );
 }

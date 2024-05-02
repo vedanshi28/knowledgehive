@@ -1,11 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { AppContext } from "../../context/AppContext";
 import { useLocation } from "react-router-dom";
 
 function UserCard({ id, name, username, imgUrl }) {
-  const { otherUsers, setLoading, setOtherUsers } = useContext(AppContext);
+  const { otherUsers, setLoading, setOtherUsers, getUser, userProfile } = useContext(AppContext);
   const location = useLocation();
+
+  useEffect(() => {
+    getUser();
+  }, []);
+  //console.log(userProfile);
+
+
 
   async function fetchUser() {
     console.log("Fetching User...");

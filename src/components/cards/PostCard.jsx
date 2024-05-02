@@ -233,11 +233,11 @@ function PostCard({ id, post }) {
             <p className="mt-2 text-small-regular text-light-2">
               {post.postDesc}
             </p>
-            {post.imgUrl ? (
+            {post.postUrl ? (
               <>
                 <img
                   key={post._id}
-                  src={post.imgUrl}
+                  src={post.postUrl}
                   alt="post image"
                   className="post-card_img"
                 />
