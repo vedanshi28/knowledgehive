@@ -91,7 +91,7 @@ export default function PostForm() {
         console.error("Failed to fetch data:", response.statusText);
       }
     } catch (error) {
-      console.error(" Upload failed:", error);
+      console.error("Upload failed:", error);
     } finally {
       setFormData({
         postTitle: "",
@@ -215,11 +215,10 @@ export default function PostForm() {
                 ):(
                   <>
                   <button
-                  type="submit"
                   label="Loading..."
                   className="rounded-md bg-dark-4 px-3 py-2 my-4 text-sm font-semibold text-white shadow-sm hover:bg-dark-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark-2"
                 >
-                  Submit
+                  Loading...
                 </button>
                   </>
                 )}

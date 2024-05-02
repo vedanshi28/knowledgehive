@@ -26,6 +26,8 @@ const style = {
 function ProfileHeader() {
   const { user, setUser } = useContext(AppContext);
   const [open, setOpen] = React.useState(false);
+  const [previewImages, setPreviewImages] = useState([]);
+  const [url, setUrl] = useState("");
   const [newData, setNewData] = useState({
     name: "",
     contact: "",
@@ -63,6 +65,37 @@ function ProfileHeader() {
   };
 
   useEffect(() => {}, [user]);
+
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    const images = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        images.push(event.target.result);
+        if (images.length === files.length) {
+          setPreviewImages(images);
+        }
+      };
+      reader.readAsDataURL(files[i]);
+    }
+  };
+
+  const handleImageSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const response = await fetch(`http://localhost:5000/api/file/upload`, {
+      method: "POST",
+      body: formData,
+    });
+
+    console.log(response);
+    const json = await response.json();
+    console.log(json.url);
+    setUrl(json.url);
+  };
+  
 
   return (
     <div className="flex flex-1">
@@ -157,6 +190,31 @@ function ProfileHeader() {
               setNewData({ ...newData, userdesc: e.target.value })
             }
           />
+
+              <form className="mt-10" onSubmit={handleImageSubmit}>
+                  <input
+                  placeholder="Add profile image"
+                    type="file"
+                    name="file"
+                    id="input-files"
+                    className="cursor-pointer pt-4 pl-2 rounded-full object-cover"
+                    onChange={handleImageChange}
+                    multiple
+                  />
+
+                  {previewImages.map((image, index) => (
+                    <img key={index} src={image} alt={`Preview ${index + 1}`} />
+                  ))}
+                    <button
+                  type="submit"
+                  className="rounded-md bg-dark-4 px-3 py-2 my-4 text-sm font-semibold text-white shadow-sm hover:bg-dark-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark-2"
+                >
+                  Submit
+                </button>
+                
+
+              </form>
+
           <Button sx={{ color: "#6875F5", mt: 4 }} onClick={handleUpdate}>
             Save
           </Button>

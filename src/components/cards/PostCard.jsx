@@ -56,7 +56,7 @@ function PostCard({ id, post }) {
       );
       //console.log(res);
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
       setEditPostData("");
       fetchPosts();
       toast.success("Edited Post Successfully!");
@@ -145,7 +145,7 @@ function PostCard({ id, post }) {
   };
 
   useEffect(() => {
-    console.log(post);
+    //console.log(post);
     if (user.email === post.email) {
       setCanDelete(true);
     }
