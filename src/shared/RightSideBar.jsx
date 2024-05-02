@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import UserCard from "../components/cards/UserCard";
 import { similarminds } from "../constant";
 import Button from "@mui/material/Button";
@@ -6,16 +6,20 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { AppContext } from "../context/AppContext";
 
 function RightSideBar() {
-  const {  setCategory, userProfile  } = useContext(AppContext);
+  const {  setCategory, userProfile , getUser } = useContext(AppContext);
 
   const handleClick = (category) => {
     setCategory(category);
   };
+
+  useEffect(() => {
+    getUser();
+  }, []);
   //console.log(userProfile)
 
   return (
     <section className="custom-scrollbar rightsidebar">
-      <div className="flex flex-1 flex-col justify-start">
+      <div className="flex flex-col justify-start">
         
         <h3 className="text-heading4-medium text-light-1 mt-6">
           Suggested Categories

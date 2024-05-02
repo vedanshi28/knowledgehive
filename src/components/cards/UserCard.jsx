@@ -68,8 +68,7 @@ async function fetchUser() {
 
       <Button
         className="user-card_btn"
-        href={`/userprofile/${otherUsers.username}`}
-        onClick={fetchUser}
+        href={`/userprofile/${user.username}`}
       >
         View
       </Button>
