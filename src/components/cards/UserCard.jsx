@@ -4,18 +4,16 @@ import { AppContext } from "../../context/AppContext";
 import { useLocation } from "react-router-dom";
 import userprofile from "../../assets/icons/userprofile.png"
 
-function UserCard({ id, name, username, imgUrl }) {
-  const { otherUsers, setLoading, setOtherUsers, getUser, userProfile } = useContext(AppContext);
+function UserCard({ id, user }) {
+  const { otherUsers, setLoading, setOtherUsers, getUser} = useContext(AppContext);
   const location = useLocation();
 
   useEffect(() => {
     getUser();
   }, []);
-  //console.log(userProfile);
 
 
-
-  async function fetchUser() {
+async function fetchUser() {
     console.log("Fetching User...");
     setLoading(true);
     let username = location.pathname.split("/").at(-1);
@@ -63,8 +61,8 @@ function UserCard({ id, name, username, imgUrl }) {
         </div>
 
         <div className="flex-1 text-ellipsis">
-          <h4 className="text-base-semibold text-light-1">{name}</h4>
-          <p className="text-small-medium text-gray-1">@{username}</p>
+          <h4 className="text-base-semibold text-light-1">{user.name}</h4>
+          <p className="text-small-medium text-gray-1">@{user.username}</p>
         </div>
       </div>
 
