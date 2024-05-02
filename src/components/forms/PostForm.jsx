@@ -10,7 +10,8 @@ import { AppContext } from "../../context/AppContext";
 
 export default function PostForm() {
   const navigate = useNavigate();
-  const { user,selectedCategory, setSelectedCategory } = useContext(AppContext);
+  const { user, selectedCategory, setSelectedCategory } =
+    useContext(AppContext);
   const imageRef = useRef(null);
   const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
   const [formData, setFormData] = useState({
@@ -20,10 +21,10 @@ export default function PostForm() {
   });
 
   const options = [
-    { id:'1', value: "all", label: "all"},
-    { id:'2', value: "cse", label: "cse" },
-    { id:'3', value: "it", label: "it" },
-    { id:'4', value: "ai", label: "ai" },
+    { id: "1", value: "all", label: "all" },
+    { id: "2", value: "cse", label: "cse" },
+    { id: "3", value: "it", label: "it" },
+    { id: "4", value: "ai", label: "ai" },
   ];
 
   const handleTagClick = (option) => {
@@ -79,7 +80,7 @@ export default function PostForm() {
         category: "",
       });
       setSelectedFile(null);
-      setSelectedCategory(null)
+      setSelectedCategory(null);
     }
   };
 
