@@ -184,7 +184,7 @@ export default function PostForm() {
               </div>
             </div>
 
- 
+ {/* 
             <div className="sm:col-span-8">
               <label className="shad-form_label">Add Photos</label>
               <form className="mt-2" onSubmit={handleImageSubmit}>
@@ -211,7 +211,7 @@ export default function PostForm() {
                 </div>
               </form>
             </div>
-            
+          */}  
             {/* <div className="sm:col-span-8">
               <label className="shad-form_label">Add Photos</label>
               <div className="mt-2">
