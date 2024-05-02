@@ -12,7 +12,7 @@ export default function PostForm() {
   const navigate = useNavigate();
   const [previewImages, setPreviewImages] = useState([]);
   const [url, setUrl] = useState("");
-  const { user, selectedCategory, setSelectedCategory, loading } =
+  const { user, selectedCategory, setSelectedCategory, loading, setLoading } =
     useContext(AppContext);
   const imageRef = useRef(null);
   // const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
@@ -30,7 +30,7 @@ export default function PostForm() {
   ];
 
   const handleTagClick = (option) => {
-    setSelectedCategory([...selectedCategory, option.value]);
+    setSelectedCategory([option.value]);
   };
 
   const removeTag = (index) => {
@@ -96,10 +96,9 @@ export default function PostForm() {
       setFormData({
         postTitle: "",
         postDesc: "",
-        //postImg: "",
         category: "",
+        postUrl:""
       });
-      //setSelectedFile(null);
       setSelectedCategory(null);
     }
   };
@@ -110,6 +109,7 @@ export default function PostForm() {
       postTitle: "",
       postDesc: "",
       category: "",
+      postUrl:""
     });
     //setSelectedFile(null)
   };
@@ -130,6 +130,7 @@ export default function PostForm() {
 
   const handleImageSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const formData = new FormData(event.target);
     const response = await fetch(`http://localhost:5000/api/file/upload`, {
       method: "POST",
@@ -137,6 +138,7 @@ export default function PostForm() {
     });
 
     console.log(response);
+    if(response) setLoading(false);
     const json = await response.json();
     console.log(json.url);
     setUrl(json.url);
@@ -184,7 +186,7 @@ export default function PostForm() {
               </div>
             </div>
 
- {/* 
+ 
             <div className="sm:col-span-8">
               <label className="shad-form_label">Add Photos</label>
               <form className="mt-2" onSubmit={handleImageSubmit}>
@@ -201,17 +203,32 @@ export default function PostForm() {
                   {previewImages.map((image, index) => (
                     <img key={index} src={image} alt={`Preview ${index + 1}`} />
                   ))}
-                
-                <button
+                {!loading ? (
+                  <>
+                    <button
                   type="submit"
-                  className="rounded-md bg-indigo-600 px-3 py-2 my-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="rounded-md bg-dark-4 px-3 py-2 my-4 text-sm font-semibold text-white shadow-sm hover:bg-dark-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark-2"
                 >
                   Submit
                 </button>
+                  </>
+                ):(
+                  <>
+                  <button
+                  type="submit"
+                  label="Loading..."
+                  className="rounded-md bg-dark-4 px-3 py-2 my-4 text-sm font-semibold text-white shadow-sm hover:bg-dark-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark-2"
+                >
+                  Submit
+                </button>
+                  </>
+                )}
+                
                 </div>
               </form>
             </div>
-          */}  
+         
+            
             {/* <div className="sm:col-span-8">
               <label className="shad-form_label">Add Photos</label>
               <div className="mt-2">

@@ -16,9 +16,7 @@ function RightSideBar() {
   return (
     <section className="custom-scrollbar rightsidebar">
       <div className="flex flex-1 flex-col justify-start">
-        <Button className="user-card_btn" onClick={""}>
-          Create Communities &nbsp; <i class="fa-solid fa-plus"></i>
-        </Button>
+        
         <h3 className="text-heading4-medium text-light-1 mt-6">
           Suggested Categories
         </h3>

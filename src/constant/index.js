@@ -12,11 +12,6 @@ export const sidebarLinks = [
     label: "Home",
   },
   {
-    imgURL: search,
-    route: "/search",
-    label: "Search",
-  },
-  {
     imgURL: createpost,
     route: "/create-post",
     label: "Create Post",
