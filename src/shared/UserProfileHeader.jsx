@@ -24,7 +24,7 @@ function UserProfileHeader({ otherUsers }) {
           <div className="flex items-center gap-3">
             <div className="h-15 w-15 object-cover flex justify-center">
               <img
-                src={userprofile}
+                src={profile}
                 alt="logo"
                 fill
                 className="rounded-full object-cover shadow-2xl"

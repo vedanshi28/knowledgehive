@@ -2,6 +2,7 @@ import * as React from "react";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { Link } from "@mui/material";
+import userprofile from "../../assets/icons/userprofile.png"
 
 export default function CommentCard({ comment }) {
   const { posts } = useContext(AppContext);
@@ -16,7 +17,7 @@ export default function CommentCard({ comment }) {
                 className="relative h-11 w-11"
               >
                 <img
-                  src={posts.image}
+                  src={userprofile}
                   alt="user_community_image"
                   fill
                   className="cursor-pointer rounded-full"

@@ -12,6 +12,11 @@ const tabs = [
     label: "Posts",
     url: "/posts",
   },
+  {
+    index: "2",
+    label: "Liked Posts",
+    url: "/likedposts",
+  },
 ];
 
 function Profile() {
@@ -74,7 +79,7 @@ function Profile() {
               {tabs.map((tab, index) => (
                 <li key={index} className="z-30 flex-auto text-center">
                   <button
-                    onClick={() => handleClick(index)}
+                    onClick={handleClick}
                     className="z-30 flex items-center justify-center w-full px-0 py-1 mb-0 transition-all ease-in-out border-0 rounded-lg cursor-pointer text-white bg-inherit active:text-violet-400 hover:text-violet-400"
                   >
                     {tab.label}
