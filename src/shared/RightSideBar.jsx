@@ -58,7 +58,7 @@ function RightSideBar() {
       <div className="flex flex-1 flex-col justify-start">
         <h3 className="text-heading4-medium text-light-1">Similar Minds</h3>
         <div className="mt-7 flex w-[350px] flex-col gap-10 text-indigo-400">
-          {userProfile.map((user) => (
+          {userProfile?.map((user) => (
             <UserCard
               key={user._id}
               user={user}
