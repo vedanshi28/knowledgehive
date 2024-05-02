@@ -12,6 +12,7 @@ import Profile from "./root/pages/Profile";
 import EditPost from "./root/pages/EditPost";
 import LandingPageLayout from "./landing-page/components/LandingPageLayout";
 import UserPage from "./root/pages/UserPage";
+import Temp from "./auth/Temp";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route element={<AuthLayout />}>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/temp" element={<Temp />} />
         </Route>
 
         {/* private routes */}

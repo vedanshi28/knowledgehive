@@ -22,7 +22,8 @@ function Temp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const response = await fetch(`http://localhost:8080/upload`, {
+    // const response = await fetch(`http://localhost:8080/upload`, {
+    const response = await fetch(`http://localhost:5000/api/file/upload`, {
       method: "POST",
       body: formData,
     });
