@@ -26,8 +26,8 @@ const style = {
 function ProfileHeader() {
   const { user, setUser } = useContext(AppContext);
   const [open, setOpen] = React.useState(false);
-  const [previewImages, setPreviewImages] = useState([]);
-  const [url, setUrl] = useState("");
+  //const [previewImages, setPreviewImages] = useState([]);
+  //const [url, setUrl] = useState("");
   const [newData, setNewData] = useState({
     name: "",
     contact: "",
@@ -66,6 +66,7 @@ function ProfileHeader() {
 
   useEffect(() => {}, [user]);
 
+  /* 
   const handleImageChange = (e) => {
     const files = e.target.files;
     const images = [];
@@ -96,7 +97,7 @@ function ProfileHeader() {
     setUrl(json.url);
   };
   
-
+*/
   return (
     <div className="flex flex-1">
       <div className="common-container">
@@ -190,7 +191,7 @@ function ProfileHeader() {
               setNewData({ ...newData, userdesc: e.target.value })
             }
           />
-
+{/* 
               <form className="mt-10" onSubmit={handleImageSubmit}>
                   <input
                   placeholder="Add profile image"
@@ -214,7 +215,7 @@ function ProfileHeader() {
                 
 
               </form>
-
+*/}
           <Button sx={{ color: "#6875F5", mt: 4 }} onClick={handleUpdate}>
             Save
           </Button>
