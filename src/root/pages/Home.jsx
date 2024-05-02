@@ -6,6 +6,7 @@ import { AppContext } from "../../context/AppContext";
 function Home() {
   const { posts, fetchPosts, loading, fetchCategoryPosts, category } =
     useContext(AppContext);
+    console.log(posts)
 
   useEffect(() => {
     fetchPosts();

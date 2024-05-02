@@ -101,6 +101,7 @@ export default function SignUp() {
         branch:formData.branch
       }),
     });
+    console.log(response)
   
 
     if (response.ok) {
