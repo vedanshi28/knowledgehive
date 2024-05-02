@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { AppContext } from "../../context/AppContext";
 import { useLocation } from "react-router-dom";
+import userprofile from "../../assets/icons/userprofile.png"
 
 function UserCard({ id, name, username, imgUrl }) {
   const { otherUsers, setLoading, setOtherUsers, getUser, userProfile } = useContext(AppContext);
@@ -54,7 +55,7 @@ function UserCard({ id, name, username, imgUrl }) {
       <div className="user-card_avatar">
         <div className="relative h-12 w-12">
           <img
-            src={imgUrl}
+            src={userprofile}
             alt="user_logo"
             fill
             className="rounded-full object-cover"

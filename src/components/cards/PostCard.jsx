@@ -6,6 +6,7 @@ import deleteicon from "../../assets/icons/delete.svg";
 import { AppContext } from "../../context/AppContext";
 import toast, { Toaster } from "react-hot-toast";
 import Comment from "../../root/pages/Comment";
+import userprofile from "../../assets/icons/userprofile.png"
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 
@@ -208,10 +209,12 @@ function PostCard({ id, post }) {
               className="relative h-11 w-11"
             >
               <img
-                src={""}
+                src={userprofile}
                 alt="user_community_image"
                 fill
                 className="cursor-pointer rounded-full"
+                height={54}
+                width={54}
               />
             </Link>
 
@@ -329,9 +332,6 @@ function PostCard({ id, post }) {
             value={reply}
             onChange={(e) => setReply(e.target.value)}
           />
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Add your comment in this field.
-          </Typography>
           <Button sx={{ color: "#6875F5", mt: 2 }} onClick={handleReply}>
             Reply
           </Button>
