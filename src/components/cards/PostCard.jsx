@@ -145,6 +145,7 @@ function PostCard({ id, post }) {
   };
 
   useEffect(() => {
+    console.log(post);
     if (user.email === post.email) {
       setCanDelete(true);
     }

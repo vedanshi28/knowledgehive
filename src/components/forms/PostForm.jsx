@@ -11,7 +11,8 @@ import { AppContext } from "../../context/AppContext";
 export default function PostForm() {
   const navigate = useNavigate();
   const [previewImages, setPreviewImages] = useState([]);
-  const { user, selectedCategory, setSelectedCategory } =
+  const [url, setUrl] = useState("");
+  const { user, selectedCategory, setSelectedCategory, loading } =
     useContext(AppContext);
   const imageRef = useRef(null);
   // const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
@@ -19,7 +20,6 @@ export default function PostForm() {
     postTitle: "",
     postDesc: "",
     category: "",
-    postUrl : "",
   });
 
   const options = [
@@ -58,7 +58,7 @@ export default function PostForm() {
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     //console.log(formData);
 
     try {
@@ -73,10 +73,10 @@ export default function PostForm() {
           postTitle: formData.postTitle,
           postDesc: formData.postDesc,
           category: selectedCategory,
-          postUrl: formData.postUrl,
+          postUrl: url,
         }),
       });
-      console.log(response)
+      //console.log(response)
       
 
       if (response.ok) {
@@ -128,24 +128,19 @@ export default function PostForm() {
     });
   };
 
-  
-
-    
   const handleImageSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    // const response = await fetch(`http://localhost:8080/upload`, {
     const response = await fetch(`http://localhost:5000/api/file/upload`, {
       method: "POST",
       body: formData,
     });
 
     console.log(response);
-    console.log(response.url);
-    setFormData((prevFormData) => {prevFormData.postUrl = response.url});
-     
+    const json = await response.json();
+    console.log(json.url);
+    setUrl(json.url);
   };
-  
 
   return (
     <div
@@ -171,21 +166,6 @@ export default function PostForm() {
               </div>
             </div>
 
-            <div className="sm:col-span-8">
-              <label className="shad-form_label">Post Link</label>
-              <div className="mt-2">
-                <textarea
-                  className="custom-scrollbar shad-form_message w-full h-10 pt-2 pl-2 bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3"
-                  type="text"
-                  name="link"
-                  id="link"
-                  autoComplete="link"
-                  placeholder="Post your link here (optional)"
-                  value={formData.link}
-                  onChange={changeHandler}
-                />
-              </div>
-            </div>
 
             <div className="sm:col-span-8">
               <label className="shad-form_label">Post Description</label>
