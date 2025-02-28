@@ -56,7 +56,6 @@ export default function PostForm() {
     }
   };
 
-
   const handleSubmit = async (e) => {
     // e.preventDefault();
     //console.log(formData);
@@ -77,7 +76,6 @@ export default function PostForm() {
         }),
       });
       //console.log(response)
-      
 
       if (response.ok) {
         const json = await response.json();
@@ -97,7 +95,7 @@ export default function PostForm() {
         postTitle: "",
         postDesc: "",
         category: "",
-        postUrl:""
+        postUrl: "",
       });
       setSelectedCategory(null);
     }
@@ -109,7 +107,7 @@ export default function PostForm() {
       postTitle: "",
       postDesc: "",
       category: "",
-      postUrl:""
+      postUrl: "",
     });
     //setSelectedFile(null)
   };
@@ -131,23 +129,28 @@ export default function PostForm() {
   const handleImageSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    const formData = new FormData(event.target);
-    const response = await fetch(`http://localhost:5000/api/file/upload`, {
-      method: "POST",
-      body: formData,
-    });
 
-    console.log(response);
-    if(response) setLoading(false);
-    const json = await response.json();
-    console.log(json.url);
-    setUrl(json.url);
+    try {
+      const formData = new FormData(event.target);
+      const response = await fetch(`http://localhost:5000/api/file/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      console.log(response);
+      if (response) setLoading(false);
+      const json = await response.json();
+      console.log(json.url);
+      setUrl(json.url);
+      toast.success("Image uploaded successfully");
+    } catch (error) {
+      toast.error("Image upload failed");
+      console.log(error)
+    }
   };
 
   return (
-    <div
-      className="flex flex-col gap-9 w-full max-w-5xl"
-    >
+    <div className="flex flex-col gap-9 w-full max-w-5xl">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -158,7 +161,7 @@ export default function PostForm() {
                   className="custom-scrollbar shad-form_message w-full h-10 pt-2 pl-2 bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3"
                   type="text"
                   name="postTitle"
-                  id="tile"
+                  id="title"
                   autoComplete="title"
                   placeholder="Write your post title here"
                   value={formData.postTitle}
@@ -167,7 +170,6 @@ export default function PostForm() {
                 />
               </div>
             </div>
-
 
             <div className="sm:col-span-8">
               <label className="shad-form_label">Post Description</label>
@@ -186,14 +188,13 @@ export default function PostForm() {
               </div>
             </div>
 
- 
             <div className="sm:col-span-8">
               <label className="shad-form_label">Add Photos</label>
               <form className="mt-2" onSubmit={handleImageSubmit}>
                 <div className="flex flex-center flex-col bg-dark-3 rounded-xl cursor-pointer">
                   <input
                     type="file"
-                    name="file"
+                    name="post"
                     id="input-files"
                     className="cursor-pointer pt-4 pl-2"
                     onChange={handleImageChange}
@@ -203,31 +204,29 @@ export default function PostForm() {
                   {previewImages.map((image, index) => (
                     <img key={index} src={image} alt={`Preview ${index + 1}`} />
                   ))}
-                {!loading ? (
-                  <>
-                    <button
-                  type="submit"
-                  className="rounded-md bg-dark-4 px-3 py-2 my-4 text-sm font-semibold text-white shadow-sm hover:bg-dark-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark-2"
-                >
-                  Submit
-                </button>
-                  </>
-                ):(
-                  <>
-                  <button
-                  label="Loading..."
-                  className="rounded-md bg-dark-4 px-3 py-2 my-4 text-sm font-semibold text-white shadow-sm hover:bg-dark-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark-2"
-                >
-                  Loading...
-                </button>
-                  </>
-                )}
-                
+                  {!loading ? (
+                    <>
+                      <button
+                        type="submit"
+                        className="rounded-md bg-dark-4 px-3 py-2 my-4 text-sm font-semibold text-white shadow-sm hover:bg-dark-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark-2"
+                      >
+                        Submit
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        label="Loading..."
+                        className="rounded-md bg-dark-4 px-3 py-2 my-4 text-sm font-semibold text-white shadow-sm hover:bg-dark-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark-2"
+                      >
+                        Loading...
+                      </button>
+                    </>
+                  )}
                 </div>
               </form>
             </div>
-         
-            
+
             {/* <div className="sm:col-span-8">
               <label className="shad-form_label">Add Photos</label>
               <div className="mt-2">
@@ -337,7 +336,7 @@ export default function PostForm() {
           Cancel
         </button>
         <button
-          onClick={()=>handleSubmit()}
+          onClick={() => handleSubmit()}
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Submit
