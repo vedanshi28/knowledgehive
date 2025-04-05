@@ -22,6 +22,8 @@ export default function PostForm() {
     category: "",
   });
 
+  const baseURL = process.env.REACT_APP_BASE_URL;
+
   const options = [
     { id: "1", value: "all", label: "all" },
     { id: "2", value: "cse", label: "cse" },
@@ -61,7 +63,7 @@ export default function PostForm() {
     //console.log(formData);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/post/add`, {
+      const response = await fetch(`${baseURL}/api/post/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -132,7 +134,7 @@ export default function PostForm() {
 
     try {
       const formData = new FormData(event.target);
-      const response = await fetch(`http://localhost:5000/api/file/upload`, {
+      const response = await fetch(`${baseURL}/api/file/upload`, {
         method: "POST",
         body: formData,
       });

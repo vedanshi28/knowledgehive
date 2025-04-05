@@ -2,32 +2,30 @@ import React, { useContext, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { AppContext } from "../../context/AppContext";
 import { useLocation } from "react-router-dom";
-import userprofile from "../../assets/icons/userprofile.png"
+import userprofile from "../../assets/icons/userprofile.png";
 
 function UserCard({ id, user }) {
-  const { otherUsers, setLoading, setOtherUsers, getUser} = useContext(AppContext);
+  const { otherUsers, setLoading, setOtherUsers, getUser } =
+    useContext(AppContext);
   const location = useLocation();
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     getUser();
   }, []);
 
-
-async function fetchUser() {
+  async function fetchUser() {
     console.log("Fetching User...");
     setLoading(true);
     let username = location.pathname.split("/").at(-1);
     // console.log(username);
 
-    const response = await fetch(
-      `http://localhost:5000/api/user/profile/${username}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${baseURL}/api/user/profile/${username}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     // console.log(response);
 
@@ -66,10 +64,7 @@ async function fetchUser() {
         </div>
       </div>
 
-      <Button
-        className="user-card_btn"
-        href={`/userprofile/${user.username}`}
-      >
+      <Button className="user-card_btn" href={`/userprofile/${user.username}`}>
         View
       </Button>
     </article>

@@ -19,6 +19,8 @@ export default function AppContextProvider({ children }) {
   const [fetchCategory, setFetchCategory] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
 
+  const baseURL = process.env.REACT_APP_BASE_URL;
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -32,7 +34,7 @@ export default function AppContextProvider({ children }) {
     console.log("Fetching Posts...");
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/post/fetch");
+      const res = await axios.get(`${baseURL}/api/post/fetch`);
       const data = res.data;
       setPosts(data.data);
       setComments(data.data);
@@ -48,7 +50,7 @@ export default function AppContextProvider({ children }) {
     //Fetch category posts
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/user");
+      const res = await axios.get(`${baseURL}/api/user`);
       const data = res.data;
       //console.log(data);
       setUserProfile(data.data);
@@ -64,7 +66,7 @@ export default function AppContextProvider({ children }) {
     //Fetch category posts
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/category/fetch");
+      const res = await axios.get(`${baseURL}/api/category/fetch`);
       const data = res.data;
       setFetchCategory(data.data);
       setLoading(false);

@@ -9,10 +9,9 @@ function Home() {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
-  useEffect(() => {
     fetchCategoryPosts();
   }, []);
+  
 
   const filterPosts =
     category === "all"

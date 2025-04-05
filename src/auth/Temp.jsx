@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 function Temp() {
   const [previewImages, setPreviewImages] = useState([]);
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   const handleImageChange = (e) => {
     const files = e.target.files;
@@ -23,7 +24,7 @@ function Temp() {
     event.preventDefault();
     const formData = new FormData(event.target);
     // const response = await fetch(`http://localhost:8080/upload`, {
-    const response = await fetch(`http://localhost:5000/api/file/upload`, {
+    const response = await fetch(`${baseURL}/api/file/upload`, {
       method: "POST",
       body: formData,
     });

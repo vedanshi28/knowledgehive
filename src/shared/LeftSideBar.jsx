@@ -11,6 +11,7 @@ const LeftSideBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { user, setProfile, loading, setLoading } = useContext(AppContext);
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   const fetchProfile = async () => {
     //Fetch user profile
@@ -18,7 +19,7 @@ const LeftSideBar = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/user/profile/${user.username}`
+        `${baseURL}/api/user/profile/${user.username}`
       );
       const data = res.data;
       console.log(data);

@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { AppContext } from "../context/AppContext";
 
+const baseURL = process.env.REACT_APP_BASE_URL;
+
 function Copyright(props) {
   return (
     <Typography
@@ -81,7 +83,7 @@ export default function SignIn() {
 
     setLoggingIn(true);
 
-    const response = await fetch(`http://localhost:5000/api/login`, {
+    const response = await fetch(`${baseURL}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

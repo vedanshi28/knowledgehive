@@ -20,6 +20,7 @@ function Profile() {
   const { setLoading, setUserPosts, userPosts } = useContext(AppContext);
   const location = useLocation();
   let filteredData;
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   const handleClick = (index) => {
     setActiveTabIndex(index);
@@ -32,7 +33,7 @@ function Profile() {
 
     try {
       setFetchingPosts(true);
-      res = await axios.get("http://localhost:5000/api/post/fetch");
+      res = await axios.get(`${baseURL}/api/post/fetch`);
       const data = res.data;
       setUserPosts(data.data);
       //console.log(data)

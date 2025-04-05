@@ -10,6 +10,8 @@ import userprofile from "../../assets/icons/userprofile.png"
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 
+const baseURL = process.env.REACT_APP_BASE_URL;
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -44,7 +46,7 @@ function PostCard({ id, post }) {
   const editPost = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/post/update/${post._id}`,
+        `${baseURL}/api/post/update/${post._id}`,
         {
           method: "PUT",
           headers: {
@@ -76,7 +78,7 @@ function PostCard({ id, post }) {
     // console.log("Deleting Post..")
     try {
       const response = await fetch(
-        `http://localhost:5000/api/post/delete/${post._id}`,
+        `${baseURL}/api/post/delete/${post._id}`,
         {
           method: "DELETE",
         }
@@ -94,7 +96,7 @@ function PostCard({ id, post }) {
   const handleLike = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/post/like/${post._id}`,
+        `${baseURL}/api/post/like/${post._id}`,
         {
           method: "POST",
           headers: {
@@ -121,7 +123,7 @@ function PostCard({ id, post }) {
   const handleUnlike = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/post/unlike/${post._id}`,
+        `${baseURL}/api/post/unlike/${post._id}`,
         {
           method: "POST",
           headers: {
@@ -162,7 +164,7 @@ function PostCard({ id, post }) {
     // console.log(reply);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/post/comment/${post._id}`,
+        `${baseURL}/api/post/comment/${post._id}`,
         {
           method: "POST",
           headers: {

@@ -27,6 +27,8 @@ function UserPage() {
   const location = useLocation();
   let filteredData;
 
+  const baseURL = process.env.REACT_APP_BASE_URL;
+
   async function fetchUser() {
     console.log("Fetching User...");
     setLoading(true);
@@ -34,7 +36,7 @@ function UserPage() {
     // console.log(username);
 
     const response = await fetch(
-      `http://localhost:5000/api/user/profile/${username}`,
+      `${baseURL}/api/user/profile/${username}`,
       {
         method: "GET",
         headers: {
@@ -73,7 +75,7 @@ function UserPage() {
 
     try {
       setFetchingPosts(true);
-      res = await axios.get("http://localhost:5000/api/post/fetch");
+      res = await axios.get(`${baseURL}/api/post/fetch`);
       const data = res.data;
       setUserPosts(data.data);
       //console.log(data)

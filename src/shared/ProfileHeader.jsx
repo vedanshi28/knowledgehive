@@ -35,11 +35,12 @@ function ProfileHeader() {
   });
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   const handleUpdate = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/user/profile/${user.username}`,
+        `${baseURL}/api/user/profile/${user.username}`,
         {
           method: "PUT",
           headers: {
@@ -86,7 +87,7 @@ function ProfileHeader() {
   const handleImageSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const response = await fetch(`http://localhost:5000/api/file/upload`, {
+    const response = await fetch(`${baseURL}/api/file/upload`, {
       method: "POST",
       body: formData,
     });
