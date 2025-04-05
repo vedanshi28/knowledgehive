@@ -15,6 +15,8 @@ import { useState,useContext } from "react";
 import toast from "react-hot-toast";
 import { AppContext } from "../context/AppContext";
 
+const baseURL = process.env.REACT_APP_BASE_URL;
+
 function Copyright(props) {
   return (
     <Typography
@@ -86,7 +88,7 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Sign up in progress")
-    const response = await fetch(`http://localhost:5000/api/register`, {
+    const response = await fetch(`${baseURL}/api/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
